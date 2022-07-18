@@ -15,9 +15,9 @@
 <div align="center"><img src="https://metrics.lecoq.io/CoolestEnoch?template=terminal&base.indepth=false&base.hireable=false&config.timezone=Asia%2FHong_Kong"></div>
 --!>
 
-<h1 align="center"> <img src="https://readme-typing-svg.herokuapp.com/?lines=今天躺平了吗(bushi&center=true&size=27"> </a> </h1>
-
 <div align="center"> <img src="http://api.btstu.cn/sjbz/?lx=dongman" /> </div>
+
+<h1 align="center"> <img src="https://readme-typing-svg.herokuapp.com/?lines=今天躺平了吗(bushi&center=true&size=27"> </a> </h1>
 
 <div align="center"> <img src="https://github-readme-stats.vercel.app/api?username=CoolestEnoch&count_private=true&show_icons=true&theme=codeSTACKr&role=OWNER,ORGANIZATION_MEMBER,COLLABORATOR" /> </div>
 
