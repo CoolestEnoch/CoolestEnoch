@@ -27,4 +27,4 @@
 <div align="center"> <img src="https://activity-graph.herokuapp.com/graph?username=CoolestEnoch&theme=xcode" /> </div>
 
 
-[CoolestEnoch's GitHub stats](https://github-readme-stats.vercel.app/api?username=CoolestEnoch&count_private=true&show_icons=true&theme=codeSTACKr&role=OWNER,ORGANIZATION_MEMBER,COLLABORATOR)
+![CoolestEnoch's GitHub stats](https://github-readme-stats.vercel.app/api?username=CoolestEnoch&count_private=true&show_icons=true&theme=codeSTACKr&role=OWNER,ORGANIZATION_MEMBER,COLLABORATOR)
