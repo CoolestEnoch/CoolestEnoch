@@ -19,7 +19,9 @@
 
 <div align="center"> <img src="https://github-readme-streak-stats.herokuapp.com/?user=CoolestEnoch" /> </div>
 
-<h1 align="center"> <a href="https://sunguoqi.com/"> <img src="https://readme-typing-svg.herokuapp.com/?lines=今天躺平了吗(bushi&center=true&size=27"> </a> </h1>
+<h1 align="center"> <img src="https://readme-typing-svg.herokuapp.com/?lines=今天躺平了吗(bushi&center=true&size=27"> </a> </h1>
+
+<!--   <a href="https://sunguoqi.com/">   --!>
 
 <div align="center"> <img src="https://activity-graph.herokuapp.com/graph?username=CoolestEnoch&theme=xcode" /> </div>
 
