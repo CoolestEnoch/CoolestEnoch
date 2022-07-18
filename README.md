@@ -9,7 +9,7 @@
 - 😄 Pronouns: ...
 - ⚡ Fun fact: doing something interesting via programming
 
-<div align="center"> <img src="https://v2.jinrishici.com/one.svg" /> </div>
+> <div align="center"> <img src="https://v2.jinrishici.com/one.svg" /> </div>
 
 <!--
 <div align="center"><img src="https://metrics.lecoq.io/CoolestEnoch?template=terminal&base.indepth=false&base.hireable=false&config.timezone=Asia%2FHong_Kong"></div>
