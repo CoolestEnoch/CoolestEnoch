@@ -17,12 +17,11 @@
 
 <div align="center"> <img src="http://api.btstu.cn/sjbz/?lx=dongman" /> </div>
 
-<h1 align="center"> <img src="https://readme-typing-svg.herokuapp.com/?lines=今天你躺平了吗(bushi&center=true&size=27"> </a> </h1>
+<h1 align="center"> <img src="https://readme-typing-svg.herokuapp.com/?lines=今天你躺平了吗(bushi&center=true&size=27"> </h1>
 
+<h1 align="center"> <img src="https://github-readme-stats.vercel.app/api?username=CoolestEnoch&count_private=true&show_icons=true"> </h1>
 
-[![GitHub stats](https://github-readme-stats.vercel.app/api?username=CoolestEnoch&count_private=true&show_icons=true)](https://github.com/anuraghazra/github-readme-stats)
-
-[![Top Langs](https://github-readme-stats-one-bice.vercel.app/api/top-langs/?username=CoolestEnoch&layout=compact&langs_count=10&exclude_repo=iQOO-Z1-kernel,canyie.github.io)](https://github.com/anuraghazra/github-readme-stats)
+<h1 align="center"> <img src="https://github-readme-stats-one-bice.vercel.app/api/top-langs/?username=CoolestEnoch&layout=compact&langs_count=10&exclude_repo=iQOO-Z1-kernel"> </h1>
 
 <div align="center"> <img src="https://github-readme-stats.vercel.app/api?username=CoolestEnoch&count_private=true&show_icons=true&theme=codeSTACKr&role=OWNER,ORGANIZATION_MEMBER,COLLABORATOR" /> </div>
 
