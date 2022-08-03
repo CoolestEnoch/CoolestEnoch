@@ -11,9 +11,6 @@
 
 > <div align="center"> <img src="https://v2.jinrishici.com/one.svg" /> </div>
 
-<div align="center"> <img src="http://api.btstu.cn/sjbz/?lx=dongman" /> </div>
-
-
 [![pic](http://api.btstu.cn/sjbz/?lx=dongman)](https://github.com/CoolestEnoch/)
 
 [![Motto](https://readme-typing-svg.herokuapp.com/?lines=今天你躺平了吗\(bushi&center=true&size=27)](https://github.com/CoolestEnoch/)
