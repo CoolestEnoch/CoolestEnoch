@@ -14,6 +14,7 @@
 [![pic](http://api.btstu.cn/sjbz/?lx=dongman)](https://github.com/CoolestEnoch/)
 
 [![Motto](https://readme-typing-svg.herokuapp.com/?lines=今天你躺平了吗\(bushi&center=true&size=27)](https://github.com/CoolestEnoch/)
+![ViewCount](https://count.getloli.com/get/@view_github_ce)
 
 
 [![stats](https://github-readme-stats.vercel.app/api?username=CoolestEnoch&count_private=true&show_icons=true)](https://github.com/CoolestEnoch/)
