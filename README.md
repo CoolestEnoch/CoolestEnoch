@@ -18,6 +18,7 @@
 
 
 [![stats](https://github-readme-stats.vercel.app/api?username=CoolestEnoch&count_private=true&show_icons=true)](https://github.com/CoolestEnoch/)
+<!--
 [![stats](https://github-readme-stats-one-bice.vercel.app/api/top-langs/?username=CoolestEnoch&layout=compact&langs_count=10&exclude_repo=iQOO-Z1-kernel)](https://github.com/CoolestEnoch/)
 
 [![state](https://github-readme-stats.vercel.app/api?username=CoolestEnoch&count_private=true&show_icons=true&theme=codeSTACKr&role=OWNER,ORGANIZATION_MEMBER,COLLABORATOR)](https://github.com/CoolestEnoch/)
@@ -27,3 +28,4 @@
 [![MainPic](https://github-readme-streak-stats.herokuapp.com/?user=CoolestEnoch)](https://github.com/CoolestEnoch/)
 
 <div align="center"> <img src="https://activity-graph.herokuapp.com/graph?username=CoolestEnoch&theme=xcode" /> </div>
+-->
