@@ -7,7 +7,7 @@ metingElement.setAttribute('mini', 'true');
 metingElement.setAttribute('order', 'random');
 metingElement.setAttribute('fixed', 'true');
 metingElement.setAttribute('list-folded', 'true');
-metingElement.setAttribute('loop', 'true');
+metingElement.setAttribute('loop', 'all');
 metingElement.setAttribute('autoplay', 'true');
 document.body.appendChild(metingElement);
 
