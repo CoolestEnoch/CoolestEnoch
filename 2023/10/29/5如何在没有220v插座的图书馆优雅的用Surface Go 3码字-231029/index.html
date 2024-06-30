@@ -1,0 +1,773 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
+  <link rel="icon" href="/img/favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="CoolestEnoch">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="话说旧事两年前的今天，在同学的安利下我开箱了一台Surface Go 3，但是出厂预装的Win11家庭版22000实在难用，主要就是一个字：烫。在i3-10100Y这个TDP-up有7瓦CPU上运行臃肿的Win11，再加上那128G寸土寸金的SSD属实是有点小才大用了，尤其是装了WSA之后。不插电源用Win11两个小时就没电了！！于是我给它装回了Win10 Iot LTSC 2021系统。在获得">
+<meta property="og:type" content="article">
+<meta property="og:title" content="如何在没有220v插座的图书馆优雅的用Surface Go 3码字">
+<meta property="og:url" content="http://blog.coolenoch.ink/2023/10/29/5%E5%A6%82%E4%BD%95%E5%9C%A8%E6%B2%A1%E6%9C%89220v%E6%8F%92%E5%BA%A7%E7%9A%84%E5%9B%BE%E4%B9%A6%E9%A6%86%E4%BC%98%E9%9B%85%E7%9A%84%E7%94%A8Surface%20Go%203%E7%A0%81%E5%AD%97-231029/index.html">
+<meta property="og:site_name" content="Enoch的个人小站">
+<meta property="og:description" content="话说旧事两年前的今天，在同学的安利下我开箱了一台Surface Go 3，但是出厂预装的Win11家庭版22000实在难用，主要就是一个字：烫。在i3-10100Y这个TDP-up有7瓦CPU上运行臃肿的Win11，再加上那128G寸土寸金的SSD属实是有点小才大用了，尤其是装了WSA之后。不插电源用Win11两个小时就没电了！！于是我给它装回了Win10 Iot LTSC 2021系统。在获得">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://media-cdn.microsoftstore.com.cn/media/product_long_description/3082-00000/pdp_image/topgo3_221104.jpg">
+<meta property="article:published_time" content="2023-10-29T10:00:00.000Z">
+<meta property="article:modified_time" content="2024-06-30T13:53:51.425Z">
+<meta property="article:author" content="CoolestEnoch">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://media-cdn.microsoftstore.com.cn/media/product_long_description/3082-00000/pdp_image/topgo3_221104.jpg">
+  
+  
+  
+  <title>如何在没有220v插座的图书馆优雅的用Surface Go 3码字 - Enoch的个人小站</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+  
+<link rel="stylesheet" href="/css/effect/cursor.css">
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"blog.coolenoch.ink","root":"/","version":"1.9.7","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":true,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 7.2.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Enoch的个人小站</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/" target="_self">
+                <i class="iconfont icon-link-fill"></i>
+                <span>友链</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/airplane.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="如何在没有220v插座的图书馆优雅的用Surface Go 3码字"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2023-10-29 18:00" pubdate>
+          2023年10月29日 晚上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          2.1k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          18 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">如何在没有220v插座的图书馆优雅的用Surface Go 3码字</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <p><img src="https://media-cdn.microsoftstore.com.cn/media/product_long_description/3082-00000/pdp_image/topgo3_221104.jpg" srcset="/img/loading.gif" lazyload alt="封面"></p>
+<h1 id="话说旧事"><a href="#话说旧事" class="headerlink" title="话说旧事"></a>话说旧事</h1><p>两年前的今天，在同学的安利下我开箱了一台Surface Go 3，但是出厂预装的<code>Win11</code>家庭版<code>22000</code>实在难用，主要就是一个字：<em><strong>烫</strong></em>。在<a target="_blank" rel="noopener" href="https://ark.intel.com/content/www/cn/zh/ark/products/213356/intel-core-i310100y-processor-4m-cache-up-to-3-90-ghz.html">i3-10100Y</a>这个TDP-up有7瓦CPU上运行臃肿的Win11，再加上那128G寸土寸金的SSD属实是有点小才大用了，尤其是装了WSA之后。<br><em><strong>不插电源用Win11两个小时就没电了！！</strong></em><br>于是我给它装回了<code>Win10 Iot LTSC 2021</code>系统。在获得流畅体验的同时，开始追求更加极客的玩法。<br>网上说装黑苹果可以提升Windows笔电的续航，但我装了<code>Big Sur</code>之后续航不仅没有变好，撞温度墙的次数也不比Win11少。后续的<code>Ventura</code>和<code>Sonoma</code>系统也是如此，尽管台前调度确实好用。<br>离谱的是，Surface Go 3这东西开机的时候不会给SD卡卡槽上电，也就意味着我无法在SD卡安装系统。<br>于是我从Windows划了32G出来试了试<code>ChromeOS</code>，一个基于<code>Gentoo</code>的<del><em>浏览器</em></del>系统。在获得更好的安卓体验的同时，电脑也能更加凉快。但是ChromeOS还是限制太多，比如想要享受纯净的Linux体验，就得开个<code>Debian</code>容器，要不然就是装<code>chromebrew</code>，不爽。在多次尝试将<code>ChromeOS</code> 装到SD卡中，均以失败告终，因为无法认到在SD卡内的<code>rootfs</code>。</p>
+<p>甚至FydeOS官方对我的<a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1784y127DR/#reply191770078496">评价</a>是…</p>
+<blockquote>
+<p>Chromium OS跟一般的Linux不一样，不建议这么骚操作，我们官方不会出教程，你只能自己去尝试一下</p>
+</blockquote>
+<p>更要命的是，经历过我几次在SSD内折腾黑苹果之后，内置硬盘的寿命仅在一年就消耗了<code>3%</code>！！！<br>但是面对着捉襟见肘的空间，我打算放手搏一搏，死马当活马医，直接把<code>ArchLinux</code>装到SD卡里。</p>
+<h1 id="前情提要"><a href="#前情提要" class="headerlink" title="前情提要"></a>前情提要</h1><p>开机，进<code>Arch Live CD</code>，把SD卡挂载到<code>/mnt</code>，把<code>ESP</code>挂到<code>/mnt/boot</code>下，直接<code>pacstrap</code>开跑。没想到啊，还成功了。查阅相关资料才知道，Surface会在加载<code>initramfs</code>之后给SD卡卡槽上电。先不管<code>ChromeOS</code> 了，先把Arch整好再说。</p>
+<blockquote>
+<p><strong>⚠警告</strong><br>请不要把<code>swap</code>放到SD卡内，否则你的卡寿命会掉的很快。<del>别说你买了延保就使劲造，回头丢数据了有你好哭的</del><br><del><em>所以我直接把<code>swap</code>关了</em></del></p>
+</blockquote>
+<p><del>既然是个x86机器，那就想办法榨干它。</del><code>vscode</code>, <code>Obsidian</code>, <code>syncthing</code>, <code>Chrome</code>, <code>Waydroid</code>, <code>Android Studio</code>, <code>Intellij Idea</code>啥的全怼进去。<br><del>然后<code>AS</code>在跑编译的时候就爆内存了，淦，下次不碰8G的电脑了</del></p>
+<p>在跑<code>Waydroid</code>的时候，最开始还挺流畅的，但后来越来越卡，然后又流畅一会儿，又卡一会儿。</p>
+<p>这让我突然想到了之前Win11的时候，电脑老撞温度墙，一撞墙CPU就强制锁到<code>399MHz</code>频率运行到降温为止。让我十分头大。</p>
+<h1 id="试着解决"><a href="#试着解决" class="headerlink" title="试着解决"></a>试着解决</h1><p>突然想起来我在Windows上简单粗暴的调教温度墙的经历：直接用<code>ThrottleStop</code>禁用牙膏厂的<code>Turbo Boost</code>，然后电脑撑死就60度，上不去了。于是直接到Arch照搬这个操作。</p>
+<p>一开始就是简单的关闭<code>Turbo Boost</code>，将<code>/sys/devices/system/cpu/intel_pstate/no_turbo</code>文件内容写为1，以此关闭Intel的<code>p-state</code>下的睿频功能。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">sudo su<br><span class="hljs-built_in">echo</span> 1 &gt;&gt; /sys/devices/system/cpu/intel_pstate/no_turbo &amp;&amp; <span class="hljs-built_in">exit</span><br></code></pre></td></tr></table></figure>
+<p>效果显著！Waydroid中运行<code>12306</code>这个网页套壳的卖票软件<del>(真不是星穹铁道)</del>和<code>飞常准</code>看飞机，苏菲就没撞过温度墙，一直50度很乖。就算我再开一个<del>日益臃肿的</del>最新版酷安，也是这个温度。</p>
+<p>但是随之而来的问题是，两万毫安的充电宝只能撑大半天<del>因为苏菲吸得是在太快了</del>。就算平时开个<code>Okular</code>看书，<code>Obsidian</code>记笔记，再开个<code>syncthing</code>同步，也只能勉强将温度维持到40度，一直降不下来。问题是我平时也用不到那么高的性能，<del>为了防止性能过剩，</del>怎么办呢？</p>
+<h1 id="对调度策略下手"><a href="#对调度策略下手" class="headerlink" title="对调度策略下手"></a>对调度策略下手</h1><p>之前查过很多资料，有更加精细粒度管理性能的<del>(直接人工硬核介入CPU的时间片轮转)</del>，也有简单粗暴限制CPU最大占用率的。在目前看来，我的需求更倾向于限制最大运行频率。</p>
+<h1 id="初识cpupower工具"><a href="#初识cpupower工具" class="headerlink" title="初识cpupower工具"></a>初识<code>cpupower</code>工具</h1><blockquote>
+<p><a target="_blank" rel="noopener" href="https://archlinux.org/packages/?name=cpupower">cpupower</a> is a set of userspace utilities designed to assist with CPU frequency scaling. The package is not required to use scaling, but is highly recommended because it provides useful command-line utilities and a <a target="_blank" rel="noopener" href="https://wiki.archlinux.org/title/Systemd" title="Systemd">systemd</a> service to change the governor at boot.<br>The configuration file for <em>cpupower</em> is located in <code>/etc/default/cpupower</code>. This configuration file is read by a bash script in <code>/usr/lib/systemd/scripts/cpupower</code> which is activated by <em>systemd</em> with <code>cpupower.service</code>. You may want to <a target="_blank" rel="noopener" href="https://wiki.archlinux.org/title/Enable" title="Enable">enable</a> <code>cpupower.service</code> to start at boot.</p>
+</blockquote>
+<p style='text-align: right;'><a target="_blank" rel="noopener" href="https://wiki.archlinux.org/title/CPU_frequency_scaling">-- 来自 Arch Wiki</a></p>
+
+<p><del>香啊，很香啊！</del>这东西太符合我的要求了！直接对CPU性能一顿限制，<del>防止性能过剩</del>。</p>
+<p>先把这软件装好:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">sudo pacman -S cpupower<br></code></pre></td></tr></table></figure>
+
+<p>然后就可以通过<code>cpupower frequency-info</code>命令来查看当前CPU支持的模式信息：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs bash">analyzing CPU 1:  <br> driver: intel_pstate  <br> CPUs <span class="hljs-built_in">which</span> run at the same hardware frequency: 1  <br> CPUs <span class="hljs-built_in">which</span> need to have their frequency coordinated by software: 1  <br> maximum transition latency:  Cannot determine or is not supported.  <br> hardware limits: 400 MHz - 3.90 GHz  <br> available cpufreq governors: performance powersave  <br> current policy: frequency should be within 400 MHz and 1.30 GHz.  <br>                 The governor <span class="hljs-string">&quot;powersave&quot;</span> may decide <span class="hljs-built_in">which</span> speed to use  <br>                 within this range.  <br> current CPU frequency: Unable to call hardware  <br> current CPU frequency: 700 MHz (asserted by call to kernel)  <br> boost state support:  <br>   Supported: <span class="hljs-built_in">yes</span>  <br>   Active: <span class="hljs-built_in">yes</span><br></code></pre></td></tr></table></figure>
+<p><del>好啊，很好啊！</del>可以在<code>400 MHz - 3.90 GHz</code>之间变频，支持<code>performance</code>和<code>powersave</code>两个策略。</p>
+<blockquote>
+<p>但是我测了一下，<code>powersave</code>策略似乎并没有什么效果，所以不如直接限频。</p>
+</blockquote>
+<p>然后我们<del>请那个男人</del>来看一看它限频的用法：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">man cpupower-frequency-set<br></code></pre></td></tr></table></figure>
+<p>嗯～～很好，用法和参数都给的很清楚。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs bash">OPTIONS  <br>      -d --min &lt;FREQ&gt;  <br>             new minimum CPU frequency the governor may <span class="hljs-keyword">select</span>.  <br>      -u --max &lt;FREQ&gt;  <br>             new maximum CPU frequency the governor may <span class="hljs-keyword">select</span>.  <br>      -g --governor &lt;GOV&gt;  <br>             new cpufreq governor.  <br>      -f --freq &lt;FREQ&gt;  <br>             specific frequency to be <span class="hljs-built_in">set</span>. Requires userspace governor to be available and loaded.  <br>      -r --related  <br>             modify all hardware-related CPUs at the same time  <br>      REMARKS  <br>      By default values are applied on all cores. How to modify single core configurations is described <span class="hljs-keyword">in</span> the cpupower(1) manpage <span class="hljs-keyword">in</span> the --cpu  option  section.  <br>      The -f FREQ, --freq FREQ parameter cannot be combined with any other parameter.  <br>      FREQuencies can be passed <span class="hljs-keyword">in</span> Hz, kHz (default), MHz, GHz, or THz by postfixing the value with the wanted unit name, without any space (frequency <span class="hljs-keyword">in</span> kHz =^ Hz * 0.001 =^ MHz * 1000 =^ GHz * 1000000).  <br>      On Linux kernels up to 2.6.29, the -r or --related parameter is ignored.<br></code></pre></td></tr></table></figure>
+
+<p>那，我们直接开<del><em>炫</em></del>限:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">sudo cpupower frequency-set -u 700MHZ<br></code></pre></td></tr></table></figure>
+<p>很快啊，桌面上的KDE小组件显示的频率就超不过700MHz了。<br>如果要恢复，先记住上面<code>cpupower frequency-info</code>输出的提示第六行，就是CPU最高支持的频率，我这里是3.9GHz。那就把最大频率重新设置到3.9就行:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">sudo cpupower frequency-set -u 3.9GHz<br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p><strong>注意</strong><br>这里的修改都是仅对本次开机有效，重启需要重新设置。</p>
+</blockquote>
+<p><em><strong>如何在开机的时候自动限频呢？</strong></em><br>回忆一下上面<code>Arch Wiki</code>说的，默认配置文件在<code>/etc/default/cpupower</code>下，当启用服务<code>cpupower</code>之后开机就会去读配置限频。<br>这个是默认配置文件：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># Define CPUs governor  </span><br><span class="hljs-comment"># valid governors: ondemand, performance, powersave, conservative, userspace.  </span><br><span class="hljs-comment">#governor=&#x27;ondemand&#x27;  </span><br>  <br><span class="hljs-comment"># Limit frequency range  </span><br><span class="hljs-comment"># Valid suffixes: Hz, kHz (default), MHz, GHz, THz  </span><br><span class="hljs-comment">#min_freq=&quot;2.25GHz&quot;  </span><br><span class="hljs-comment">#max_freq=&quot;3GHz&quot;  </span><br>  <br><span class="hljs-comment"># Specific frequency to be set.  </span><br><span class="hljs-comment"># Requires userspace governor to be available.  </span><br><span class="hljs-comment"># Do not set governor field if you use this one.  </span><br><span class="hljs-comment">#freq=  </span><br>  <br><span class="hljs-comment"># Utilizes cores in one processor package/socket first before processes are    </span><br><span class="hljs-comment"># scheduled to other processor packages/sockets.  </span><br><span class="hljs-comment"># See man (1) CPUPOWER-SET for additional details.  </span><br><span class="hljs-comment">#mc_scheduler=  </span><br>  <br><span class="hljs-comment"># Utilizes thread siblings of one processor core first before processes are  </span><br><span class="hljs-comment"># scheduled to other cores. See man (1) CPUPOWER-SET for additional details.  </span><br><span class="hljs-comment">#smp_scheduler=  </span><br>  <br><span class="hljs-comment">#  Sets a register on supported Intel processore which allows software to convey  </span><br><span class="hljs-comment"># its policy for the relative importance of performance versus energy savings to  </span><br><span class="hljs-comment"># the  processor. See man (1) CPUPOWER-SET for additional details.  </span><br><span class="hljs-comment">#perf_bias=  </span><br>  <br><span class="hljs-comment"># vim:set ts=2 sw=2 ft=sh et:</span><br></code></pre></td></tr></table></figure>
+
+<p>我们依葫芦画瓢，按文件的第七、第八行，填入<code>max_freq=&quot;700MHz&quot;</code>后保存退出重启开机，频率就被默认限制到700Mhz了！</p>
+<p>至此，这台苏菲总算变得轻快好使了，让它机如其名，正真的GO起来。</p>
+<h1 id="后话：死机了咋整"><a href="#后话：死机了咋整" class="headerlink" title="后话：死机了咋整"></a>后话：死机了咋整</h1><p>记不记得以前山寨机和电视机顶盒，总会有一个<code>reset</code>按钮，当机器死机的时候拿根牙<del><em>吴</em></del>签戳一下，设备就会强制重启？<br><em><strong>对你没看错，Linux内核也给我们提供了这个功能！</strong></em><br><del><em>对于表面走3这电子垃圾再合适不过了</em></del></p>
+<p>根据<a target="_blank" rel="noopener" href="https://wiki.archlinux.org/title/Keyboard_shortcuts">Arch Wiki</a>上的说法，我们只要启用<code>sysrq</code>这个调用，就可以实现一些用户主动触发的控制内核行为:</p>
+<blockquote>
+<p>Kernel (SysRq)<br>There are several low level shortcuts that are implemented in the kernel via the <code>SysRq</code> key which can be used for debugging and recovering from an unresponsive system. Whenever possible, it is recommended that you use these shortcuts instead of doing a hard shutdown (holding down the power button to completely power off the system).</p>
+</blockquote>
+</br>
+
+<blockquote>
+<p><strong>提示</strong><br><code>SysRq</code>键被映射到键盘上的<code>Prt Scn</code>功能键上了。注意使用的时候不要按下<code>Fn</code>否则(Surface Go 键盘上)触发的是<code>F8</code>而不是<code>SysRq</code>了。</p>
+</blockquote>
+<p>启用它也很简单，只需要在终端运行<code>sysctl kernel.sysrq=1</code> 或者 <code>echo &quot;1&quot; &gt; /proc/sys/kernel/sysrq</code>，然后就会自动启用这个功能。<br>但每次开机都得输一次，多麻烦！所以贴心的Linus先生给我们提供了一种传递内核参数的方式：将<code>sysrq_always_enabled=1</code>这段内核参数添加到grub里。最后你的grub启动脚本应该是这样的：</p>
+<figure class="highlight plaintext"><figcaption><span>file</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs CFG">menuentry &#x27;Arch Linux - linux-surface&#x27; --class arch --class gnu-linux --class gnu --class os &#123;  <br>       load_video  <br>       set gfxpayload=keep  <br>       insmod gzio  <br>       insmod part_gpt  <br>       insmod fat  <br>       search --no-floppy --fs-uuid --set=root 8848-8848<br>       echo    &#x27;Loading Linux linux-surface ...&#x27;  <br>       linux   /vmlinuz-linux-surface root=UUID=11451419-8848-2333-8848-114514191981 rw loglevel=3 sysrq_always_enabled=1 <br>       echo    &#x27;Loading initial ramdisk ...&#x27;  <br>       initrd  /intel-ucode.img /initramfs-linux-surface.img  <br>&#125;<br></code></pre></td></tr></table></figure>
+<p>这样你每次开机之后都默认启用了SysRq。</p>
+<p>那么问题来了，死机之后怎么调用它来强行重启呢？<br>继续看Arch Wiki给我们的一张表:</p>
+<table>
+<thead>
+<tr>
+<th>Keyboard Shortcut</th>
+<th>Description</th>
+<th>Code to Enable</th>
+<th>Other Functions Enabled</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>Alt+SysRq+r</code> Unraw</td>
+<td>Take control of keyboard back from X.</td>
+<td>4</td>
+<td><code>Alt+SysRq+k</code> SAK</td>
+</tr>
+<tr>
+<td><code>Alt+SysRq+e</code> Terminate</td>
+<td>Send SIGTERM to all processes, allowing them to terminate gracefully.</td>
+<td>64</td>
+<td><code>Alt+SysRq+f</code> OOM kill  <br><code>Alt+SysRq+j</code> Thaw</td>
+</tr>
+<tr>
+<td><code>Alt+SysRq+i</code> Kill</td>
+<td>Send SIGKILL to all processes, forcing them to terminate immediately.</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><code>Alt+SysRq+s</code> Sync</td>
+<td>Flush data to disk.</td>
+<td>16</td>
+<td>-</td>
+</tr>
+<tr>
+<td><code>Alt+SysRq+u</code> Unmount</td>
+<td>Unmount and remount all filesystems read-only.</td>
+<td>32</td>
+<td>-</td>
+</tr>
+<tr>
+<td><code>Alt+SysRq+b</code> Reboot</td>
+<td>Reboot</td>
+<td>128</td>
+<td>-</td>
+</tr>
+</tbody></table>
+<p>也就是说，强制重启只需要按组合键<code>alt 截屏 b</code>就行。<br><del><em>有没有找回一点当年山寨机顶盒的感觉2333</em></del></p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Linux/" class="category-chain-item">Linux</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>如何在没有220v插座的图书馆优雅的用Surface Go 3码字</div>
+      <div>http://blog.coolenoch.ink/2023/10/29/5如何在没有220v插座的图书馆优雅的用Surface Go 3码字-231029/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>CoolestEnoch</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2023年10月29日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2023/10/31/6Surface3%E8%A3%85Linux%E8%B8%A9%E5%9D%91%E8%AE%B0%E5%BD%95-231031/" title="Surface3装Linux踩坑记录">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Surface3装Linux踩坑记录</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2023/08/23/4Android12%E7%9A%84SplashScreen%E9%80%82%E9%85%8D-230823/" title="Android12的SplashScreen适配">
+                        <span class="hidden-mobile">Android12的SplashScreen适配</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+  
+<script src="/js/effect/GoTop/jquery.min.js"></script>
+<script src="/js/effect/lib/jquery-1.9.1.min.js"></script>
+<script src="/js/effect/lib/jquery-3.6.0.min.js"></script>
+<script src="/js/effect/clickeffect.js"></script>
+<script src="/js/effect/clickWord.js"></script>
+<script src="/js/effect/emojiCursor.js"></script>
+<script src="/js/effect/sakura-less.js"></script>
+<script src="/js/effect/sakana@1.0.8.js"></script>
+<script src="/js/effect/cuteTitle.js"></script>
+<script src="/js/effect/GoTop/szgotop.js"></script>
+<script src="/js/effect/Netease.js"></script>
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

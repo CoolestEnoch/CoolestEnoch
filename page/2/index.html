@@ -1,0 +1,895 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
+  <link rel="icon" href="/img/favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="CoolestEnoch">
+  <meta name="keywords" content="">
+  
+    <meta property="og:type" content="website">
+<meta property="og:title" content="Enoch的个人小站">
+<meta property="og:url" content="http://blog.coolenoch.ink/page/2/index.html">
+<meta property="og:site_name" content="Enoch的个人小站">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:author" content="CoolestEnoch">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>Enoch的个人小站</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+  
+<link rel="stylesheet" href="/css/effect/cursor.css">
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"blog.coolenoch.ink","root":"/","version":"1.9.7","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":true,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 7.2.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 100vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Enoch的个人小站</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/" target="_self">
+                <i class="iconfont icon-link-fill"></i>
+                <span>友链</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/airplane.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="Keep Exploring."></span>
+          
+        </div>
+
+        
+      </div>
+
+      
+        <div class="scroll-down-bar">
+          <i class="iconfont icon-arrowdown"></i>
+        </div>
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      <div class="container nopadding-x-md">
+        <div id="board"
+          style="margin-top: 0">
+          
+          <div class="container">
+            <div class="row">
+              <div class="col-12 col-md-10 m-auto">
+                
+
+
+  <div class="row mx-auto index-card">
+    
+    
+      <div class="col-12 col-md-4 m-auto index-img">
+        <a href="/2024/01/14/7iSH%E7%9A%84%E6%B5%85%E6%8A%98%E8%85%BE%E8%AE%B0%E5%BD%95-240114/" target="_self">
+          <img src="https://ish.app/assets/icon.png" srcset="/img/loading.gif" lazyload alt="iSH的浅折腾记录">
+        </a>
+      </div>
+    
+    <article class="col-12 col-md-8 mx-auto index-info">
+      <h2 class="index-header">
+        
+        <a href="/2024/01/14/7iSH%E7%9A%84%E6%B5%85%E6%8A%98%E8%85%BE%E8%AE%B0%E5%BD%95-240114/" target="_self">
+          iSH的浅折腾记录
+        </a>
+      </h2>
+
+      
+      <a class="index-excerpt " href="/2024/01/14/7iSH%E7%9A%84%E6%B5%85%E6%8A%98%E8%85%BE%E8%AE%B0%E5%BD%95-240114/" target="_self">
+        <div>
+          闲来没事折腾折腾苹果上的ish，这东西比Termux难用：比如清华的一键换源命令不能用，默认给的是root用户，用的还是x86的包。 本质上还是相当于折腾Alpine Linux 从0开始装到能用ssh第0步当然是去AppStore里下载iSH 换清华源还是可以换的，只不过不能用官方的换源命令了，得改一下： 1sed -i &#x27;s/apk.ish.app\/v3.14-2023-05-1
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2024-01-14 18:00" pubdate>
+              2024-01-14
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3 d-flex align-items-center">
+            <i class="iconfont icon-category"></i>
+            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Linux/" class="category-chain-item">Linux</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+          </div>
+        
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+      <div class="col-12 col-md-4 m-auto index-img">
+        <a href="/2023/10/31/6Surface3%E8%A3%85Linux%E8%B8%A9%E5%9D%91%E8%AE%B0%E5%BD%95-231031/" target="_self">
+          <img src="https://tse4-mm.cn.bing.net/th/id/OIP-C.umuhtu_JjocMMbT7mMA4wgHaEK?pid=ImgDet&amp;dpr=2.8" srcset="/img/loading.gif" lazyload alt="Surface3装Linux踩坑记录">
+        </a>
+      </div>
+    
+    <article class="col-12 col-md-8 mx-auto index-info">
+      <h2 class="index-header">
+        
+        <a href="/2023/10/31/6Surface3%E8%A3%85Linux%E8%B8%A9%E5%9D%91%E8%AE%B0%E5%BD%95-231031/" target="_self">
+          Surface3装Linux踩坑记录
+        </a>
+      </h2>
+
+      
+      <a class="index-excerpt " href="/2023/10/31/6Surface3%E8%A3%85Linux%E8%B8%A9%E5%9D%91%E8%AE%B0%E5%BD%95-231031/" target="_self">
+        <div>
+          对没错，写完Surface Go 3的文又来Surface 3这里凑个热闹（ 同学的老款苏菲装Linux重获新生！ 12344GB RAM,128GB EMMC英特尔Atom Z8700处理器4c4t,基频1.6GHz,睿频2.4GHz最大TDP才2瓦！！！这么低！！！！！    “卧槽你的苏菲怎么续航能撑一天？大佬怎么优化的教教我”“英特尔Atom处理器，tdp两瓦”“啊那没事了”  但是这东
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2023-10-31 18:00" pubdate>
+              2023-10-31
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3 d-flex align-items-center">
+            <i class="iconfont icon-category"></i>
+            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Linux/" class="category-chain-item">Linux</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+          </div>
+        
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+      <div class="col-12 col-md-4 m-auto index-img">
+        <a href="/2023/10/29/5%E5%A6%82%E4%BD%95%E5%9C%A8%E6%B2%A1%E6%9C%89220v%E6%8F%92%E5%BA%A7%E7%9A%84%E5%9B%BE%E4%B9%A6%E9%A6%86%E4%BC%98%E9%9B%85%E7%9A%84%E7%94%A8Surface%20Go%203%E7%A0%81%E5%AD%97-231029/" target="_self">
+          <img src="https://media-cdn.microsoftstore.com.cn/media/product_long_description/3082-00000/pdp_image/topgo3_221104.jpg" srcset="/img/loading.gif" lazyload alt="如何在没有220v插座的图书馆优雅的用Surface Go 3码字">
+        </a>
+      </div>
+    
+    <article class="col-12 col-md-8 mx-auto index-info">
+      <h2 class="index-header">
+        
+        <a href="/2023/10/29/5%E5%A6%82%E4%BD%95%E5%9C%A8%E6%B2%A1%E6%9C%89220v%E6%8F%92%E5%BA%A7%E7%9A%84%E5%9B%BE%E4%B9%A6%E9%A6%86%E4%BC%98%E9%9B%85%E7%9A%84%E7%94%A8Surface%20Go%203%E7%A0%81%E5%AD%97-231029/" target="_self">
+          如何在没有220v插座的图书馆优雅的用Surface Go 3码字
+        </a>
+      </h2>
+
+      
+      <a class="index-excerpt " href="/2023/10/29/5%E5%A6%82%E4%BD%95%E5%9C%A8%E6%B2%A1%E6%9C%89220v%E6%8F%92%E5%BA%A7%E7%9A%84%E5%9B%BE%E4%B9%A6%E9%A6%86%E4%BC%98%E9%9B%85%E7%9A%84%E7%94%A8Surface%20Go%203%E7%A0%81%E5%AD%97-231029/" target="_self">
+        <div>
+          话说旧事两年前的今天，在同学的安利下我开箱了一台Surface Go 3，但是出厂预装的Win11家庭版22000实在难用，主要就是一个字：烫。在i3-10100Y这个TDP-up有7瓦CPU上运行臃肿的Win11，再加上那128G寸土寸金的SSD属实是有点小才大用了，尤其是装了WSA之后。不插电源用Win11两个小时就没电了！！于是我给它装回了Win10 Iot LTSC 2021系统。在获得
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2023-10-29 18:00" pubdate>
+              2023-10-29
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3 d-flex align-items-center">
+            <i class="iconfont icon-category"></i>
+            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Linux/" class="category-chain-item">Linux</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+          </div>
+        
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+      <div class="col-12 col-md-4 m-auto index-img">
+        <a href="/2023/08/23/4Android12%E7%9A%84SplashScreen%E9%80%82%E9%85%8D-230823/" target="_self">
+          <img src="https://www.gstatic.cn/devrel-devsite/prod/vf01e53c189c374f4b844e7f928194555d40bd3ee38d62d21b64d81f753f3c6a2/android/images/rebrand/lockup.svg" srcset="/img/loading.gif" lazyload alt="Android12的SplashScreen适配">
+        </a>
+      </div>
+    
+    <article class="col-12 col-md-8 mx-auto index-info">
+      <h2 class="index-header">
+        
+        <a href="/2023/08/23/4Android12%E7%9A%84SplashScreen%E9%80%82%E9%85%8D-230823/" target="_self">
+          Android12的SplashScreen适配
+        </a>
+      </h2>
+
+      
+      <a class="index-excerpt " href="/2023/08/23/4Android12%E7%9A%84SplashScreen%E9%80%82%E9%85%8D-230823/" target="_self">
+        <div>
+          废话不多说，直接上代码 添加到themes.xml中，然后把需要展示的activity的theme设置为这个就行。当然也可以直接在application字段下全局设置，这样冷启动的时候就会展示splashscreen 1234567891011121314&lt;style name=&quot;MySplashScreen&quot; parent=&quot;@style/Theme.崩坏丶
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2023-08-23 18:00" pubdate>
+              2023-08-23
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3 d-flex align-items-center">
+            <i class="iconfont icon-category"></i>
+            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Android/" class="category-chain-item">Android</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+          </div>
+        
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+      <div class="col-12 col-md-4 m-auto index-img">
+        <a href="/2023/08/15/3%E6%B5%85%E8%B0%88Android%E7%9A%84PackageManager%E4%BB%A5%E5%8F%8AXposed%20Hook%E6%80%9D%E8%B7%AF-230815/" target="_self">
+          <img src="https://tse3-mm.cn.bing.net/th/id/OIP-C.FpgNGT5YM2WJrH6VabbaiAHaDt?pid=ImgDet&amp;rs=1" srcset="/img/loading.gif" lazyload alt="浅谈Android的PackageManager以及Xposed Hook思路">
+        </a>
+      </div>
+    
+    <article class="col-12 col-md-8 mx-auto index-info">
+      <h2 class="index-header">
+        
+        <a href="/2023/08/15/3%E6%B5%85%E8%B0%88Android%E7%9A%84PackageManager%E4%BB%A5%E5%8F%8AXposed%20Hook%E6%80%9D%E8%B7%AF-230815/" target="_self">
+          浅谈Android的PackageManager以及Xposed Hook思路
+        </a>
+      </h2>
+
+      
+      <a class="index-excerpt " href="/2023/08/15/3%E6%B5%85%E8%B0%88Android%E7%9A%84PackageManager%E4%BB%A5%E5%8F%8AXposed%20Hook%E6%80%9D%E8%B7%AF-230815/" target="_self">
+        <div>
+          前情提要最近穹轨挺火，室友天天原神启动，搞得我也想来一个星穹铁道启动在b站上看到网友整活，CR200J启动以及往12306里疯狂氪金648的流水账单，为了蹭个热度就来整个烂活 既然是个Android爱好者，那肯定得从Android开发的角度来整这个烂活。于是我就打算通过xposed插件实现在不改包的情况下将包名为com.MobileTiket的铁路12306app图标和名称替换为星穹铁道。 技术
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2023-08-15 18:00" pubdate>
+              2023-08-15
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3 d-flex align-items-center">
+            <i class="iconfont icon-category"></i>
+            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Android/" class="category-chain-item">Android</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+          </div>
+        
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+      <div class="col-12 col-md-4 m-auto index-img">
+        <a href="/2023/07/30/2Panon%20%E7%9A%84%E8%B8%A9%E5%9D%91%E8%AE%B0%E5%BD%95-230730/" target="_self">
+          <img src="https://images.pling.com/img/00/00/54/69/68/1326546/52baef5cc6595c640b44d821ed75c9d3e44c.png" srcset="/img/loading.gif" lazyload alt="Panon 的踩坑记录">
+        </a>
+      </div>
+    
+    <article class="col-12 col-md-8 mx-auto index-info">
+      <h2 class="index-header">
+        
+        <a href="/2023/07/30/2Panon%20%E7%9A%84%E8%B8%A9%E5%9D%91%E8%AE%B0%E5%BD%95-230730/" target="_self">
+          Panon 的踩坑记录
+        </a>
+      </h2>
+
+      
+      <a class="index-excerpt " href="/2023/07/30/2Panon%20%E7%9A%84%E8%B8%A9%E5%9D%91%E8%AE%B0%E5%BD%95-230730/" target="_self">
+        <div>
+          Panon？一个Linux下的音频可视化插件！原作者项目地址github的readme里说要装依赖，然后去KDE小挂件市场里下载在最近一次的Arch Linux更新之后，我按作者的操作去做了… 12sudo pacman -S qt5-websockets python-docopt python-numpy python-pyaudio python-cffi python-websocket
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2023-07-30 18:00" pubdate>
+              2023-07-30
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3 d-flex align-items-center">
+            <i class="iconfont icon-category"></i>
+            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Linux/" class="category-chain-item">Linux</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+          </div>
+        
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+      <div class="col-12 col-md-4 m-auto index-img">
+        <a href="/2023/07/30/1Waydroid%E7%9A%84%E7%A2%8E%E7%A2%8E%E5%BF%B5-230730/" target="_self">
+          <img src="https://www.gitbook.com/cdn-cgi/image/width=256,dpr=2,height=40,fit=contain,format=auto/https%3A%2F%2F2140589054-files.gitbook.io%2F~%2Ffiles%2Fv0%2Fb%2Fgitbook-legacy-files%2Fo%2Fspaces%252F-MiYFr8anWJnZu5dVlhr%252Favatar-rectangle-1630538785250.png%3Fgeneration%3D1630538786012033%26alt%3Dmedia" srcset="/img/loading.gif" lazyload alt="Waydroid的碎碎念">
+        </a>
+      </div>
+    
+    <article class="col-12 col-md-8 mx-auto index-info">
+      <h2 class="index-header">
+        
+        <a href="/2023/07/30/1Waydroid%E7%9A%84%E7%A2%8E%E7%A2%8E%E5%BF%B5-230730/" target="_self">
+          Waydroid的碎碎念
+        </a>
+      </h2>
+
+      
+      <a class="index-excerpt " href="/2023/07/30/1Waydroid%E7%9A%84%E7%A2%8E%E7%A2%8E%E5%BF%B5-230730/" target="_self">
+        <div>
+          安卓系统，已经融入了我们的生活，那怎么在电脑上运行安卓系统呢，小编(好了请停止你的营销号模式 当然这是基于我的arch linux系统进行操作2333至于为什么不配置Nvidia显卡相关设置，问就是Fa♂️Q Nvidia（逃平时基本都是把n卡屏蔽了，省心hhh 将显示管理器从X11迁移到Wayland上从X11迁到wayland上，当然不会山删掉x11,这样在sddm登陆的地方可以选择用wayl
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2023-07-30 18:00" pubdate>
+              2023-07-30
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3 d-flex align-items-center">
+            <i class="iconfont icon-category"></i>
+            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Linux/" class="category-chain-item">Linux</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+          </div>
+        
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h2 class="index-header">
+        
+        <a href="/2023/07/20/0%E4%B8%96%E7%95%8C%E5%AE%89%E5%A5%BD-230720/" target="_self">
+          世界安好
+        </a>
+      </h2>
+
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/2023/07/20/0%E4%B8%96%E7%95%8C%E5%AE%89%E5%A5%BD-230720/" target="_self">
+        <div>
+          记录一下第一次搭typecho XD 用的特效来自这里和这里, 将html和js代码放入footer.php的body标签内最后即可。 HoerMouse: 鼠标插件MC风格指针库 APlayer: 可选作用域的音乐播放器QPlayer: 全局的音乐播放器Pio: 看板娘  看板娘文档Pio交互提示扩展:  12345678910111213&#123;    &quot;welcome&quot
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2023-07-20 18:00" pubdate>
+              2023-07-20
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3 d-flex align-items-center">
+            <i class="iconfont icon-category"></i>
+            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Linux/" class="category-chain-item">Linux</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+          </div>
+        
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h2 class="index-header">
+        
+        <a href="/1970/01/01/hello-world-hexo/" target="_self">
+          Hello World
+        </a>
+      </h2>
+
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/1970/01/01/hello-world-hexo/" target="_self">
+        <div>
+          Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="1970-01-01 00:00" pubdate>
+              1970-01-01
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3 d-flex align-items-center">
+            <i class="iconfont icon-category"></i>
+            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Default/" class="category-chain-item">Default</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+          </div>
+        
+        
+      </div>
+    </article>
+  </div>
+
+
+
+  <nav aria-label="navigation">
+    <span class="pagination" id="pagination">
+      <a class="extend prev" rel="prev" href="/"><i class="iconfont icon-arrowleft"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span>
+    </span>
+  </nav>
+
+
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+  
+<script src="/js/effect/GoTop/jquery.min.js"></script>
+<script src="/js/effect/lib/jquery-1.9.1.min.js"></script>
+<script src="/js/effect/lib/jquery-3.6.0.min.js"></script>
+<script src="/js/effect/clickeffect.js"></script>
+<script src="/js/effect/clickWord.js"></script>
+<script src="/js/effect/emojiCursor.js"></script>
+<script src="/js/effect/sakura-less.js"></script>
+<script src="/js/effect/sakana@1.0.8.js"></script>
+<script src="/js/effect/cuteTitle.js"></script>
+<script src="/js/effect/GoTop/szgotop.js"></script>
+<script src="/js/effect/Netease.js"></script>
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

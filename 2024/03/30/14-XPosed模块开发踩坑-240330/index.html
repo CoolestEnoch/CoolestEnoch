@@ -1,0 +1,687 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
+  <link rel="icon" href="/img/favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="CoolestEnoch">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="(图源Download Xposed Framework and Installer) tl;dr为了在毕设里加入语音控制，计划对系统语音助手进行动态注入以实现语音控制，技术选型为XPosed。谁家自动化毕设代码要注入别的进程啊🤣👉 XPosed模块开发环境搭建本文选用的是基于EzXHelper + DexKit的开发环境。 一切的首先：Android studio创建工程。在build.gr">
+<meta property="og:type" content="article">
+<meta property="og:title" content="XPosed模块开发踩坑">
+<meta property="og:url" content="http://blog.coolenoch.ink/2024/03/30/14-XPosed%E6%A8%A1%E5%9D%97%E5%BC%80%E5%8F%91%E8%B8%A9%E5%9D%91-240330/index.html">
+<meta property="og:site_name" content="Enoch的个人小站">
+<meta property="og:description" content="(图源Download Xposed Framework and Installer) tl;dr为了在毕设里加入语音控制，计划对系统语音助手进行动态注入以实现语音控制，技术选型为XPosed。谁家自动化毕设代码要注入别的进程啊🤣👉 XPosed模块开发环境搭建本文选用的是基于EzXHelper + DexKit的开发环境。 一切的首先：Android studio创建工程。在build.gr">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://devsjournal.com/wp-content/uploads/2015/12/Download-Xposed-Framework-and-Installer-for-Android.jpg">
+<meta property="article:published_time" content="2024-03-30T10:00:00.000Z">
+<meta property="article:modified_time" content="2024-06-30T13:53:51.422Z">
+<meta property="article:author" content="CoolestEnoch">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://devsjournal.com/wp-content/uploads/2015/12/Download-Xposed-Framework-and-Installer-for-Android.jpg">
+  
+  
+  
+  <title>XPosed模块开发踩坑 - Enoch的个人小站</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+  
+<link rel="stylesheet" href="/css/effect/cursor.css">
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"blog.coolenoch.ink","root":"/","version":"1.9.7","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":true,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 7.2.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Enoch的个人小站</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/" target="_self">
+                <i class="iconfont icon-link-fill"></i>
+                <span>友链</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/airplane.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="XPosed模块开发踩坑"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2024-03-30 18:00" pubdate>
+          2024年3月30日 晚上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          574 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          5 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">XPosed模块开发踩坑</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <p><img src="https://devsjournal.com/wp-content/uploads/2015/12/Download-Xposed-Framework-and-Installer-for-Android.jpg" srcset="/img/loading.gif" lazyload alt="img"><br>(图源<a target="_blank" rel="noopener" href="https://devsjournal.com/download-install-xposed-installer-framework-android.html">Download Xposed Framework and Installer</a>)</p>
+<h1 id="tl-dr"><a href="#tl-dr" class="headerlink" title="tl;dr"></a>tl;dr</h1><p>为了在毕设里加入语音控制，计划对系统语音助手进行动态注入以实现语音控制，技术选型为<code>XPosed</code>。<del><em>谁家自动化毕设代码要注入别的进程啊🤣👉</em></del></p>
+<h1 id="XPosed模块开发环境搭建"><a href="#XPosed模块开发环境搭建" class="headerlink" title="XPosed模块开发环境搭建"></a>XPosed模块开发环境搭建</h1><p>本文选用的是基于<a target="_blank" rel="noopener" href="https://github.com/KyuubiRan/EzXHelper"><code>EzXHelper</code></a> + <a target="_blank" rel="noopener" href="https://github.com/LuckyPray/DexKit"><code>DexKit</code></a>的开发环境。</p>
+<p>一切的首先：Android studio创建工程。<br>在<code>build.gradle.kts(app)</code>中添加以下依赖项：</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs kotlin"><span class="hljs-comment">// EzX Helper  </span><br>implementation(<span class="hljs-string">&quot;com.github.kyuubiran:EzXHelper:1.0.3&quot;</span>)  <br>compileOnly(<span class="hljs-string">&quot;de.robv.android.xposed:api:82&quot;</span>)  <br>  <br><span class="hljs-comment">// Dex Kit  </span><br>implementation(<span class="hljs-string">&quot;org.luckypray:dexkit:2.0.0&quot;</span>)<br></code></pre></td></tr></table></figure>
+
+<p>在<code>settings.gradle.kts</code>中的<code>dependencyResolutionManagement</code>添加以下两个仓库：</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs kotlin">maven(url = <span class="hljs-string">&quot;https://jitpack.io&quot;</span>)  <br>maven(url = <span class="hljs-string">&quot;https://api.xposed.info&quot;</span>)<br></code></pre></td></tr></table></figure>
+
+<p>在<code>AndroidManifest.xml</code>中的<code>application</code>节点中添加以下键值以能在<code>LSPosed</code>中显示模块信息：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">meta-data</span>  </span><br><span class="hljs-tag">    <span class="hljs-attr">android:name</span>=<span class="hljs-string">&quot;xposedmodule&quot;</span>  </span><br><span class="hljs-tag">    <span class="hljs-attr">android:value</span>=<span class="hljs-string">&quot;true&quot;</span> /&gt;</span>  <br><span class="hljs-tag">&lt;<span class="hljs-name">meta-data</span>  </span><br><span class="hljs-tag">    <span class="hljs-attr">android:name</span>=<span class="hljs-string">&quot;xposeddescription&quot;</span>  </span><br><span class="hljs-tag">    <span class="hljs-attr">android:value</span>=<span class="hljs-string">&quot;@string/xposeddescription&quot;</span> /&gt;</span>  <span class="hljs-comment">&lt;!--这是在模块名称下面的小字--&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">meta-data</span>  </span><br><span class="hljs-tag">    <span class="hljs-attr">android:name</span>=<span class="hljs-string">&quot;xposedminversion&quot;</span>  </span><br><span class="hljs-tag">    <span class="hljs-attr">android:value</span>=<span class="hljs-string">&quot;93&quot;</span> /&gt;</span>  <br><span class="hljs-tag">&lt;<span class="hljs-name">meta-data</span>  </span><br><span class="hljs-tag">    <span class="hljs-attr">android:name</span>=<span class="hljs-string">&quot;xposedscope&quot;</span>  </span><br><span class="hljs-tag">    <span class="hljs-attr">android:resource</span>=<span class="hljs-string">&quot;@array/xposed_scope&quot;</span> /&gt;</span><span class="hljs-comment">&lt;!--作用域--&gt;</span><br></code></pre></td></tr></table></figure>
+
+<p>其中作用域的xml文件这么填(一行一个包名)：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-meta">&lt;?xml version=<span class="hljs-string">&quot;1.0&quot;</span> encoding=<span class="hljs-string">&quot;utf-8&quot;</span>?&gt;</span>  <br><span class="hljs-tag">&lt;<span class="hljs-name">resources</span>&gt;</span>  <br>    <span class="hljs-tag">&lt;<span class="hljs-name">string-array</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;xposed_scope&quot;</span>&gt;</span>  <br>       <span class="hljs-tag">&lt;<span class="hljs-name">item</span>&gt;</span>com.android.launcher3<span class="hljs-tag">&lt;/<span class="hljs-name">item</span>&gt;</span>  <br>    <span class="hljs-tag">&lt;/<span class="hljs-name">string-array</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">resources</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<p>创建xposed的主hook类(我创建在<code>com.example.package</code>下，叫<code>HookEntry.kt</code>)：</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><code class="hljs kotlin"><span class="hljs-keyword">class</span> <span class="hljs-title class_">HookEntry</span> : <span class="hljs-type">IXposedHookLoadPackage</span>, <span class="hljs-type">IXposedHookZygoteInit</span> &#123;  <br>  <br>    <span class="hljs-keyword">override</span> <span class="hljs-function"><span class="hljs-keyword">fun</span> <span class="hljs-title">initZygote</span><span class="hljs-params">(startupParam: <span class="hljs-type">IXposedHookZygoteInit</span>.<span class="hljs-type">StartupParam</span>)</span></span> &#123;  <br>       EzXHelperInit.initZygote(startupParam)  <br>    &#125;  <br>  <br>    <span class="hljs-keyword">override</span> <span class="hljs-function"><span class="hljs-keyword">fun</span> <span class="hljs-title">handleLoadPackage</span><span class="hljs-params">(lpparam: <span class="hljs-type">XC_LoadPackage</span>.<span class="hljs-type">LoadPackageParam</span>)</span></span> &#123;  <br>       <span class="hljs-keyword">val</span> packageName: String = lpparam.packageName  <br>       EzXHelperInit.initHandleLoadPackage(lpparam)  <br>  <br>       <span class="hljs-keyword">when</span> (packageName) &#123;  <br>          <span class="hljs-comment">// 修改模块激活状态, 这里需要你的MainActivity下有一个叫isActive的函数, 并且是调用就直接返回false的。在激活模块后，下面的hook代码会让它返回true以实现让它知道模块激活了。</span><br>          BuildConfig.APPLICATION_ID -&gt; &#123;  <br>             findMethod(<span class="hljs-string">&quot;com.example.package.MainActivity&quot;</span>) &#123;  <br>                name == <span class="hljs-string">&quot;isActive&quot;</span> &amp;&amp; returnType == <span class="hljs-built_in">Boolean</span>::<span class="hljs-keyword">class</span>.java  <br>             &#125;.hookBefore &#123;  <br>                it.result = <span class="hljs-literal">true</span>  <br>             &#125;  <br>          &#125;  <br>          <span class="hljs-string">&quot;target.package.name&quot;</span> -&gt; &#123;<span class="hljs-comment">/* your hook code here */</span> &#125;  <br>       &#125;  <br>    &#125;  <br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>然后创建<code>assets</code>文件夹，里面创建<code>xposed_init</code>文件，写入上面那个类文件的包名:</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs text">com.example.package.HookEntry<br></code></pre></td></tr></table></figure>
+<blockquote>
+<p>这里不需要管扩展名，不用像在<code>java</code>里调用<code>kotlin</code>需要写<code>HookEntryKt.xxx</code>一样</p>
+</blockquote>
+<h1 id="提示duplicated-class怎么办"><a href="#提示duplicated-class怎么办" class="headerlink" title="提示duplicated class怎么办"></a>提示<code>duplicated class</code>怎么办</h1><p>在<code>gradle.properties</code>里确保添加了以下两行：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs prop">android.useAndroidX=true<br>android.enableJetifier=true<br></code></pre></td></tr></table></figure>
+
+
+<h1 id="LSPosed提示关闭部署优化，怎么操作"><a href="#LSPosed提示关闭部署优化，怎么操作" class="headerlink" title="LSPosed提示关闭部署优化，怎么操作"></a><code>LSPosed</code>提示关闭<code>部署优化</code>，怎么操作</h1><p>Android studio左上角三横 - <code>Run</code> - <code>Edit Configurations...</code> - 取消勾选<code>Always install with package manager</code>，保存！</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Android/" class="category-chain-item">Android</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>XPosed模块开发踩坑</div>
+      <div>http://blog.coolenoch.ink/2024/03/30/14-XPosed模块开发踩坑-240330/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>CoolestEnoch</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2024年3月30日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2024/06/11/15macOS%E5%AE%89%E8%A3%85Homebrew%E8%AE%B0%E5%BD%95-240611/" title="macOS安装Homebrew记录">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">macOS安装Homebrew记录</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2024/03/18/13-MQTT%E5%BC%80%E5%8F%91%E6%9D%82%E8%AE%B0-240318/" title="MQTT开发杂记">
+                        <span class="hidden-mobile">MQTT开发杂记</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+  
+<script src="/js/effect/GoTop/jquery.min.js"></script>
+<script src="/js/effect/lib/jquery-1.9.1.min.js"></script>
+<script src="/js/effect/lib/jquery-3.6.0.min.js"></script>
+<script src="/js/effect/clickeffect.js"></script>
+<script src="/js/effect/clickWord.js"></script>
+<script src="/js/effect/emojiCursor.js"></script>
+<script src="/js/effect/sakura-less.js"></script>
+<script src="/js/effect/sakana@1.0.8.js"></script>
+<script src="/js/effect/cuteTitle.js"></script>
+<script src="/js/effect/GoTop/szgotop.js"></script>
+<script src="/js/effect/Netease.js"></script>
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

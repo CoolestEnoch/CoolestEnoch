@@ -1,0 +1,683 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
+  <link rel="icon" href="/img/favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="CoolestEnoch">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="记录一下第一次搭typecho XD 用的特效来自这里和这里, 将html和js代码放入footer.php的body标签内最后即可。 HoerMouse: 鼠标插件MC风格指针库 APlayer: 可选作用域的音乐播放器QPlayer: 全局的音乐播放器Pio: 看板娘  看板娘文档Pio交互提示扩展:  12345678910111213&#123;    &quot;welcome&amp;quot">
+<meta property="og:type" content="article">
+<meta property="og:title" content="世界安好">
+<meta property="og:url" content="http://blog.coolenoch.ink/2023/07/20/0%E4%B8%96%E7%95%8C%E5%AE%89%E5%A5%BD-230720/index.html">
+<meta property="og:site_name" content="Enoch的个人小站">
+<meta property="og:description" content="记录一下第一次搭typecho XD 用的特效来自这里和这里, 将html和js代码放入footer.php的body标签内最后即可。 HoerMouse: 鼠标插件MC风格指针库 APlayer: 可选作用域的音乐播放器QPlayer: 全局的音乐播放器Pio: 看板娘  看板娘文档Pio交互提示扩展:  12345678910111213&#123;    &quot;welcome&amp;quot">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2023-07-20T10:00:00.000Z">
+<meta property="article:modified_time" content="2024-06-30T13:53:51.418Z">
+<meta property="article:author" content="CoolestEnoch">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>世界安好 - Enoch的个人小站</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+  
+<link rel="stylesheet" href="/css/effect/cursor.css">
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"blog.coolenoch.ink","root":"/","version":"1.9.7","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":true,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 7.2.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Enoch的个人小站</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/" target="_self">
+                <i class="iconfont icon-link-fill"></i>
+                <span>友链</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/airplane.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="世界安好"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2023-07-20 18:00" pubdate>
+          2023年7月20日 晚上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          847 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          8 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">世界安好</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <p>记录一下第一次搭typecho XD</p>
+<p>用的特效来自<a target="_blank" rel="noopener" href="https://blog.csdn.net/ungoing/article/details/125071691">这里</a>和<a target="_blank" rel="noopener" href="https://blog.csdn.net/m0_53321320/article/details/124241666">这里</a>, 将html和js代码放入footer.php的body标签内最后即可。</p>
+<p><a target="_blank" rel="noopener" href="https://gitee.com/HoerMouse">HoerMouse: 鼠标插件</a><br><a target="_blank" rel="noopener" href="https://custom-cursor.com/en/collection/minecraft">MC风格指针库</a></p>
+<p><a target="_blank" rel="noopener" href="https://github.com/DIYgod/APlayer">APlayer: 可选作用域的音乐播放器</a><br><a target="_blank" rel="noopener" href="https://github.com/chenxing640/QPlayer">QPlayer: 全局的音乐播放器</a><br><a target="_blank" rel="noopener" href="https://paugram.com/coding/add-poster-girl-with-plugin.html#title-3">Pio: 看板娘</a></p>
+<blockquote>
+<p><a target="_blank" rel="noopener" href="https://docs.paul.ren/pio/#/?id=%e4%ba%a4%e4%ba%92%e6%8f%90%e7%a4%ba%e6%89%a9%e5%b1%95">看板娘文档</a><br>Pio交互提示扩展:</p>
+</blockquote>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs json"><span class="hljs-punctuation">&#123;</span><br>    <span class="hljs-attr">&quot;welcome&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span><span class="hljs-string">&quot;你好，欢迎来到Enoch的小站&quot;</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span><br>    <span class="hljs-attr">&quot;touch&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span><span class="hljs-string">&quot;我要恰大米！&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;有大米吗？&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;提款机我要吃大葱！&quot;</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span><br>    <span class="hljs-attr">&quot;home&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;点击这里回到首页！&quot;</span><span class="hljs-punctuation">,</span><br>    <span class="hljs-attr">&quot;link&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;https://coolenoch.ink&quot;</span><span class="hljs-punctuation">,</span><br>    <span class="hljs-attr">&quot;close&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;QWQ 有缘再会吧~&quot;</span><span class="hljs-punctuation">,</span><br>    <span class="hljs-attr">&quot;referer&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;你通过 %t 来到了这里&quot;</span><span class="hljs-punctuation">,</span><br>    <span class="hljs-attr">&quot;custom&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span><br>        <span class="hljs-punctuation">&#123;</span><br>            <span class="hljs-attr">&quot;selector&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;.comment-form&quot;</span><br>        <span class="hljs-punctuation">&#125;</span><br>    <span class="hljs-punctuation">]</span><br><span class="hljs-punctuation">&#125;</span><br></code></pre></td></tr></table></figure>
+
+<p><a target="_blank" rel="noopener" href="https://github.com/xiamuguizhi/GoTop">GoTop: 返回顶部插件</a></p>
+<p><strong>离开网页提示</strong><br> 在footer.php中编辑</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-comment">&lt;!-- 离开网页提示 start --&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">src</span>=<span class="hljs-string">&quot;https://code.jquery.com/jquery-3.6.0.min.js&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">script</span>&gt;</span><span class="language-javascript"></span><br><span class="language-javascript">        <span class="hljs-keyword">var</span> <span class="hljs-title class_">OriginTitile</span> = <span class="hljs-variable language_">document</span>.<span class="hljs-property">title</span>,</span><br><span class="language-javascript">            titleTime;</span><br><span class="language-javascript">        <span class="hljs-variable language_">document</span>.<span class="hljs-title function_">addEventListener</span>(<span class="hljs-string">&quot;visibilitychange&quot;</span>, <span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) &#123;</span><br><span class="language-javascript">            <span class="hljs-keyword">if</span> (<span class="hljs-variable language_">document</span>.<span class="hljs-property">hidden</span>) &#123;</span><br><span class="language-javascript">                $(<span class="hljs-string">&#x27;[rel=&quot;icon&quot;]&#x27;</span>).<span class="hljs-title function_">attr</span>(<span class="hljs-string">&quot;href&quot;</span>, <span class="hljs-string">&quot;https://img1.baidu.com/it/u=2168395802,233412699&amp;fm=253&amp;fmt=auto&amp;app=138&amp;f=JPEG?w=500&amp;h=526&quot;</span>);</span><br><span class="language-javascript">                <span class="hljs-variable language_">document</span>.<span class="hljs-property">title</span> = <span class="hljs-string">&quot;页面已崩溃！点击恢复！&quot;</span>;</span><br><span class="language-javascript">                <span class="hljs-built_in">clearTimeout</span>(titleTime);</span><br><span class="language-javascript">            &#125; <span class="hljs-keyword">else</span> &#123;</span><br><span class="language-javascript">                $(<span class="hljs-string">&#x27;[rel=&quot;icon&quot;]&#x27;</span>).<span class="hljs-title function_">attr</span>(<span class="hljs-string">&quot;href&quot;</span>, <span class="hljs-string">&quot;https://user-images.githubusercontent.com/22438240/258717075-1c071b29-c4d5-4f75-9ca6-3cdcf9b73151.svg&quot;</span>);</span><br><span class="language-javascript">                <span class="hljs-variable language_">document</span>.<span class="hljs-property">title</span> = <span class="hljs-string">&quot;(/≧▽≦/)咦！又好了！ &quot;</span> + <span class="hljs-title class_">OriginTitile</span>;</span><br><span class="language-javascript">                titleTime = <span class="hljs-built_in">setTimeout</span>(<span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) &#123;</span><br><span class="language-javascript">                    <span class="hljs-variable language_">document</span>.<span class="hljs-property">title</span> = <span class="hljs-title class_">OriginTitile</span>;</span><br><span class="language-javascript">                &#125;, <span class="hljs-number">2000</span>);</span><br><span class="language-javascript">            &#125;</span><br><span class="language-javascript">        &#125;);</span><br><span class="language-javascript">    </span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span><br><span class="hljs-comment">&lt;!-- 离开网页提示 end --&gt;</span><br></code></pre></td></tr></table></figure>
+
+
+<p><strong>主页不显示文章全文</strong><br>将<code>index.php</code>和<code>archive.php</code>中<code>阅读全文</code>所在div周围代码改成如下：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs php">&lt;div <span class="hljs-class"><span class="hljs-keyword">class</span>=&quot;<span class="hljs-title">post</span>-<span class="hljs-title">content</span>&quot; <span class="hljs-title">itemprop</span>=&quot;<span class="hljs-title">articleBody</span>&quot;&gt;</span><br><span class="hljs-class">	&lt;?<span class="hljs-title">php</span> <span class="hljs-title">replaceTag</span>($<span class="hljs-title">this</span>-&gt;<span class="hljs-title">excerpt</span>(100)); ?&gt;</span><br><span class="hljs-class">	&lt;<span class="hljs-title">div</span> <span class="hljs-title">text</span>-<span class="hljs-title">center</span> <span class="hljs-title">class</span>=&quot;<span class="hljs-title">post</span>-<span class="hljs-title">button</span>&quot;&gt;</span><br><span class="hljs-class">		&lt;<span class="hljs-title">a</span> <span class="hljs-title">href</span>=&quot;&lt;?<span class="hljs-title">php</span> $<span class="hljs-title">this</span>-&gt;<span class="hljs-title">permalink</span>() ?&gt;&quot;&gt;</span><br><span class="hljs-class">			&lt;?<span class="hljs-title">php</span> <span class="hljs-title">_e</span>(&#x27;-   阅读全文   -&#x27;); ?&gt;</span><br><span class="hljs-class">		&lt;/<span class="hljs-title">a</span>&gt;</span><br><span class="hljs-class">	&lt;/<span class="hljs-title">div</span>&gt;</span><br><span class="hljs-class">&lt;/<span class="hljs-title">div</span>&gt;</span><br></code></pre></td></tr></table></figure>
+<p>(主要是添加第二行代码<code>&lt;?php replaceTag($this-&gt;excerpt(100)); ?&gt;</code>；或者超过200字就显示为省略号<code>&lt;?php $this-&gt;excerpt(200, &#39;...&#39;); ?&gt;</code>或者直接不显示概要<code>&lt;?php $this-&gt;excerpt(); ?&gt;</code>)</p>
+<p><strong>石蒜摇～～～</strong><br>添加到<code>控制台</code>-<code>外观</code>-<code>设置外观</code>-<code>自定义CSS代码</code>中<br>代码来自<a target="_blank" rel="noopener" href="https://github.com/dsrkafuu/sakana-widget">itorr&#x2F;sakana</a>, 我稍微修改了一下</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">meta</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;viewport&quot;</span> <span class="hljs-attr">content</span>=<span class="hljs-string">&quot;width=device-width&quot;</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">style</span>&gt;</span><span class="language-css"></span><br><span class="language-css"><span class="hljs-selector-class">.sakana-box</span>&#123;</span><br><span class="language-css">  <span class="hljs-attribute">position</span>: fixed;</span><br><span class="language-css">  <span class="hljs-attribute">left</span>: <span class="hljs-number">0</span>;</span><br><span class="language-css">  <span class="hljs-attribute">bottom</span>: <span class="hljs-number">0</span>;</span><br><span class="language-css">  <span class="hljs-attribute">transform-origin</span>: <span class="hljs-number">0%</span> <span class="hljs-number">100%</span>; <span class="hljs-comment">/* 从左下开始变换 */</span></span><br><span class="language-css">&#125;</span><br><span class="language-css"></span><span class="hljs-tag">&lt;/<span class="hljs-name">style</span>&gt;</span><br><br><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;sakana-box&quot;</span> <span class="hljs-attr">style</span>=<span class="hljs-string">&#x27;position:fixed; z-index:999; left:0; bottom:0;&#x27;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">src</span>=<span class="hljs-string">&quot;https://cdn.jsdelivr.net/npm/sakana@1.0.8&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">script</span>&gt;</span><span class="language-javascript"></span><br><span class="language-javascript"><span class="hljs-comment">// 取消静音</span></span><br><span class="language-javascript"><span class="hljs-title class_">Sakana</span>.<span class="hljs-title function_">setMute</span>(<span class="hljs-literal">false</span>);</span><br><span class="language-javascript"><span class="hljs-comment">// 启动</span></span><br><span class="language-javascript"><span class="hljs-title class_">Sakana</span>.<span class="hljs-title function_">init</span>(&#123;</span><br><span class="language-javascript">  <span class="hljs-attr">el</span>:         <span class="hljs-string">&#x27;.sakana-box&#x27;</span>,     <span class="hljs-comment">// 启动元素 node 或 选择器</span></span><br><span class="language-javascript">  <span class="hljs-attr">scale</span>:      <span class="hljs-number">.5</span>,                <span class="hljs-comment">// 缩放倍数</span></span><br><span class="language-javascript">  <span class="hljs-attr">canSwitchCharacter</span>: <span class="hljs-literal">true</span>,      <span class="hljs-comment">// 允许换角色</span></span><br><span class="language-javascript">&#125;);</span><br><span class="language-javascript"></span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span><br></code></pre></td></tr></table></figure>
+<p>或者将这段代码添加到<code>footer.php</code>中也行:</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-comment">&lt;!-- Sakana start --&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;sakana-box&quot;</span> <span class="hljs-attr">style</span>=<span class="hljs-string">&#x27;position:fixed; z-index:999; left:0; bottom:0; transform-origin: 0% 100%; /* 从左下开始变换 */&#x27;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">src</span>=<span class="hljs-string">&quot;https://cdn.jsdelivr.net/npm/sakana@1.0.8&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">script</span>&gt;</span><span class="language-javascript"></span><br><span class="language-javascript"><span class="hljs-comment">// 取消静音</span></span><br><span class="language-javascript"><span class="hljs-title class_">Sakana</span>.<span class="hljs-title function_">setMute</span>(<span class="hljs-literal">false</span>);</span><br><span class="language-javascript"><span class="hljs-comment">// 启动</span></span><br><span class="language-javascript"><span class="hljs-title class_">Sakana</span>.<span class="hljs-title function_">init</span>(&#123;</span><br><span class="language-javascript">  <span class="hljs-attr">el</span>:         <span class="hljs-string">&#x27;.sakana-box&#x27;</span>,     <span class="hljs-comment">// 启动元素 node 或 选择器</span></span><br><span class="language-javascript">  <span class="hljs-attr">scale</span>:      <span class="hljs-number">.5</span>,                <span class="hljs-comment">// 缩放倍数</span></span><br><span class="language-javascript">  <span class="hljs-attr">canSwitchCharacter</span>: <span class="hljs-literal">true</span>,      <span class="hljs-comment">// 允许换角色</span></span><br><span class="language-javascript">&#125;);</span><br><span class="language-javascript"></span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span><br><span class="hljs-comment">&lt;!-- Sakana end --&gt;</span><br></code></pre></td></tr></table></figure>
+
+
+<p><strong>模糊的背景图片</strong><br>添加到footer.php中</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-comment">&lt;!-- 模糊背景 start --&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;backgroundDiv&quot;</span> <span class="hljs-attr">style</span>=<span class="hljs-string">&quot;position: fixed;top: 0;left: 0;width: 100%;height: 100%;background-image: url(&#x27;/url/to/your.jpg&#x27;);background-size: cover;background-position: center;filter: blur(10px);z-index: -1;&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span><br><span class="hljs-comment">&lt;!-- 模糊背景 end--&gt;</span><br></code></pre></td></tr></table></figure>
+
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Linux/" class="category-chain-item">Linux</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>世界安好</div>
+      <div>http://blog.coolenoch.ink/2023/07/20/0世界安好-230720/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>CoolestEnoch</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2023年7月20日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2023/07/30/1Waydroid%E7%9A%84%E7%A2%8E%E7%A2%8E%E5%BF%B5-230730/" title="Waydroid的碎碎念">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Waydroid的碎碎念</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/1970/01/01/hello-world-hexo/" title="Hello World">
+                        <span class="hidden-mobile">Hello World</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+  
+<script src="/js/effect/GoTop/jquery.min.js"></script>
+<script src="/js/effect/lib/jquery-1.9.1.min.js"></script>
+<script src="/js/effect/lib/jquery-3.6.0.min.js"></script>
+<script src="/js/effect/clickeffect.js"></script>
+<script src="/js/effect/clickWord.js"></script>
+<script src="/js/effect/emojiCursor.js"></script>
+<script src="/js/effect/sakura-less.js"></script>
+<script src="/js/effect/sakana@1.0.8.js"></script>
+<script src="/js/effect/cuteTitle.js"></script>
+<script src="/js/effect/GoTop/szgotop.js"></script>
+<script src="/js/effect/Netease.js"></script>
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

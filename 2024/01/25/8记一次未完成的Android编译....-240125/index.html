@@ -1,0 +1,1008 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
+  <link rel="icon" href="/img/favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="CoolestEnoch">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="前情提要这是一台“过时”的华为平板，搭载高通616处理器，3+16GB存储组合，10.1英尺1920x1200屏幕。⚠️万字长文预警 硬件和软件环境我用的是平时拿来干活的笔记本。硬件方面：i5-10300H的处理器，16GB 2933MHz的主存，编译环境用的硬盘是Samsung Evo 870 1TB；软件方面：采用Debian 12系统。主要是Ubuntu太臃肿了 装依赖Part 1: 下载">
+<meta property="og:type" content="article">
+<meta property="og:title" content="记一次未完成的Android编译....">
+<meta property="og:url" content="http://blog.coolenoch.ink/2024/01/25/8%E8%AE%B0%E4%B8%80%E6%AC%A1%E6%9C%AA%E5%AE%8C%E6%88%90%E7%9A%84Android%E7%BC%96%E8%AF%91....-240125/index.html">
+<meta property="og:site_name" content="Enoch的个人小站">
+<meta property="og:description" content="前情提要这是一台“过时”的华为平板，搭载高通616处理器，3+16GB存储组合，10.1英尺1920x1200屏幕。⚠️万字长文预警 硬件和软件环境我用的是平时拿来干活的笔记本。硬件方面：i5-10300H的处理器，16GB 2933MHz的主存，编译环境用的硬盘是Samsung Evo 870 1TB；软件方面：采用Debian 12系统。主要是Ubuntu太臃肿了 装依赖Part 1: 下载">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://tse1-mm.cn.bing.net/th/id/OIP-C.PXi-K-Ym4EAqkcjluImyBAHaD-?w=276&h=180&c=7&r=0&o=5&dpr=1.3&pid=1.7">
+<meta property="article:published_time" content="2024-01-25T10:00:00.000Z">
+<meta property="article:modified_time" content="2024-06-30T13:53:51.428Z">
+<meta property="article:author" content="CoolestEnoch">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://tse1-mm.cn.bing.net/th/id/OIP-C.PXi-K-Ym4EAqkcjluImyBAHaD-?w=276&h=180&c=7&r=0&o=5&dpr=1.3&pid=1.7">
+  
+  
+  
+  <title>记一次未完成的Android编译.... - Enoch的个人小站</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+  
+<link rel="stylesheet" href="/css/effect/cursor.css">
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"blog.coolenoch.ink","root":"/","version":"1.9.7","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":true,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 7.2.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Enoch的个人小站</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/" target="_self">
+                <i class="iconfont icon-link-fill"></i>
+                <span>友链</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/airplane.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="记一次未完成的Android编译...."></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2024-01-25 18:00" pubdate>
+          2024年1月25日 晚上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          7.8k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          66 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">记一次未完成的Android编译....</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <p><img src="https://tse1-mm.cn.bing.net/th/id/OIP-C.PXi-K-Ym4EAqkcjluImyBAHaD-?w=276&h=180&c=7&r=0&o=5&dpr=1.3&pid=1.7" srcset="/img/loading.gif" lazyload alt="封面"></p>
+<h1 id="前情提要"><a href="#前情提要" class="headerlink" title="前情提要"></a>前情提要</h1><p>这是一台“过时”的华为平板，搭载高通616处理器，3+16GB存储组合，10.1英尺1920x1200屏幕。<br><em><strong>⚠️万字长文预警</strong></em></p>
+<h1 id="硬件和软件环境"><a href="#硬件和软件环境" class="headerlink" title="硬件和软件环境"></a>硬件和软件环境</h1><p>我用的是平时拿来干活的笔记本。硬件方面：<code>i5-10300H</code>的处理器，<code>16GB 2933MHz</code>的主存，编译环境用的硬盘是<code>Samsung Evo 870 1TB</code>；软件方面：采用<code>Debian 12</code>系统。<del><em>主要是Ubuntu太臃肿了</em></del></p>
+<h1 id="装依赖"><a href="#装依赖" class="headerlink" title="装依赖"></a>装依赖</h1><h2 id="Part-1-下载和解压"><a href="#Part-1-下载和解压" class="headerlink" title="Part 1: 下载和解压"></a>Part 1: 下载和解压</h2><p>第一个要装的就是<code>adb</code>和<code>fastboot</code>。</p>
+<blockquote>
+<p>⚠️ 注意！不要去<code>apt</code>源里下载，那里的版本太老了。前往谷歌官方下载：<code>https://dl.google.com/android/repository/platform-tools-latest-linux.zip</code></p>
+</blockquote>
+<p>按照<code>Lineage</code>官方的<a target="_blank" rel="noopener" href="https://wiki.lineageos.org/devices/dipper/build/#prepare-the-device-specific-code">说法(这一部分不分机型，都是通的，所以这个超链接指向了小米8的页面)</a>，把他解压到<code>~</code>下吧：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">unzip platform-tools-latest-linux.zip -d ~<br></code></pre></td></tr></table></figure>
+<p>现在你确定一下<code>~</code>目录下是否存在<code>platform-tools</code>文件夹，如果存在则继续。<br>打开你的<code>~/.profile</code>或者<code>~/.zshrc</code>(本文全文将以<code>.zshrc</code>进行举例说明)，在<code>source $ZSH/oh-my-zsh.sh</code>前添加以下代码：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># add Android SDK platform tools to path</span><br><span class="hljs-keyword">if</span> [ -d <span class="hljs-string">&quot;<span class="hljs-variable">$HOME</span>/platform-tools&quot;</span> ] ; <span class="hljs-keyword">then</span><br>    <span class="hljs-built_in">export</span> PATH=<span class="hljs-string">&quot;<span class="hljs-variable">$HOME</span>/platform-tools:<span class="hljs-variable">$PATH</span>&quot;</span><br><span class="hljs-keyword">fi</span><br></code></pre></td></tr></table></figure>
+<p>然后，<code>source</code>它，然后<code>echo $PATH</code>一下看看环境变量里是否存在<code>~/platform-tools</code>，存在就可以进行下一步。</p>
+<h2 id="Part-2-从apt源安装"><a href="#Part-2-从apt源安装" class="headerlink" title="Part 2: 从apt源安装"></a>Part 2: 从apt源安装</h2><p>使用apt把这些都装进去：<code>bc bison build-essential ccache curl flex g++-multilib gcc-multilib git git-lfs gnupg gperf imagemagick lib32readline-dev lib32z1-dev libelf-dev liblz4-tool libsdl1.2-dev libssl-dev libxml2 libxml2-utils lzop pngcrush rsync schedtool squashfs-tools xsltproc zip zlib1g-dev</code><br>对于我使用的<code>Debian 12</code>系统，再安装这些:<code>lib32ncurses-dev libncurses5 libncurses5-dev</code></p>
+<p>对于<code>Ubuntu</code>用户，请按照<code>Lineage</code>官网说法进行操作：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs text"># For Ubuntu 23.10 (mantic), install libncurses5 from 23.04 (lunar) as follows:<br>wget http://archive.ubuntu.com/ubuntu/pool/universe/n/ncurses/libtinfo5_6.4-2_amd64.deb &amp;&amp; sudo dpkg -i libtinfo5_6.4-2_amd64.deb &amp;&amp; rm -f libtinfo5_6.4-2_amd64.deb<br>wget http://archive.ubuntu.com/ubuntu/pool/universe/n/ncurses/libncurses5_6.4-2_amd64.deb &amp;&amp; sudo dpkg -i libncurses5_6.4-2_amd64.deb &amp;&amp; rm -f libncurses5_6.4-2_amd64.deb<br><br># While for Ubuntu versions older than 23.10 (mantic), simply install:<br>lib32ncurses5-dev libncurses5 libncurses5-dev<br><br># Additionally, for Ubuntu versions older than 20.04 (focal), install also:<br>libwxgtk3.0-dev<br><br># While for Ubuntu versions older than 16.04 (xenial), install:<br>libwxgtk2.8-dev<br></code></pre></td></tr></table></figure>
+
+
+<h2 id="Part-3-OpenJDK的安装"><a href="#Part-3-OpenJDK的安装" class="headerlink" title="Part 3: OpenJDK的安装"></a>Part 3: OpenJDK的安装</h2><p><code>OpenJDK</code>的版本取决于你想要编译的<code>Lineage OS</code>版本。<br>下面的信息来自于上面提到的<code>Lineage</code>官网教程。<br><code>LineageOS</code> 18.1及更高版本: <code>openjdk-11 openjdk-11-source</code><br><code>LineageOS</code> 16.0-17.1: <code>openjdk-9 openjdk-9-source</code><br><code>LineageOS</code> 14.1-15.1: <code>openjdk-8-jdk</code></p>
+<blockquote>
+<p>⚠️注意: 构建这些版本时你需要在<code>/etc/java-8-openjdk/security/java.security</code>中从<code>jdk.tls.disabledAlgorithms</code>中移除<code>TLSv1</code>和<code>TLSv1.1</code>相关的东西。</p>
+</blockquote>
+<p><code>LineageOS</code> 11.0-13.0: <code>openjdk-7-jdk</code></p>
+<blockquote>
+<p><del><code>Ubuntu 16.04</code>及更新版本的软件源中已将<code>OpenJDK 1.7</code>移除了。解决方案参考<code>Ask Ubuntu</code>上的问题<a target="_blank" rel="noopener" href="http://askubuntu.com/questions/761127/how-do-i-install-openjdk-7-on-ubuntu-16-04-or-higher">“How do I install openjdk 7 on Ubuntu 16.04 or higher?”</a>。注意热评里那个叫你添加<code>ppa</code>源的老登，因为<code>ppa</code>源缺乏安全性维护，所以别看他的回答，看后面一个叫你去Debian官网下载的回答。</del><br><del>笔者评：截止写稿时，<code>Debian 12</code>源上的<code>openjdk</code>只有<code>17</code>版本了。所以只能去网站上下载<code>.deb</code>包然后安装。这里提供两个下载站：<a target="_blank" rel="noopener" href="https://jdk.java.net/archive/">OpenJDK Archive(无需登陆但没有deb)</a>；<a target="_blank" rel="noopener" href="https://www.oracle.com/java/technologies/downloads/archive/">Java SE Archive(概率登陆但有deb)</a>。</del></p>
+</blockquote>
+<blockquote>
+<p>但是！我们是不是可以整点活？比如直接去隔壁<code>Ubuntu</code>的镜像源网站上下载？比如清华源：<br>Ubuntu系统前往这里下载：<a target="_blank" rel="noopener" href="https://mirrors.tuna.tsinghua.edu.cn/ubuntu/pool/universe/o/openjdk-lts/">下载jdk11-universe</a><a target="_blank" rel="noopener" href="https://mirrors.tuna.tsinghua.edu.cn/ubuntu/pool/main/o/openjdk-lts/">下载jdk11-main</a>；<a target="_blank" rel="noopener" href="https://mirrors.tuna.tsinghua.edu.cn/ubuntu/pool/universe/o/openjdk-9/">下载jdk9-universe</a>；<a target="_blank" rel="noopener" href="https://mirrors.tuna.tsinghua.edu.cn/ubuntu/pool/universe/o/openjdk-8/">下载jdk8-universe</a><a target="_blank" rel="noopener" href="https://mirrors.tuna.tsinghua.edu.cn/ubuntu/pool/main/o/openjdk-8/">下载jdk8-main</a>；<a target="_blank" rel="noopener" href="https://mirrors.tuna.tsinghua.edu.cn/ubuntu/pool/main/o/openjdk-7/">下载jdk7-main</a><br>Debian系统前往这里下载：<a target="_blank" rel="noopener" href="https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/o/openjdk-11/">下载jdk11-main</a><a target="_blank" rel="noopener" href="https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/o/openjdk-8/">下载jdk8-main</a><br>使用此方法时如提示缺失依赖则需要补全依赖然后再安装，否则<code>apt</code>会报错：<code>ca-certificates-java java-common libc6</code><br>需要把<code>openjdk-xx-jdk</code>及其<code>headless</code>版本、<code>openjdk-xx-jre</code>及其<code>headless</code>版本和<code>openjdk-xx-source</code>都安装上再继续。</p>
+</blockquote>
+<h2 id="Part-4-Python的安装"><a href="#Part-4-Python的安装" class="headerlink" title="Part 4: Python的安装"></a>Part 4: Python的安装</h2><p><del><em>啥？这都什么年代了还教咋装Python？</em></del>要不是因为不同<code>Lineage</code>版本要求的Python版本不一样，<del>我也懒得写了</del><br><code>LineageOS</code> 17.1及更高版本: <code>python3</code><br><code>LineageOS</code> 11.0-16.0: <code>python2</code><br>如果你电脑上有多个<del>蟒蛇</del><code>Python</code>互相冲突，<code>Lineage</code>官网推荐的解决方案是用<code>venv</code>。相关的东西这里不再赘述。</p>
+<h1 id="进入准备工作！"><a href="#进入准备工作！" class="headerlink" title="进入准备工作！"></a>进入准备工作！</h1><h2 id="建立工作目录"><a href="#建立工作目录" class="headerlink" title="建立工作目录"></a>建立工作目录</h2><blockquote>
+<p>⚠️ Lineage和清华源上的教程写的不一样，这里冲突部分采用的是Lineage官网教程。</p>
+</blockquote>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">mkdir</span> -p ~/bin<br><span class="hljs-built_in">mkdir</span> -p ~/android/lineage<br></code></pre></td></tr></table></figure>
+<p>其中<code>~/bin</code>存放<code>git-repo</code>工具，<code>~/android/lineage</code>存放<code>LineageOS</code>的源码。</p>
+<h2 id="安装repo工具"><a href="#安装repo工具" class="headerlink" title="安装repo工具"></a>安装repo工具</h2><blockquote>
+<p>这是个啥？<br><code>repo</code>是个由Google开发的<code>git</code>的增强工具，和<code>git</code>配合食用。<a target="_blank" rel="noopener" href="https://source.android.google.cn/docs/setup/download">参考Google官方文档。</a></p>
+</blockquote>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">mkdir</span> ~/bin<br>PATH=~/bin:<span class="hljs-variable">$PATH</span><br>curl https://mirrors.tuna.tsinghua.edu.cn/git/git-repo &gt; ~/bin/repo<br><span class="hljs-built_in">chmod</span> a+x ~/bin/repo<br></code></pre></td></tr></table></figure>
+<p>更新repo使用这个命令：<code>export REPO_URL=&#39;https://mirrors.tuna.tsinghua.edu.cn/git/git-repo&#39;</code><br>然后再使用上面添加<code>adb</code>的方法将<code>~/bin</code>目录添加到环境变量中，编辑<code>.zshrc</code>…:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># set PATH so it includes user&#x27;s private bin if it exists</span><br><span class="hljs-keyword">if</span> [ -d <span class="hljs-string">&quot;<span class="hljs-variable">$HOME</span>/bin&quot;</span> ] ; <span class="hljs-keyword">then</span><br>    PATH=<span class="hljs-string">&quot;<span class="hljs-variable">$HOME</span>/bin:<span class="hljs-variable">$PATH</span>&quot;</span><br><span class="hljs-keyword">fi</span><br></code></pre></td></tr></table></figure>
+<p>别忘了再次<code>source</code>它一下！</p>
+<h2 id="配置Git"><a href="#配置Git" class="headerlink" title="配置Git"></a>配置Git</h2><p>没啥好说的，设置一下用户名和邮箱，这步没做的话下一步初始化仓库的时候命令行里也会叫你提供这两个信息。</p>
+<blockquote>
+<p>⚠️ 注意: 这里的操作是对整个电脑全局的设置。如果你只想在编译系统的源码仓库文件夹内设置这两个信息，则请跳过设置信息这一步，直接进行<code>lfs</code>初始化。</p>
+</blockquote>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">git config --global user.email <span class="hljs-string">&quot;you@example.com&quot;</span><br>git config --global user.name <span class="hljs-string">&quot;Your Name&quot;</span><br></code></pre></td></tr></table></figure>
+
+<p>为了能让<code>git</code>存放大文件，需要初始化一下<code>Large File Storage</code>：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">git lfs install<br></code></pre></td></tr></table></figure>
+
+<p>设置<code>Git</code>的<code>Change-Id</code>：<code>Lineage</code>官方说为了防止重复的<code>Change-Id</code>,就要这么操作一下。但是我没有进行这一步设置。</p>
+<blockquote>
+<p>To avoid duplicated Change-Id: trailers in commit messages, especially when cherry-picking changes, make Change-Id: a known trailer to git:</p>
+</blockquote>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">git config --global trailer.changeid.key <span class="hljs-string">&quot;Change-Id&quot;</span><br></code></pre></td></tr></table></figure>
+
+
+<h2 id="配置编译缓存"><a href="#配置编译缓存" class="headerlink" title="配置编译缓存"></a>配置编译缓存</h2><p>这是用<code>ccache</code>来加快编译的。将这些内容放入<code>.zshrc</code>中然后再<code>source</code>一下：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">export</span> USE_CCACHE=1<br><span class="hljs-built_in">export</span> CCACHE_EXEC=/usr/bin/ccache<br></code></pre></td></tr></table></figure>
+<p>然后回到命令行终端，设置<code>ccache</code>大小:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">ccache -M 50G<br></code></pre></td></tr></table></figure>
+<p><code>ccache</code>大小影响你的编译速度。如果只编译一个设备，那么给<code>20-50GB</code>就够了；如果编译多个设备(不共享内核源码)，则建议配置<code>75-100GB</code>。<br>当然，你也可以启用压缩：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs bash">ccache -o compression=<span class="hljs-literal">true</span><br>````<br>&gt; 启用压缩后，一台设备大概给`20G`就够了。<br><br><br><br><span class="hljs-comment"># 处理源码</span><br><br><br><span class="hljs-comment">## 初始化仓库</span><br>&gt; ⚠️ 这个过程需要保证网络绝对畅通<br><br>``` bash<br>repo init -u https://mirrors.tuna.tsinghua.edu.cn/git/lineageOS/LineageOS/android.git -b lineage-20.0 --git-lfs<br></code></pre></td></tr></table></figure>
+<p>参数<code>-b</code>后面接的是系统版本，前往<a target="_blank" rel="noopener" href="https://github.com/LineageOS/android/tree/lineage-20.0">这里</a>查看可以选择哪些分支版本。其中<code>lineage-16.0</code>对应<code>Android 9</code>，后续<code>los</code>版本号整数加一对应<code>Android</code>版本号的整数加一，比如<code>lineage-17.0</code>对应<code>Android 10</code>。</p>
+<h2 id="将仓库源码地址设为国内镜像站"><a href="#将仓库源码地址设为国内镜像站" class="headerlink" title="将仓库源码地址设为国内镜像站"></a>将仓库源码地址设为国内镜像站</h2><p>这里用清华源<br>打开.repo&#x2F;manifests&#x2F;default.xml，将</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">remote</span>  <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;github&quot;</span></span><br><span class="hljs-tag">         <span class="hljs-attr">fetch</span>=<span class="hljs-string">&quot;..&quot;</span></span><br><span class="hljs-tag">         <span class="hljs-attr">review</span>=<span class="hljs-string">&quot;review.lineageos.org&quot;</span> /&gt;</span><br></code></pre></td></tr></table></figure>
+<p>改成</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">remote</span>  <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;github&quot;</span></span><br><span class="hljs-tag">         <span class="hljs-attr">fetch</span>=<span class="hljs-string">&quot;https://github.com/&quot;</span> /&gt;</span><br><br><span class="hljs-tag">&lt;<span class="hljs-name">remote</span>  <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;lineage&quot;</span></span><br><span class="hljs-tag">         <span class="hljs-attr">fetch</span>=<span class="hljs-string">&quot;https://mirrors.tuna.tsinghua.edu.cn/git/lineageOS/&quot;</span></span><br><span class="hljs-tag">         <span class="hljs-attr">review</span>=<span class="hljs-string">&quot;review.lineageos.org&quot;</span> /&gt;</span><br></code></pre></td></tr></table></figure>
+<p>将</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">remote</span>  <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;aosp&quot;</span></span><br><span class="hljs-tag">         <span class="hljs-attr">fetch</span>=<span class="hljs-string">&quot;https://android.googlesource.com&quot;</span></span><br><span class="hljs-tag">         <span class="hljs-attr">xxx</span>=<span class="hljs-string">&quot;...&quot;</span>/&gt;</span><br></code></pre></td></tr></table></figure>
+<p>改成</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">remote</span>  <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;aosp&quot;</span></span><br><span class="hljs-tag">         <span class="hljs-attr">fetch</span>=<span class="hljs-string">&quot;https://mirrors.tuna.tsinghua.edu.cn/git/AOSP&quot;</span></span><br><span class="hljs-tag">         <span class="hljs-attr">xxx</span>=<span class="hljs-string">&quot;...&quot;</span>/&gt;</span><br></code></pre></td></tr></table></figure>
+<p>将</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">default</span> <span class="hljs-attr">revision</span>=<span class="hljs-string">&quot;...&quot;</span></span><br><span class="hljs-tag">         <span class="hljs-attr">remote</span>=<span class="hljs-string">&quot;github&quot;</span></span><br><span class="hljs-tag">         <span class="hljs-attr">xxx</span>=<span class="hljs-string">&quot;...&quot;</span>/&gt;</span><br></code></pre></td></tr></table></figure>
+<p>改成</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">default</span> <span class="hljs-attr">revision</span>=<span class="hljs-string">&quot;...&quot;</span></span><br><span class="hljs-tag">         <span class="hljs-attr">remote</span>=<span class="hljs-string">&quot;lineage&quot;</span></span><br><span class="hljs-tag">         <span class="hljs-attr">xxx</span>=<span class="hljs-string">&quot;...&quot;</span>/&gt;</span><br></code></pre></td></tr></table></figure>
+
+
+<h2 id="同步源码树"><a href="#同步源码树" class="headerlink" title="同步源码树"></a>同步源码树</h2><p>以后都使用这个来同步。这会从清华服务器上下载源码而非Lineage官网下载</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># Use default thread and branch parameters, which is &quot;-j 4 -c&quot; here.</span><br>repo <span class="hljs-built_in">sync</span><br><span class="hljs-comment"># Use custom parameters, which means use 2 threads to sync.</span><br>repo <span class="hljs-built_in">sync</span> -j2<br></code></pre></td></tr></table></figure>
+<blockquote>
+<p>注意: 这个命令默认添加参数<code>-j 4 -c</code>。其中<code>-j 4</code>代表使用四线程进行同步。如果你遇到了服务器对线程的限制或性能问题，手动添加该参数以降低线程数，像第二行。<br><code>-c</code>代表着只克隆上一步选定的分支而非所有分支。<strong>该参数不建议进行人为额外操作</strong>。</p>
+</blockquote>
+<h2 id="处理设备配置文件"><a href="#处理设备配置文件" class="headerlink" title="处理设备配置文件"></a>处理设备配置文件</h2><blockquote>
+<p><del>我要编译的设备不在<code>Lineage</code>的<a target="_blank" rel="noopener" href="https://wiki.lineageos.org/devices/">官方维护列表</a>内，所以需要自己配置配置文件。如果你的设备在官方维护列表内，可以跳过这一步。</del></p>
+</blockquote>
+<p>在<code>~/android/lineage/.repo/local_manifests/</code>下创建文件<code>federer.xml</code></p>
+<blockquote>
+<p><code>federer</code>是我设备的代号，这里也可以填写别的名字作为代号，主要就是区分设备用</p>
+</blockquote>
+<p>写入以下信息:</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-meta">&lt;?xml version=<span class="hljs-string">&quot;1.0&quot;</span> encoding=<span class="hljs-string">&quot;UTF-8&quot;</span>?&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">manifest</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">remote</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;vendor&quot;</span> <span class="hljs-attr">fetch</span>=<span class="hljs-string">&quot;https://github.com&quot;</span> <span class="hljs-attr">revision</span>=<span class="hljs-string">&quot;la-17.1&quot;</span> /&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">remote</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;device&quot;</span> <span class="hljs-attr">fetch</span>=<span class="hljs-string">&quot;https://github.com&quot;</span> <span class="hljs-attr">revision</span>=<span class="hljs-string">&quot;la-17.1&quot;</span>/&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">remote</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;device-common&quot;</span> <span class="hljs-attr">fetch</span>=<span class="hljs-string">&quot;https://github.com&quot;</span> <span class="hljs-attr">revision</span>=<span class="hljs-string">&quot;la-17.1&quot;</span>/&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">remote</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;kernel&quot;</span> <span class="hljs-attr">fetch</span>=<span class="hljs-string">&quot;https://github.com&quot;</span> <span class="hljs-attr">revision</span>=<span class="hljs-string">&quot;LaOS-15.1&quot;</span>/&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">remote</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;kernel-common&quot;</span> <span class="hljs-attr">fetch</span>=<span class="hljs-string">&quot;https://github.com&quot;</span> <span class="hljs-attr">revision</span>=<span class="hljs-string">&quot;la-17.1&quot;</span>/&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">remote</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;sepolicy_legacy&quot;</span> <span class="hljs-attr">fetch</span>=<span class="hljs-string">&quot;https://github.com&quot;</span> <span class="hljs-attr">revision</span>=<span class="hljs-string">&quot;lineage-20.0&quot;</span>/&gt;</span><br>    <span class="hljs-comment">&lt;!-- Vendor folders --&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">project</span> <span class="hljs-attr">path</span>=<span class="hljs-string">&quot;vendor/huawei/federer&quot;</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;datenpanne/android_vendor_huawei_federer&quot;</span> <span class="hljs-attr">remote</span>=<span class="hljs-string">&quot;vendor&quot;</span> /&gt;</span><br>    <span class="hljs-comment">&lt;!--Device Trees--&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">project</span> <span class="hljs-attr">path</span>=<span class="hljs-string">&quot;device/huawei/federer&quot;</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;datenpanne/android_device_huawei_federer&quot;</span> <span class="hljs-attr">remote</span>=<span class="hljs-string">&quot;device&quot;</span> /&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">project</span> <span class="hljs-attr">path</span>=<span class="hljs-string">&quot;device/huawei/t2-common&quot;</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;datenpanne/android_device_huawei_t2-common&quot;</span> <span class="hljs-attr">remote</span>=<span class="hljs-string">&quot;device-common&quot;</span> /&gt;</span><br>    <span class="hljs-comment">&lt;!--Kernel--&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">project</span> <span class="hljs-attr">path</span>=<span class="hljs-string">&quot;kernel/huawei/federer&quot;</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;datenpanne/android_kernel_huawei_federer&quot;</span> <span class="hljs-attr">remote</span>=<span class="hljs-string">&quot;kernel&quot;</span> /&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">project</span> <span class="hljs-attr">path</span>=<span class="hljs-string">&quot;kernel/huawei/federer&quot;</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;datenpanne/android_kernel_huawei_t2-common&quot;</span> <span class="hljs-attr">remote</span>=<span class="hljs-string">&quot;kernel-common&quot;</span> /&gt;</span><br>    <span class="hljs-comment">&lt;!--SePolicy Legacy. I tried to compile but throw an error to me said about I don&#x27;t have these files. I searched on Bing and found this repository, then I add it here. For other devices, you don&#x27;t need to add this .--&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">project</span> <span class="hljs-attr">path</span>=<span class="hljs-string">&quot;device/qcom/sepolicy-legacy&quot;</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;LineageOS/android_device_qcom_sepolicy&quot;</span> <span class="hljs-attr">remote</span>=<span class="hljs-string">&quot;sepolicy_legacy&quot;</span> /&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">manifest</span>&gt;</span><br></code></pre></td></tr></table></figure>
+<p>其中<code>remote</code>字段中的<code>fetch</code>字段意思是该代码托管的提供商名。如果你的代码也托管在<code>Github</code>上，则无需修改该字段。<br>其中<code>remote</code>字段中的<code>revision</code>字段意思是该代码在仓库里的分支名。<br>其中<code>project</code>字段中的<code>path</code>字段意为存放该源码的本地位置，。<br>其中<code>project</code>字段中的<code>name</code>字段意为仓库链接去掉<code>https://github.com</code>之后剩下的，即<code>作者/仓库名</code>。</p>
+<p>然后再次进行<code>repo sync</code>一下，以下载设备树、内核源码等信息。</p>
+<blockquote>
+<p>⚠️ 注意：如果提示sync失败，则多次使用<code>repo sync -j1 --fail-fast</code>重试。<br>注意xml的格式化问题，不然sync会报错。比如xml最开头的字符不是<code>&lt;</code>而是空格时报如下错误:<code>error: in \</code>sync`: error parsing manifest ~&#x2F;android&#x2F;lineage&#x2F;.repo&#x2F;local_manifests&#x2F;federer.xml: XML or text declaration not at start of entity: line 1, column 1&#96;</p>
+</blockquote>
+<h2 id="提取设备专属固件"><a href="#提取设备专属固件" class="headerlink" title="提取设备专属固件"></a>提取设备专属固件</h2><p>插上已经root了的lineage设备(<strong>一定要是你即将编译的设备，比如我的是华为Federer-A01w</strong>)，终端前往<code>~/android/lineage/device/huawei/federer</code>文件夹，运行当前目录下的<code>./extract-files.sh</code></p>
+<blockquote>
+<p>如果提示<code>Unable to find helper script at ./../../../vendor/lineage/build/tools/extract_utils.sh</code>则前往<code>~/android/lineage/vendor/lineage/build/tools</code>，将<code>https://github.com/LineageOS/android_tools_extract-utils</code>下的所有文件全部下载到这个文件夹，保证<code>~/android/lineage/vendor/lineage/build/tools</code>文件夹下有<code>extract_utils.sh</code>脚本，再回去重新运行<code>./extract-files.sh</code></p>
+</blockquote>
+<blockquote>
+<p>如果一直没有弹出授权提示，并且手动<code>adb devices</code>提示<code>(missing udev rules? user is in the plugdev group); see [http://developer.android.com/tools/device.html]</code>，则先将你的用户组添加入<code>plugdev</code>然后安装<code>android-sdk-platform-tools-common</code>。具体操作如下：</p>
+</blockquote>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">sudo usermod -aG plugdev <span class="hljs-variable">$LOGNAME</span><br>sudo apt-get install android-sdk-platform-tools-common<br></code></pre></td></tr></table></figure>
+<p>然后<strong>重启电脑</strong>。再次<code>adb devices</code>，设备上就会弹出授权弹窗了。回到<code>~/android/lineage/device/huawei/federer</code>再次执行<code>./extract-files.sh</code></p>
+<h1 id="编译"><a href="#编译" class="headerlink" title="编译"></a>编译</h1><h2 id="选择默认内核编译配置文件"><a href="#选择默认内核编译配置文件" class="headerlink" title="选择默认内核编译配置文件"></a>选择默认内核编译配置文件</h2><p>在进行内核编译的时候，总要选择一个内核配置文件，也就是<code>defconfig</code>。通常在内核源码目录<code>/arch/arm64/configs</code>文件夹下，然后内核源码在lineage工程文件夹下的目录是<code>~/android/lineage/kernel/huawei/federer/</code>。<br>将你要用的<code>defconfig</code>记下，打开<code>device/huawei/federer/BoardConfig.mk</code>，找到(如果没有就新建)<code>TARGET_KERNEL_CONFIG</code>字段，将<code>defconfig</code>文件名作为字段值填入。最终可以找到这么一行信息：</p>
+<figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs makefile">TARGET_KERNEL_CONFIG := merge_hi6250_defconfig<br></code></pre></td></tr></table></figure>
+<p>同样的，设置<code>TARGET_KERNEL_SOURCE</code>指向内核源码所在目录：</p>
+<figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs makefile">TARGET_KERNEL_SOURCE := kernel/huawei/federer<br></code></pre></td></tr></table></figure>
+
+
+
+
+<h2 id="准备开始编译"><a href="#准备开始编译" class="headerlink" title="准备开始编译"></a>准备开始编译</h2><p>进入<code>~/android/lineage</code>文件夹。<br>进行最后的环境准备：<code>source build/envsetup.sh</code><br>选择要编译的设备：<code>lunch</code><br>然后会有一个设备列表，像这样：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs text">...<br>27. lineage_federer-eng<br>28. lineage_federer-userdebug<br>...<br>Which would you like? [aosp_arm-eng]<br></code></pre></td></tr></table></figure>
+<p>像我的设备，刚刚创建的是<code>federer</code>,那就选27或者28都行。</p>
+<h2 id="开始编译！"><a href="#开始编译！" class="headerlink" title="开始编译！"></a>开始编译！</h2><blockquote>
+<p>⚠️⚠️警告: 如果你的电脑和我一样只有<code>16GB</code>物理内存的话，请一定要<strong>开启</strong><code>SWAP</code>，否则会编到一半爆内存卡死，等待你的只有强制重启。<br>我的电脑<code>SWAP</code>给了<code>16GB</code>, 启用了<code>ZRAM</code></p>
+</blockquote>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">croot<br>brunch federer<br></code></pre></td></tr></table></figure>
+
+
+
+
+
+
+<h2 id="我遇到的一些问题"><a href="#我遇到的一些问题" class="headerlink" title="我遇到的一些问题"></a>我遇到的一些问题</h2><h3 id="Problem-1"><a href="#Problem-1" class="headerlink" title="Problem 1"></a>Problem 1</h3><blockquote>
+<p>include path缺失：system&#x2F;core&#x2F;base&#x2F;include&#x2F;android-base&#x2F;</p>
+</blockquote>
+<p>我从<del>咕噜咕噜</del>Google的AOSP源仓库里下载了这个文件。访问<a target="_blank" rel="noopener" href="https://android.googlesource.com/platform/system/core/+/c0e6e40/base/include/android-base">这里</a>，然后你能在屏幕顶上看到一个<code>tgz</code>按钮，点它然后下载，再在你的本地los工作目录里创建这个文件夹：<code>~/android/lineage/system/core/base/include/android-base/</code>，把压缩包里的文件全丢进去，再重新编译<del>等待下一个报错</del>。</p>
+<h3 id="Problem-2"><a href="#Problem-2" class="headerlink" title="Problem 2"></a>Problem 2</h3><blockquote>
+<p>device&#x2F;huawei&#x2F;federer&#x2F;sensors&#x2F;Android.mk: error: sensors.msm8916: LOCAL_COPY_HEADERS is obsolete. See <a target="_blank" rel="noopener" href="https://android.googlesource.com/platform/build/+/master/Changes.md#copy_headers">https://android.googlesource.com/platform/build/+/master/Changes.md#copy_headers</a></p>
+</blockquote>
+<p>参见<a target="_blank" rel="noopener" href="https://github.com/crdroidandroid/android/issues/57">此issue</a><br>这是makefile语法过时问题。打开<code>/home/android233/android/lineage/device/huawei/federer/BoardConfigCommon.mk</code>，在最前面添加<code>BUILD_BROKEN_USES_BUILD_COPY_HEADERS := true</code><br>~~<br>打开<code>device/huawei/federer/sensors/Android.mk</code>，将以下部分</p>
+<figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs makefile"><span class="hljs-comment"># Export calibration library needed dependency headers</span><br>LOCAL_COPY_HEADERS_TO := sensors/inc<br>LOCAL_COPY_HEADERS := 	\<br>		CalibrationModule.h \<br>		sensors_extension.h \<br>		sensors.h<br></code></pre></td></tr></table></figure>
+<p>替换为</p>
+<figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs makefile"><span class="hljs-comment"># Export calibration library needed dependency headers</span><br>LOCAL_COPY_HEADERS_TO := sensors/inc<br>LOCAL_EXPORT_C_INCLUDES := <span class="hljs-variable">$(LOCAL_PATH)</span><br></code></pre></td></tr></table></figure>
+<p>~~</p>
+<h3 id="Problem-3"><a href="#Problem-3" class="headerlink" title="Problem 3"></a>Problem 3</h3><blockquote>
+<p>device&#x2F;huawei&#x2F;t2-common&#x2F;camera&#x2F;QCamera2&#x2F;stack&#x2F;mm-camera-interface&#x2F;Android.mk: error: libmmcamera_interface: LOCAL_COPY_HEADERS is obsolete. See <a target="_blank" rel="noopener" href="https://android.googlesource.com/platform/build/+/master/Changes.md#copy_headers">https://android.googlesource.com/platform/build/+/master/Changes.md#copy_headers</a></p>
+</blockquote>
+<p>问题与<a href="#problem-2">Problem 2</a>重复。这是makefile语法过时问题。打开<code>/home/android233/android/lineage/device/huawei/t2-common/BoardConfigCommon.mk</code>，在最前面添加<code>BUILD_BROKEN_USES_BUILD_COPY_HEADERS := true</code><br>~~<br>打开<code>device/huawei/t2-common/camera/QCamera2/stack/mm-camera-interface/Android.mk</code>，将以下部分</p>
+<figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs makefile">LOCAL_COPY_HEADERS_TO := mm-camera-interface<br>LOCAL_COPY_HEADERS += ../common/cam_intf.h<br>LOCAL_COPY_HEADERS += ../common/cam_types.h<br></code></pre></td></tr></table></figure>
+<p>修改为</p>
+<figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs makefile">LOCAL_COPY_HEADERS_TO := mm-camera-interface<br>LOCAL_EXPORT_C_INCLUDES += <span class="hljs-variable">$(LOCAL_PATH)</span>/../common<br></code></pre></td></tr></table></figure>
+<p>~~</p>
+<h3 id="Problem-4"><a href="#Problem-4" class="headerlink" title="Problem 4"></a>Problem 4</h3><blockquote>
+<p>device&#x2F;huawei&#x2F;t2-common&#x2F;gps&#x2F;core&#x2F;Android.mk: error: libloc_core: LOCAL_COPY_HEADERS is obsolete. See <a target="_blank" rel="noopener" href="https://android.googlesource.com/platform/build/+/master/Changes.md#copy_headers">https://android.googlesource.com/platform/build/+/master/Changes.md#copy_headers</a></p>
+</blockquote>
+<p>问题与<a href="#problem-2">Problem 2</a>重复。打开<code>/home/android233/android/lineage/device/huawei/federer/BoardConfigCommon.mk</code>，在最前面添加<code>BUILD_BROKEN_USES_BUILD_COPY_HEADERS := true</code><br>~~<br>这是makefile语法过时问题。<br>打开<code>device/huawei/t2-common/gps/core/Android.mk</code>，将以下部分</p>
+<figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs makefile">LOCAL_COPY_HEADERS:= \<br>    LocApiBase.h \<br>    LocAdapterBase.h \<br>    ContextBase.h \<br>    LocDualContext.h \<br>    LBSProxyBase.h \<br>    UlpProxyBase.h \<br>    gps_extended_c.h \<br>    gps_extended.h \<br>    loc_core_log.h \<br>    LocAdapterProxyBase.h<br></code></pre></td></tr></table></figure>
+<p>修改为</p>
+<figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs makefile">LOCAL_EXPORT_C_INCLUDES := <span class="hljs-variable">$(LOCAL_PATH)</span><br></code></pre></td></tr></table></figure>
+<p>~~</p>
+<h3 id="Problem-5"><a href="#Problem-5" class="headerlink" title="Problem 5"></a>Problem 5</h3><blockquote>
+<p>device&#x2F;huawei&#x2F;t2-common&#x2F;gps&#x2F;loc_api&#x2F;libloc_api_50001&#x2F;Android.mk: error: libloc_eng: LOCAL_COPY_HEADERS is obsolete. See <a target="_blank" rel="noopener" href="https://android.googlesource.com/platform/build/+/master/Changes.md#copy_headers">https://android.googlesource.com/platform/build/+/master/Changes.md#copy_headers</a></p>
+</blockquote>
+<p>问题与<a href="#problem-2">Problem 2</a>重复。打开<code>/home/android233/android/lineage/device/huawei/t2-common/BoardConfigCommon.mk</code>，在最前面添加<code>BUILD_BROKEN_USES_BUILD_COPY_HEADERS := true</code><br>~~<br>这是makefile语法过时问题。<br>打开<code>device/huawei/t2-common/gps/loc_api/libloc_api_50001/Android.mk</code>，将以下部分</p>
+<figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs makefile">LOCAL_COPY_HEADERS:= \<br>   LocEngAdapter.h \<br>   loc.h \<br>   loc_eng.h \<br>   loc_eng_xtra.h \<br>   loc_eng_ni.h \<br>   loc_eng_agps.h \<br>   loc_eng_msg.h \<br>   loc_eng_log.h<br></code></pre></td></tr></table></figure>
+<p>修改为</p>
+<figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs makefile">LOCAL_EXPORT_C_INCLUDES := <span class="hljs-variable">$(LOCAL_PATH)</span><br></code></pre></td></tr></table></figure>
+<p>~~</p>
+<h3 id="Problem-6"><a href="#Problem-6" class="headerlink" title="Problem 6"></a>Problem 6</h3><blockquote>
+<p>device&#x2F;huawei&#x2F;t2-common&#x2F;gps&#x2F;utils&#x2F;Android.mk: error: libgps.utils: LOCAL_COPY_HEADERS is obsolete. See <a target="_blank" rel="noopener" href="https://android.googlesource.com/platform/build/+/master/Changes.md#copy_headers">https://android.googlesource.com/platform/build/+/master/Changes.md#copy_headers</a></p>
+</blockquote>
+<p>问题与<a href="#problem-2">Problem 2</a>重复。打开<code>/home/android233/android/lineage/device/huawei/t2-common/BoardConfigCommon.mk</code>，在最前面添加<code>BUILD_BROKEN_USES_BUILD_COPY_HEADERS := true</code><br>这是makefile语法过时问题。<br>打开<code>device/huawei/t2-common/gps/utils/Android.mk</code>，将以下部分</p>
+<figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs makefile">LOCAL_COPY_HEADERS:= \<br>   loc_log.h \<br>   loc_cfg.h \<br>   log_util.h \<br>   linked_list.h \<br>   msg_q.h \<br>   MsgTask.h \<br>   LocHeap.h \<br>   LocThread.h \<br>   LocTimer.h \<br>   loc_target.h \<br>   loc_timer.h \<br>   LocSharedLock.h \<br>   platform_lib_abstractions/platform_lib_includes.h \<br>   platform_lib_abstractions/platform_lib_time.h \<br>   platform_lib_abstractions/platform_lib_macros.h \<br>   loc_misc_utils.h<br></code></pre></td></tr></table></figure>
+<p>修改为</p>
+<figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs makefile">LOCAL_EXPORT_C_INCLUDES := <span class="hljs-variable">$(LOCAL_PATH)</span><br></code></pre></td></tr></table></figure>
+
+
+<h3 id="Problem-7"><a href="#Problem-7" class="headerlink" title="Problem 7"></a>Problem 7</h3><blockquote>
+<p>build&#x2F;make&#x2F;core&#x2F;base_rules.mk:338: error: device&#x2F;huawei&#x2F;t2-common&#x2F;gps&#x2F;utils: <a href="mailto:&#x4d;&#79;&#x44;&#x55;&#x4c;&#69;&#46;&#84;&#x41;&#82;&#71;&#69;&#x54;&#46;&#83;&#x48;&#x41;&#x52;&#x45;&#68;&#x5f;&#x4c;&#x49;&#x42;&#x52;&#x41;&#82;&#73;&#69;&#83;&#x2e;&#97;&#110;&#100;&#x72;&#x6f;&#x69;&#x64;&#46;&#104;&#x69;&#100;&#x6c;&#46;&#x62;&#x61;&#x73;&#x65;&#x40;&#49;&#46;&#x30;">&#x4d;&#79;&#x44;&#x55;&#x4c;&#69;&#46;&#84;&#x41;&#82;&#71;&#69;&#x54;&#46;&#83;&#x48;&#x41;&#x52;&#x45;&#68;&#x5f;&#x4c;&#x49;&#x42;&#x52;&#x41;&#82;&#73;&#69;&#83;&#x2e;&#97;&#110;&#100;&#x72;&#x6f;&#x69;&#x64;&#46;&#104;&#x69;&#100;&#x6c;&#46;&#x62;&#x61;&#x73;&#x65;&#x40;&#49;&#46;&#x30;</a> already defined by hardware&#x2F;lineage&#x2F;compat.</p>
+</blockquote>
+<p>这是被多个makefile重定义的问题。<br>打开<code>build/make/core/base_rules.mk</code>将第338行注释掉，<code>make clean</code>一下然后重新编译：</p>
+<figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs makefile"><span class="hljs-comment">#$(error $(LOCAL_PATH): $(module_id) already defined by $($(module_id)))</span><br></code></pre></td></tr></table></figure>
+
+
+<h3 id="Problem-8"><a href="#Problem-8" class="headerlink" title="Problem 8"></a>Problem 8</h3><blockquote>
+<p>device&#x2F;huawei&#x2F;t2-common&#x2F;mdm-helper&#x2F;Android.mk: error: libmdmdetect: LOCAL_COPY_HEADERS is obsolete. See <a target="_blank" rel="noopener" href="https://android.googlesource.com/platform/build/+/master/Changes.md#copy_headers">https://android.googlesource.com/platform/build/+/master/Changes.md#copy_headers</a></p>
+</blockquote>
+<p>问题与<a href="#problem-2">Problem 2</a>重复。这是makefile语法过时问题。打开<code>/home/android233/android/lineage/device/huawei/t2-common/BoardConfigCommon.mk</code>，在最前面添加<code>BUILD_BROKEN_USES_BUILD_COPY_HEADERS := true</code><br>~~<br>打开<code>device/huawei/t2-common/mdm-helper/Android.mk</code>，将以下部分</p>
+<figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs makefile">LOCAL_COPY_HEADERS := libmdmdetect/mdm_detect.h<br></code></pre></td></tr></table></figure>
+<p>修改为</p>
+<figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs makefile">LOCAL_EXPORT_C_INCLUDES := <span class="hljs-variable">$(LOCAL_PATH)</span>/libmdmdetect<br></code></pre></td></tr></table></figure>
+<p>~~</p>
+<h3 id="Problem-9"><a href="#Problem-9" class="headerlink" title="Problem 9"></a>Problem 9</h3><blockquote>
+<p>device&#x2F;huawei&#x2F;t2-common&#x2F;camera&#x2F;QCamera2&#x2F;HAL&#x2F;Android.mk: error: “camera.msm8916 (SHARED_LIBRARIES android-arm) missing libqdMetaData (SHARED_LIBRARIES android-arm)”<br>You can set ALLOW_MISSING_DEPENDENCIES&#x3D;true in your environment if this is intentional, but that may defer real problems until later in the build.<br>device&#x2F;huawei&#x2F;t2-common&#x2F;camera&#x2F;QCamera2&#x2F;HAL&#x2F;Android.mk: error: “camera.msm8916 (SHARED_LIBRARIES android-arm) missing libqservice (SHARED_LIBRARIES android-arm)”<br>You can set ALLOW_MISSING_DEPENDENCIES&#x3D;true in your environment if this is intentional, but that may defer real problems until later in the build.</p>
+</blockquote>
+<p>~~<br>这是个HAL层高通QCAM2驱动依赖缺失。先按照提示，设置环境变量<code>export ALLOW_MISSING_DEPENDENCIES=true</code>忽略此类问题。<br>打开<code>device/huawei/t2-common/camera/QCamera2/HAL/Android.mk</code>，将以下部分</p>
+<figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs makefile">LOCAL_SHARED_LIBRARIES += libqdMetaData libqservice libbinder<br></code></pre></td></tr></table></figure>
+<p>修改为</p>
+<figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs makefile">LOCAL_SHARED_LIBRARIES += libbinder<br></code></pre></td></tr></table></figure>
+<p>~~<br>不能这么做！<br>经过核查，LineageOS在19.0开始从源码清单里将<code>msm8916</code>部分驱动删除了：我们可以从这个<a target="_blank" rel="noopener" href="https://github.com/LineageOS/android/blob/lineage-19.0/snippets/lineage.xml">文件</a>的<code>74、99、100、101</code>行看出。我们只需将其补充到<code>~/android/lineage/.repo/local_manifests/federer.xml</code>中，然后重新<code>repo sync</code>再跑编译即可。<br>在<code>/home/android233/android/lineage/hardware/qcom-caf/msm8916/display/libqdutils/Android.mk</code>的26行，证明了我的说法：</p>
+<figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs makefile">LOCAL_MODULE  := libqdMetaData<br></code></pre></td></tr></table></figure>
+<p>解决方法：直接往<code>~/android/lineage/.repo/local_manifests/federer.xml</code>中添加以下语句：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">linkfile</span> <span class="hljs-attr">src</span>=<span class="hljs-string">&quot;os_pickup.mk&quot;</span> <span class="hljs-attr">dest</span>=<span class="hljs-string">&quot;hardware/qcom-caf/msm8916/Android.mk&quot;</span> /&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">project</span> <span class="hljs-attr">path</span>=<span class="hljs-string">&quot;hardware/qcom-caf/msm8916/audio&quot;</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;LineageOS/android_hardware_qcom_audio&quot;</span> <span class="hljs-attr">groups</span>=<span class="hljs-string">&quot;qcom,qcom_audio,pdk-qcom&quot;</span> <span class="hljs-attr">revision</span>=<span class="hljs-string">&quot;lineage-19.0-caf-msm8916&quot;</span> /&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">project</span> <span class="hljs-attr">path</span>=<span class="hljs-string">&quot;hardware/qcom-caf/msm8916/display&quot;</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;LineageOS/android_hardware_qcom_display&quot;</span> <span class="hljs-attr">groups</span>=<span class="hljs-string">&quot;pdk-qcom,qcom,qcom_display&quot;</span> <span class="hljs-attr">revision</span>=<span class="hljs-string">&quot;lineage-19.0-caf-msm8916&quot;</span> /&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">project</span> <span class="hljs-attr">path</span>=<span class="hljs-string">&quot;hardware/qcom-caf/msm8916/media&quot;</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;LineageOS/android_hardware_qcom_media&quot;</span> <span class="hljs-attr">groups</span>=<span class="hljs-string">&quot;qcom,pdk-qcom&quot;</span> <span class="hljs-attr">revision</span>=<span class="hljs-string">&quot;lineage-19.0-caf-msm8916&quot;</span> /&gt;</span><br></code></pre></td></tr></table></figure>
+<p>解决方法：我是修补<code>~/android/lineage/.repo/manifests/snippets/lineage.xml</code>实现的：（已弃用，用上面那个方法去。）<br>108行后添加:</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">project</span> <span class="hljs-attr">path</span>=<span class="hljs-string">&quot;hardware/qcom-caf/msm8916/audio&quot;</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;LineageOS/android_hardware_qcom_audio&quot;</span> <span class="hljs-attr">groups</span>=<span class="hljs-string">&quot;qcom,qcom_audio,pdk-qcom&quot;</span> <span class="hljs-attr">revision</span>=<span class="hljs-string">&quot;lineage-19.0-caf-msm8916&quot;</span> /&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">project</span> <span class="hljs-attr">path</span>=<span class="hljs-string">&quot;hardware/qcom-caf/msm8916/display&quot;</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;LineageOS/android_hardware_qcom_display&quot;</span> <span class="hljs-attr">groups</span>=<span class="hljs-string">&quot;pdk-qcom,qcom,qcom_display&quot;</span> <span class="hljs-attr">revision</span>=<span class="hljs-string">&quot;lineage-19.0-caf-msm8916&quot;</span> /&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">project</span> <span class="hljs-attr">path</span>=<span class="hljs-string">&quot;hardware/qcom-caf/msm8916/media&quot;</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;LineageOS/android_hardware_qcom_media&quot;</span> <span class="hljs-attr">groups</span>=<span class="hljs-string">&quot;qcom,pdk-qcom&quot;</span> <span class="hljs-attr">revision</span>=<span class="hljs-string">&quot;lineage-19.0-caf-msm8916&quot;</span> /&gt;</span><br></code></pre></td></tr></table></figure>
+<p>84行添加</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">linkfile</span> <span class="hljs-attr">src</span>=<span class="hljs-string">&quot;os_pickup.mk&quot;</span> <span class="hljs-attr">dest</span>=<span class="hljs-string">&quot;hardware/qcom-caf/msm8916/Android.mk&quot;</span> /&gt;</span><br></code></pre></td></tr></table></figure>
+
+<p><strong>当前正在和作者确认….上面只是我的解决方法。 &#x2F;&#x2F;TODO</strong></p>
+<h3 id="Problem-10"><a href="#Problem-10" class="headerlink" title="Problem 10"></a>Problem 10</h3><blockquote>
+<p>hardware&#x2F;qcom-caf&#x2F;msm8916&#x2F;display&#x2F;libhwcomposer&#x2F;..&#x2F;common.mk: error: “hwcomposer.msm8916 (SHARED_LIBRARIES android-arm64) missing libbfqio (SHARED_LIBRARIES android-arm64)”<br>You can set ALLOW_MISSING_DEPENDENCIES&#x3D;true in your environment if this is intentional, but that may defer real problems until later in the build.<br>hardware&#x2F;qcom-caf&#x2F;msm8916&#x2F;display&#x2F;libhwcomposer&#x2F;..&#x2F;common.mk: error: “hwcomposer.msm8916 (SHARED_LIBRARIES android-arm) missing libbfqio (SHARED_LIBRARIES android-arm)”<br>You can set ALLOW_MISSING_DEPENDENCIES&#x3D;true in your environment if this is intentional, but that may defer real problems until later in the build.</p>
+</blockquote>
+<p>果然，修补<code>lineage.xml</code>后出现了同样的错误：缺少<del><em>libFa♂Qio</em></del><code>libbfqio</code>。<br>前往github下载legacy的依赖库，添加到<code>~/android/lineage/.repo/local_manifests/federer.xml</code>中：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-comment">&lt;!--libbfqio--&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">remote</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;libbfqio&quot;</span> <span class="hljs-attr">fetch</span>=<span class="hljs-string">&quot;https://github.com&quot;</span> <span class="hljs-attr">revision</span>=<span class="hljs-string">&quot;android-9.0.0&quot;</span>/&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">project</span> <span class="hljs-attr">path</span>=<span class="hljs-string">&quot;hardware/qcom-caf/msm8916/display/libbfqio&quot;</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;AOSP-Legacy-MSM8916/platform_external_libbfqio&quot;</span> <span class="hljs-attr">remote</span>=<span class="hljs-string">&quot;libbfqio&quot;</span> /&gt;</span><br></code></pre></td></tr></table></figure>
+
+
+
+
+
+<h3 id="Problem-11"><a href="#Problem-11" class="headerlink" title="Problem 11"></a>Problem 11</h3><blockquote>
+<p>vendor&#x2F;lineage&#x2F;build&#x2F;tasks&#x2F;kernel.mk:139: warning: ***************************************************************<br>vendor&#x2F;lineage&#x2F;build&#x2F;tasks&#x2F;kernel.mk:140: warning: * Using prebuilt kernel binary instead of source              *<br>vendor&#x2F;lineage&#x2F;build&#x2F;tasks&#x2F;kernel.mk:141: warning: * THIS IS DEPRECATED, AND IS NOT ADVISED.                     *<br>vendor&#x2F;lineage&#x2F;build&#x2F;tasks&#x2F;kernel.mk:142: warning: * Please configure your device to download the kernel         *<br>vendor&#x2F;lineage&#x2F;build&#x2F;tasks&#x2F;kernel.mk:143: warning: * source repository to kernel&#x2F;huawei&#x2F;t2-common&#x2F;<br>vendor&#x2F;lineage&#x2F;build&#x2F;tasks&#x2F;kernel.mk:144: warning: * for more information                                        *<br>vendor&#x2F;lineage&#x2F;build&#x2F;tasks&#x2F;kernel.mk:145: warning: ***************************************************************</p>
+</blockquote>
+<p>啊这是个警告，就是说在编译vendor的时候一些东西直接拿之前编译好的二进制来用的话是不建议的。<br>后续补：诶卧槽不对，好像是我又下少东西了淦，就是上面配置<code>federer.xml</code>的地方，后来我多加了一行kernel-common。但是现在重新<code>repo sync</code>肯定是不行的，所以我们直接去<code>~/android/lineage/kernel/huawei</code>里将<code>t2-common</code>内核clone进来：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">git <span class="hljs-built_in">clone</span> --depth=1 https://github.com/datenpanne/android_kernel_huawei_t2-common.git t2-common<br></code></pre></td></tr></table></figure>
+<p>这个步骤因机型而异！！不要因为我这么操作了，你也这么操作！！</p>
+<h3 id="Problem-12"><a href="#Problem-12" class="headerlink" title="Problem 12"></a>Problem 12</h3><blockquote>
+<p>FAILED: ninja: ‘out&#x2F;target&#x2F;product&#x2F;federer&#x2F;kernel’, needed by ‘out&#x2F;target&#x2F;product&#x2F;federer&#x2F;recovery.img’, missing and no known rule to make it</p>
+</blockquote>
+<p>这是源码仓库提供的编译链里缺失了<code>dtbToolLineage</code>这个工具。我们只需要将其源码下载下来然后编译，再将其复制进去即可。具体操作如下：<br>前往<code>https://github.com/LineageOS/android_system_tools_dtbtool</code>仓库，将<code>dtbtool.c</code>文件直接下载到桌面，用gcc编译<code>gcc dtbtool.c -o dtbToolLineage</code>，生成的文件为<code>dtbToolLineage</code>，然后将它手动放到<code>~/android/lineage/out/host/linux-x86/bin/</code>下，重新运行<code>brunch federer</code>即可。<br>或者往<code>~/android/lineage/.repo/local_manifests/federer.xml</code>里添加如下内容：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-comment">&lt;!--dtbtool--&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">remote</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;dtbtool&quot;</span> <span class="hljs-attr">fetch</span>=<span class="hljs-string">&quot;https://github.com&quot;</span> <span class="hljs-attr">revision</span>=<span class="hljs-string">&quot;lineage-18.1&quot;</span>/&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">project</span> <span class="hljs-attr">path</span>=<span class="hljs-string">&quot;system/tools/dtbtool&quot;</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;LineageOS/android_system_tools_dtbtool&quot;</span> <span class="hljs-attr">remote</span>=<span class="hljs-string">&quot;dtbtool&quot;</span> /&gt;</span><br></code></pre></td></tr></table></figure>
+
+
+<h3 id="Problem-13"><a href="#Problem-13" class="headerlink" title="Problem 13"></a>Problem 13</h3><blockquote>
+<p>FAILED: ninja: ‘external&#x2F;ant-wireless&#x2F;antradio-library&#x2F;com.dsi.ant.antradio_library.xml’, needed by ‘out&#x2F;target&#x2F;product&#x2F;federer&#x2F;system&#x2F;vendor&#x2F;etc&#x2F;permissions&#x2F;com.dsi.ant.antradio_library.xml’, missing and no known rule to make it</p>
+</blockquote>
+<p>这是缺失<code>com.dsi.ant.antradio_library.xml</code>，我一看，好家伙这个目录下直接把它的父目录<code>antradio-library</code>整个弄丢了。我们只需要前往github将这个目录clone进去即可。<br>前往<code>~/android/lineage/external/ant-wireless/</code>执行</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">git <span class="hljs-built_in">clone</span> --depth=1 https://github.com/LineageOS/android_external_ant-wireless_antradio-library.git antradio-library<br></code></pre></td></tr></table></figure>
+
+
+<h3 id="Problem-14"><a href="#Problem-14" class="headerlink" title="Problem 14"></a>Problem 14</h3><blockquote>
+<p>FAILED: ninja: ‘vendor&#x2F;huawei&#x2F;federer&#x2F;proprietary&#x2F;vendor&#x2F;bin&#x2F;fm_qsoc_patches’, needed by ‘out&#x2F;target&#x2F;product&#x2F;federer&#x2F;system&#x2F;vendor&#x2F;bin&#x2F;fm_qsoc_patches’, missing and no known rule to make it</p>
+</blockquote>
+<p>这是缺失<code>fm_qsoc_patches</code>，我去原始<code>vendor</code>仓库找了一遍确实找到了，但是有点奇怪的是为什么我的电脑上这个文件不存在了。先不管了，回到<a target="_blank" rel="noopener" href="https://github.com/datenpanne/android_vendor_huawei_federer/blob/la-17.1/proprietary/vendor/bin/fm_qsoc_patches">github原始仓库</a>里把这个文件下下来手动放进<code>~/android/lineage/vendor/huawei/federer/proprietary/vendor/bin</code>再继续吧。</p>
+<h3 id="Problem-15"><a href="#Problem-15" class="headerlink" title="Problem 15"></a>Problem 15</h3><blockquote>
+<p>FAILED: ninja: ‘device&#x2F;huawei&#x2F;t2-common&#x2F;configs&#x2F;wpa_supplicant_overlay.conf’, needed by ‘out&#x2F;target&#x2F;product&#x2F;federer&#x2F;system&#x2F;vendor&#x2F;etc&#x2F;wifi&#x2F;wpa_supplicant_overlay.conf’, missing and no known rule to make it</p>
+</blockquote>
+<p>这是缺失<code>wpa_supplicant_overlay.conf</code>，我在原始仓库里找了一圈也没找到，但是在平板的<code>/vendor/etc/wifi/wpa_supplicant_overlay.conf</code>下找到了。<br>解决方法: 在<code>~/android/lineage/device/huawei/t2-common/configs</code>下创建文件<code>wpa_supplicant_overlay.conf</code>，内容填入如下:</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs text">disable_scan_offload=1<br>p2p_disabled=1<br>p2p_no_group_iface=1<br>tdls_external_control=1<br>interworking=1<br>hs20=1<br>auto_interworking=0<br>bss_max_count=512<br>bss_no_flush_when_down=1<br>driver_param=use_p2p_group_interface=1<br></code></pre></td></tr></table></figure>
+
+
+<h3 id="Problem-16"><a href="#Problem-16" class="headerlink" title="Problem 16"></a>Problem 16</h3><blockquote>
+<p>FAILED: ninja: ‘out&#x2F;target&#x2F;product&#x2F;federer&#x2F;obj_arm&#x2F;SHARED_LIBRARIES&#x2F;libqdMetaData_intermediates&#x2F;libqdMetaData.so.toc’, needed by ‘out&#x2F;target&#x2F;product&#x2F;federer&#x2F;obj_arm&#x2F;SHARED_LIBRARIES&#x2F;camera.msm8916_intermediates&#x2F;LINKED&#x2F;camera.msm8916.so’, missing and no known rule to make it</p>
+</blockquote>
+<p>问题与<a href="#problem-9">Problem 9</a>重复。把那个问题按照修补<code>~/android/lineage/.repo/local_manifests/federer.xml</code>的过程修补之后此报错就不会出现。</p>
+<h3 id="Problem-17"><a href="#Problem-17" class="headerlink" title="Problem 17"></a>Problem 17</h3><blockquote>
+<p>FAILED: build&#x2F;make&#x2F;core&#x2F;main.mk:1312: warning:  device&#x2F;huawei&#x2F;federer&#x2F;lineage_federer.mk includes non-existent modules in PRODUCT_PACKAGES<br>Offending entries: Snap TimeKeep <a href="mailto:&#x61;&#x6e;&#100;&#x72;&#x6f;&#105;&#x64;&#x2e;&#104;&#97;&#114;&#x64;&#x77;&#x61;&#x72;&#101;&#x2e;&#x61;&#x75;&#100;&#x69;&#111;&#x2e;&#x65;&#102;&#x66;&#x65;&#x63;&#116;&#64;&#x32;&#x2e;&#48;&#x2d;&#x73;&#101;&#x72;&#x76;&#x69;&#x63;&#x65;">&#x61;&#x6e;&#100;&#x72;&#x6f;&#105;&#x64;&#x2e;&#104;&#97;&#114;&#x64;&#x77;&#x61;&#x72;&#101;&#x2e;&#x61;&#x75;&#100;&#x69;&#111;&#x2e;&#x65;&#102;&#x66;&#x65;&#x63;&#116;&#64;&#x32;&#x2e;&#48;&#x2d;&#x73;&#101;&#x72;&#x76;&#x69;&#x63;&#x65;</a> <a href="mailto:&#x61;&#110;&#100;&#114;&#111;&#x69;&#100;&#46;&#104;&#x61;&#x72;&#100;&#119;&#x61;&#114;&#x65;&#46;&#98;&#x6c;&#x75;&#x65;&#116;&#x6f;&#111;&#116;&#104;&#x2e;&#97;&#50;&#x64;&#112;&#x40;&#x31;&#46;&#x30;&#45;&#105;&#109;&#x70;&#108;">&#x61;&#110;&#100;&#114;&#111;&#x69;&#100;&#46;&#104;&#x61;&#x72;&#100;&#119;&#x61;&#114;&#x65;&#46;&#98;&#x6c;&#x75;&#x65;&#116;&#x6f;&#111;&#116;&#104;&#x2e;&#97;&#50;&#x64;&#112;&#x40;&#x31;&#46;&#x30;&#45;&#105;&#109;&#x70;&#108;</a> <a href="mailto:&#97;&#110;&#100;&#x72;&#111;&#x69;&#x64;&#46;&#x68;&#x61;&#x72;&#100;&#x77;&#x61;&#x72;&#101;&#46;&#x64;&#114;&#x6d;&#x40;&#49;&#46;&#50;&#x2d;&#115;&#x65;&#114;&#118;&#105;&#99;&#x65;&#46;&#x77;&#105;&#100;&#x65;&#118;&#105;&#x6e;&#101;">&#97;&#110;&#100;&#x72;&#111;&#x69;&#x64;&#46;&#x68;&#x61;&#x72;&#100;&#x77;&#x61;&#x72;&#101;&#46;&#x64;&#114;&#x6d;&#x40;&#49;&#46;&#50;&#x2d;&#115;&#x65;&#114;&#118;&#105;&#99;&#x65;&#46;&#x77;&#105;&#100;&#x65;&#118;&#105;&#x6e;&#101;</a> <a href="mailto:&#x61;&#110;&#100;&#x72;&#111;&#x69;&#x64;&#x2e;&#x68;&#97;&#114;&#x64;&#x77;&#97;&#x72;&#x65;&#x2e;&#x67;&#114;&#x61;&#x70;&#x68;&#x69;&#x63;&#115;&#46;&#99;&#111;&#109;&#112;&#111;&#x73;&#x65;&#x72;&#x40;&#50;&#46;&#49;&#45;&#105;&#x6d;&#112;&#108;">&#x61;&#110;&#100;&#x72;&#111;&#x69;&#x64;&#x2e;&#x68;&#97;&#114;&#x64;&#x77;&#97;&#x72;&#x65;&#x2e;&#x67;&#114;&#x61;&#x70;&#x68;&#x69;&#x63;&#115;&#46;&#99;&#111;&#109;&#112;&#111;&#x73;&#x65;&#x72;&#x40;&#50;&#46;&#49;&#45;&#105;&#x6d;&#112;&#108;</a> <a href="mailto:&#97;&#x6e;&#100;&#114;&#x6f;&#105;&#100;&#x2e;&#104;&#x61;&#x72;&#x64;&#x77;&#97;&#x72;&#101;&#46;&#x70;&#111;&#x77;&#101;&#114;&#x40;&#x31;&#x2e;&#x32;&#x2d;&#x73;&#101;&#x72;&#x76;&#105;&#99;&#101;&#45;&#113;&#116;&#x69;">&#97;&#x6e;&#100;&#114;&#x6f;&#105;&#100;&#x2e;&#104;&#x61;&#x72;&#x64;&#x77;&#97;&#x72;&#101;&#46;&#x70;&#111;&#x77;&#101;&#114;&#x40;&#x31;&#x2e;&#x32;&#x2d;&#x73;&#101;&#x72;&#x76;&#105;&#99;&#101;&#45;&#113;&#116;&#x69;</a> <a href="mailto:&#x61;&#x6e;&#x64;&#x72;&#111;&#x69;&#100;&#x2e;&#104;&#97;&#114;&#100;&#x77;&#x61;&#x72;&#x65;&#46;&#x72;&#101;&#110;&#100;&#101;&#x72;&#115;&#x63;&#114;&#x69;&#x70;&#x74;&#64;&#49;&#x2e;&#x30;&#x2d;&#x73;&#101;&#114;&#118;&#105;&#x63;&#101;">&#x61;&#x6e;&#x64;&#x72;&#111;&#x69;&#100;&#x2e;&#104;&#97;&#114;&#100;&#x77;&#x61;&#x72;&#x65;&#46;&#x72;&#101;&#110;&#100;&#101;&#x72;&#115;&#x63;&#114;&#x69;&#x70;&#x74;&#64;&#49;&#x2e;&#x30;&#x2d;&#x73;&#101;&#114;&#118;&#105;&#x63;&#101;</a> <a href="mailto:&#x61;&#x6e;&#100;&#x72;&#x6f;&#x69;&#100;&#x2e;&#104;&#x61;&#114;&#100;&#x77;&#x61;&#114;&#x65;&#46;&#x77;&#x69;&#x66;&#x69;&#x2e;&#x6f;&#102;&#102;&#x6c;&#111;&#x61;&#x64;&#64;&#x31;&#46;&#48;&#45;&#x73;&#101;&#114;&#118;&#105;&#99;&#x65;">&#x61;&#x6e;&#100;&#x72;&#x6f;&#x69;&#100;&#x2e;&#104;&#x61;&#114;&#100;&#x77;&#x61;&#114;&#x65;&#46;&#x77;&#x69;&#x66;&#x69;&#x2e;&#x6f;&#102;&#102;&#x6c;&#111;&#x61;&#x64;&#64;&#x31;&#46;&#48;&#45;&#x73;&#101;&#114;&#118;&#105;&#99;&#x65;</a> <a href="mailto:&#97;&#x6e;&#100;&#x72;&#111;&#105;&#x64;&#x2e;&#x68;&#x69;&#100;&#108;&#46;&#x6d;&#97;&#x6e;&#x61;&#x67;&#101;&#114;&#64;&#x31;&#46;&#x30;&#45;&#106;&#97;&#118;&#97;">&#97;&#x6e;&#100;&#x72;&#111;&#105;&#x64;&#x2e;&#x68;&#x69;&#100;&#108;&#46;&#x6d;&#97;&#x6e;&#x61;&#x67;&#101;&#114;&#64;&#x31;&#46;&#x30;&#45;&#106;&#97;&#118;&#97;</a> copybit.msm8916 ebtables ethertypes keystore.msm8916 libOmxCore libOmxSwVencHevc libOmxVdecHevc libQWiFiSoftApCfg libbt-vendor libcnefeatureconfig libdashplayer libebtc libgenlock libmm-omxcore libmm-qcamera libqsap_sdk libstagefrighthw make_ext4fs thermal.msm8916 timekeep <a href="mailto:&#x76;&#101;&#110;&#x64;&#111;&#x72;&#x2e;&#113;&#116;&#105;&#46;&#104;&#97;&#114;&#100;&#119;&#x61;&#x72;&#x65;&#46;&#x63;&#114;&#x79;&#112;&#x74;&#102;&#115;&#x68;&#x77;&#64;&#x31;&#x2e;&#48;&#x2d;&#x73;&#x65;&#114;&#x76;&#x69;&#99;&#101;&#45;&#x71;&#x74;&#105;&#46;&#x71;&#115;&#x65;&#x65;">&#x76;&#101;&#110;&#x64;&#111;&#x72;&#x2e;&#113;&#116;&#105;&#46;&#104;&#97;&#114;&#100;&#119;&#x61;&#x72;&#x65;&#46;&#x63;&#114;&#x79;&#112;&#x74;&#102;&#115;&#x68;&#x77;&#64;&#x31;&#x2e;&#48;&#x2d;&#x73;&#x65;&#114;&#x76;&#x69;&#99;&#101;&#45;&#x71;&#x74;&#105;&#46;&#x71;&#115;&#x65;&#x65;</a> wifilogd<br>build&#x2F;make&#x2F;core&#x2F;main.mk:1312: error: Build failed.</p>
+</blockquote>
+<p>参考前面的QCamera2问题，系统提示叫你加环境变量的那个，产生原因和他也相同，本处不再详细分析，具体参考<code>https://github.com/LineageOS/android</code>中不同分支下的<code>snippets/lineage.xml</code>差异。<br>解决方案：<br>打开<code>~/android/lineage/device/huawei/t2-common/t2.mk</code>，将这些内容所在行全部用<code>#</code>注释掉(将他们先拖到所在块的最后一行，如果上一行有<code>\\</code>字符，则也要把上一行的这个字符删了，然后再注释掉最后一行，要不然会导致<code>MakeFile</code>语法错误。直接删掉也不是不行<del><em>能注释就不要删</em></del>)：</p>
+<figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs makefile">android.hardware.audio.effect@2.0-service<br>android.hardware.bluetooth.a2dp@1.0-impl<br>android.hardware.drm@1.2-service.widevine<br>android.hardware.wifi.offload@1.0-service<br>android.hidl.manager@1.0-java<br>android.hardware.renderscript@1.0-service<br></code></pre></td></tr></table></figure>
+<p>还是上面那个文件，将以下内容进行替换：</p>
+<figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs makefile">android.hardware.graphics.composer@2.1-impl 替换为 android.hardware.graphics.composer3<br>android.hardware.power@1.2-service-qti 替换为 android.hardware.power@1.2<br></code></pre></td></tr></table></figure>
+<p>还是上面那个文件，将这几段注释掉：</p>
+<figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs makefile">PRODUCT_PACKAGES += \<br>    vendor.qti.hardware.cryptfshw@1.0-service-qti.qsee<br>还有<br>PRODUCT_PACKAGES += \<br>    libbt-vendor<br>还有<br>PRODUCT_PACKAGES += \<br>    keystore.msm8916<br>还有下面这些<br>    libOmxSwVencHevc \<br>    libOmxVdecHevc \<br>    libQWiFiSoftApCfg \<br>    libebtc<br>    libgenlock<br>    libqsap_sdk<br>    make_ext4fs<br>    thermal.msm8916<br>    wifilogd<br></code></pre></td></tr></table></figure>
+<p>~~<br>编辑<code>~/android/lineage/.repo/manifests/default.xml</code>将这一行注释掉：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">project</span> <span class="hljs-attr">path</span>=<span class="hljs-string">&quot;hardware/qcom/bt&quot;</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;platform/hardware/qcom/bt&quot;</span> <span class="hljs-attr">groups</span>=<span class="hljs-string">&quot;qcom,pdk-qcom&quot;</span> <span class="hljs-attr">remote</span>=<span class="hljs-string">&quot;aosp&quot;</span> /&gt;</span><br></code></pre></td></tr></table></figure>
+<p>此时<code>repo sync</code>如果失败提示说找不到这个branch(revision)，则进入<code>~/android/lineage/hardware/qcom</code>执行命令：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">rm</span> -rf bt &amp;&amp; git <span class="hljs-built_in">clone</span> --depth=1 https://github.com/LineageOS/android_hardware_qcom_bt -b lineage-20.0-caf ~/hardware/qcom/bt<br></code></pre></td></tr></table></figure>
+<p>~~<br>再编辑<code>~/android/lineage/.repo/local_manifests/federer.xml</code>，直接添加以下语句：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-comment">&lt;!--device/huawei/federer/lineage_federer.mk includes non-existent modules in PRODUCT_PACKAGES--&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">remote</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;Snap&quot;</span> <span class="hljs-attr">fetch</span>=<span class="hljs-string">&quot;https://github.com&quot;</span> <span class="hljs-attr">revision</span>=<span class="hljs-string">&quot;lineage-18.1&quot;</span>/&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">project</span> <span class="hljs-attr">path</span>=<span class="hljs-string">&quot;packages/apps/Snap&quot;</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;LineageOS/android_packages_apps_Snap&quot;</span> <span class="hljs-attr">remote</span>=<span class="hljs-string">&quot;Snap&quot;</span> /&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">remote</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;timekeep&quot;</span> <span class="hljs-attr">fetch</span>=<span class="hljs-string">&quot;https://github.com&quot;</span> <span class="hljs-attr">revision</span>=<span class="hljs-string">&quot;lineage-20&quot;</span>/&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">project</span> <span class="hljs-attr">path</span>=<span class="hljs-string">&quot;packages/apps/timekeep&quot;</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;LineageOS/android_hardware_sony_timekeep&quot;</span> <span class="hljs-attr">remote</span>=<span class="hljs-string">&quot;timekeep&quot;</span> /&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">remote</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;mm-audio&quot;</span> <span class="hljs-attr">fetch</span>=<span class="hljs-string">&quot;https://github.com&quot;</span> <span class="hljs-attr">revision</span>=<span class="hljs-string">&quot;cm-9.1.0&quot;</span> /&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">project</span> <span class="hljs-attr">path</span>=<span class="hljs-string">&quot;vendor/qcom/opensource/omx/mm-audio&quot;</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;LineageOS/android_vendor_qcom_opensource_omx_mm-audio&quot;</span> <span class="hljs-attr">remote</span>=<span class="hljs-string">&quot;mm-audio&quot;</span> /&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">remote</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;mm-video&quot;</span> <span class="hljs-attr">fetch</span>=<span class="hljs-string">&quot;https://github.com&quot;</span> <span class="hljs-attr">revision</span>=<span class="hljs-string">&quot;cm-9.1.0&quot;</span> /&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">project</span> <span class="hljs-attr">path</span>=<span class="hljs-string">&quot;vendor/qcom/opensource/omx/mm-video&quot;</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;LineageOS/android_vendor_qcom_opensource_omx_mm-video&quot;</span> <span class="hljs-attr">remote</span>=<span class="hljs-string">&quot;mm-video&quot;</span> /&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">remote</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;mm-core&quot;</span> <span class="hljs-attr">fetch</span>=<span class="hljs-string">&quot;https://github.com&quot;</span> <span class="hljs-attr">revision</span>=<span class="hljs-string">&quot;cm-9.1.0&quot;</span> /&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">project</span> <span class="hljs-attr">path</span>=<span class="hljs-string">&quot;vendor/qcom/opensource/omx/mm-core&quot;</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;LineageOS/android_vendor_qcom_opensource_omx_mm-core&quot;</span> <span class="hljs-attr">remote</span>=<span class="hljs-string">&quot;mm-core&quot;</span> /&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">remote</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;ebtables&quot;</span> <span class="hljs-attr">fetch</span>=<span class="hljs-string">&quot;https://github.com&quot;</span> <span class="hljs-attr">revision</span>=<span class="hljs-string">&quot;lineage-15.1&quot;</span> /&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">project</span> <span class="hljs-attr">path</span>=<span class="hljs-string">&quot;external/ebtables&quot;</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;LineageOS/android_external_ebtables&quot;</span> <span class="hljs-attr">remote</span>=<span class="hljs-string">&quot;ebtables&quot;</span> /&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">remote</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;mm-dash&quot;</span> <span class="hljs-attr">fetch</span>=<span class="hljs-string">&quot;https://github.com&quot;</span> <span class="hljs-attr">revision</span>=<span class="hljs-string">&quot;cm-11.0&quot;</span> /&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">project</span> <span class="hljs-attr">path</span>=<span class="hljs-string">&quot;external/mm-dash&quot;</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;LineageOS/android_external_mm-dash&quot;</span> <span class="hljs-attr">remote</span>=<span class="hljs-string">&quot;mm-dash&quot;</span> /&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">remote</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;cryptfs_hw&quot;</span> <span class="hljs-attr">fetch</span>=<span class="hljs-string">&quot;https://github.com&quot;</span> <span class="hljs-attr">revision</span>=<span class="hljs-string">&quot;lineage-19.1&quot;</span> /&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">project</span> <span class="hljs-attr">path</span>=<span class="hljs-string">&quot;vendor/qcom/opensource/cryptfs_hw&quot;</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;LineageOS/android_vendor_qcom_opensource_cryptfs_hw&quot;</span> <span class="hljs-attr">remote</span>=<span class="hljs-string">&quot;cryptfs_hw&quot;</span> <span class="hljs-attr">groups</span>=<span class="hljs-string">&quot;qcom,pdk-qcom&quot;</span> /&gt;</span><br></code></pre></td></tr></table></figure>
+<p>然后再在26行添加以下语句，以让编译系统知道这来自老旧的仓库，这些文件是旧的格式而非最新格式，就不会因此而报错：</p>
+<figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs makefile">TARGET_DISABLE_EPPE := true<br></code></pre></td></tr></table></figure>
+<p>剩下这些丢失就会自动忽略：<code>copybit.msm8916 libdashplayer libmm-qcamera libstagefrighthw libcnefeatureconfig</code>,在<a target="_blank" rel="noopener" href="https://review.lineageos.org/c/LineageOS/android_device_motorola_msm8916-common/+/324283/6/msm8916.mk#313">Lineage Gerrit</a>中只保留了这两个：<code>libstagefrighthw libcnefeatureconfig</code></p>
+<h3 id="Problem-18"><a href="#Problem-18" class="headerlink" title="Problem 18"></a>Problem 18</h3><blockquote>
+<p>vendor&#x2F;qcom&#x2F;opensource&#x2F;omx&#x2F;mm-core&#x2F;omxcore&#x2F;Android.mk: error: libOmxCore: LOCAL_COPY_HEADERS is obsolete. See <a target="_blank" rel="noopener" href="https://android.googlesource.com/platform/build/+/master/Changes.md#copy_headers">https://android.googlesource.com/platform/build/+/master/Changes.md#copy_headers</a></p>
+</blockquote>
+<p>问题与<a href="#problem-2">Problem 2</a>重复。打开<code>/home/android233/android/lineage/vendor/qcom/opensource/omx/mm-core/omxcore/omxcore.mk</code>，在最前面添加<code>BUILD_BROKEN_USES_BUILD_COPY_HEADERS := true</code><br>~~<br>这是makefile语法过时问题。<br>打开<code>vendor/qcom/opensource/omx/mm-core/omxcore/Android.mk</code>，将以下部分</p>
+<figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><code class="hljs makefile">LOCAL_COPY_HEADERS      := inc/OMX_Audio.h<br>LOCAL_COPY_HEADERS      += inc/OMX_Component.h<br>LOCAL_COPY_HEADERS      += inc/OMX_ContentPipe.h<br>LOCAL_COPY_HEADERS      += inc/OMX_Core.h<br>LOCAL_COPY_HEADERS      += inc/OMX_Image.h<br>LOCAL_COPY_HEADERS      += inc/OMX_Index.h<br>LOCAL_COPY_HEADERS      += inc/OMX_IVCommon.h<br>LOCAL_COPY_HEADERS      += inc/OMX_Other.h<br>LOCAL_COPY_HEADERS      += inc/OMX_QCOMExtns.h<br>LOCAL_COPY_HEADERS      += inc/OMX_Types.h<br>LOCAL_COPY_HEADERS      += inc/OMX_Video.h<br>LOCAL_COPY_HEADERS      += inc/qc_omx_common.h<br>LOCAL_COPY_HEADERS      += inc/qc_omx_component.h<br>LOCAL_COPY_HEADERS      += inc/qc_omx_msg.h<br>LOCAL_COPY_HEADERS      += inc/QOMX_AudioExtensions.h<br>LOCAL_COPY_HEADERS      += inc/QOMX_AudioIndexExtensions.h<br>LOCAL_COPY_HEADERS      += inc/OMX_CoreExt.h<br>LOCAL_COPY_HEADERS      += inc/QOMX_CoreExtensions.h<br>LOCAL_COPY_HEADERS      += inc/QOMX_FileFormatExtensions.h<br>LOCAL_COPY_HEADERS      += inc/QOMX_IVCommonExtensions.h<br>LOCAL_COPY_HEADERS      += inc/QOMX_SourceExtensions.h<br>LOCAL_COPY_HEADERS      += inc/QOMX_VideoExtensions.h<br>LOCAL_COPY_HEADERS      += inc/OMX_IndexExt.h<br>LOCAL_COPY_HEADERS      += inc/QOMX_StreamingExtensions.h<br></code></pre></td></tr></table></figure>
+<p>修改为</p>
+<figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs makefile">LOCAL_EXPORT_C_INCLUDES := <span class="hljs-variable">$(LOCAL_PATH)</span>/inc<br></code></pre></td></tr></table></figure>
+<p>~~</p>
+<h3 id="Problem-19"><a href="#Problem-19" class="headerlink" title="Problem 19"></a>Problem 19</h3><blockquote>
+<p>error: vendor&#x2F;qcom&#x2F;opensource&#x2F;cryptfs_hw&#x2F;Android.bp:14:1: “libcryptfs_hw” depends on undefined module “legacy_hw_disk_encryption_defaults”</p>
+</blockquote>
+<p>打开<code>vendor/qcom/opensource/cryptfs_hw/Android.bp</code>，删除这个部分以及前面的一个逗号(Android13起不需要这个apex,所以可以移除)</p>
+<figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs makefile"><span class="hljs-string">&quot;vendor.qti.hardware.cryptfshw@1.0&quot;</span>,<br></code></pre></td></tr></table></figure>
+<p>和这个部分</p>
+<figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs makefile"><span class="hljs-section">defaults: [</span><br>  <span class="hljs-string">&quot;legacy_hw_disk_encryption_defaults&quot;</span>,<br>],<br></code></pre></td></tr></table></figure>
+
+
+<h3 id="Problem-20"><a href="#Problem-20" class="headerlink" title="Problem 20"></a>Problem 20</h3><blockquote>
+<p>build&#x2F;make&#x2F;core&#x2F;tasks&#x2F;platform_availability_check.mk:37: warning:  Following modules are requested to be installed. But are not available for platform because they do not have “&#x2F;&#x2F;apex_available:platform” or they depend on other modules that are not available for platform<br>Offending entries:<br>audio.a2dp.default:packages&#x2F;modules&#x2F;Bluetooth&#x2F;system&#x2F;audio_a2dp_hw<br>audio.a2dp.default_32:packages&#x2F;modules&#x2F;Bluetooth&#x2F;system&#x2F;audio_a2dp_hw<br>In file included from build&#x2F;make&#x2F;core&#x2F;main.mk:1456:<br>In file included from build&#x2F;make&#x2F;core&#x2F;Makefile:7030:<br>build&#x2F;make&#x2F;core&#x2F;tasks&#x2F;platform_availability_check.mk:37: error: Build failed.</p>
+</blockquote>
+<p>打开<code>~/home/android233/android/lineage/build/make/core/tasks/platform_availability_check</code>,将37行注释掉。</p>
+<h3 id="Problem-21"><a href="#Problem-21" class="headerlink" title="Problem 21"></a>Problem 21</h3><blockquote>
+<p>FAILED: ninja: ‘vendor&#x2F;huawei&#x2F;federer&#x2F;proprietary&#x2F;vendor&#x2F;bin&#x2F;fm_qsoc_patches’, needed by ‘out&#x2F;target&#x2F;product&#x2F;federer&#x2F;system&#x2F;vendor&#x2F;bin&#x2F;fm_qsoc_patches’, missing and no known rule to make it</p>
+</blockquote>
+<p>与 <a href="#problem-14">Problem 14</a> 重复。</p>
+<h3 id="Problem-22"><a href="#Problem-22" class="headerlink" title="Problem 22"></a>Problem 22</h3><blockquote>
+<p>ccache: error: Failed to create directory &#x2F;home&#x2F;android233&#x2F;.cache&#x2F;ccache&#x2F;tmp: Not a directory</p>
+</blockquote>
+<p>在我电脑上，<code>~/.cache/ccache</code>居然是个大小<code>0B</code>的空文件？难怪阻止了在目录下创建<code>tmp</code>文件。将<code>ccache</code>文件删了，<code>ninja</code>会自动创建<code>tmp</code>文件。问题解决。</p>
+<h3 id="Problem-23"><a href="#Problem-23" class="headerlink" title="Problem 23"></a>Problem 23</h3><blockquote>
+<p>device&#x2F;huawei&#x2F;t2-common&#x2F;gps&#x2F;core&#x2F;ContextBase.h:34:10: fatal error: ‘MsgTask.h’ file not found<br>#include &lt;MsgTask.h&gt;<br>         ^~~~~~~~~~~</p>
+</blockquote>
+<p>~~<br>C&#x2F;C++规定用尖括号包含的头文件是从系统目录中搜索的，而用引号包含的头文件是从当前目录中搜索的。后面就是根据报错日志修改C++源码的时候了。</p>
+<h3 id="Problem-24"><a href="#Problem-24" class="headerlink" title="Problem 24"></a>Problem 24</h3><blockquote>
+<p>found ELF prebuilt in PRODUCT_COPY_FILES, use cc_prebuilt_binary &#x2F; cc_prebuilt_library_shared instead.</p>
+</blockquote>
+<p>参考<a target="_blank" rel="noopener" href="https://github.com/remote-android/redroid-doc/issues/275">此issue</a><br>打开<code>/home/android233/android/lineage/device/huawei/federer/BoardConfig.mk</code>，在<code>最顶上</code>添加：<code>BUILD_BROKEN_ELF_PREBUILT_PRODUCT_COPY_FILES := true</code></p>
+<p>或者这样也行(我用的上面那个方法):<br>打开<code>/home/android233/android/lineage/build/make/core/Makefile</code>,将以下几行注释或删除：</p>
+<figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs makefile">check_elf_prebuilt_product_copy_files := true<br><span class="hljs-keyword">ifneq</span> (,<span class="hljs-variable">$(<span class="hljs-built_in">filter</span> true,<span class="hljs-variable">$(BUILD_BROKEN_ELF_PREBUILT_PRODUCT_COPY_FILES)</span>)</span>)<br>check_elf_prebuilt_product_copy_files :=<br><span class="hljs-keyword">endif</span><br></code></pre></td></tr></table></figure>
+
+
+<h3 id="Problem-25"><a href="#Problem-25" class="headerlink" title="Problem 25"></a>Problem 25</h3><blockquote>
+<p>clang: error: unable to execute command: Executable “ld” doesn’t exist!<br>make[1]: *** [&#x2F;home&#x2F;android233&#x2F;android&#x2F;lineage&#x2F;kernel&#x2F;huawei&#x2F;t2-common&#x2F;Makefile:426: scripts_basic] Error 2</p>
+</blockquote>
+<p>这个问题参见<a target="_blank" rel="noopener" href="https://www.reddit.com/r/LineageOS/comments/uarj83/help_building_lineage_171_for_porg_nvidia_jetson/">reddit</a>以及<a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/67175341/build-error-with-clang-msm-3-18-kernel-android-q">Stack Overflow</a><br>这个修复起来稍微有点复杂，要涉及到抓bug的操作。<br>第一步先去打开上面说的那个文件，找到报错所在行<code>426</code>，它附近的代码是这样的：</p>
+<figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs makefile"><span class="hljs-comment"># Basic helpers built in scripts/</span><br>PHONY += scripts_basic<br><span class="hljs-section">scripts_basic:</span><br>	<span class="hljs-variable">$(Q)</span><span class="hljs-variable">$(MAKE)</span> <span class="hljs-variable">$(build)</span>=scripts/basic<br>	<span class="hljs-variable">$(Q)</span>rm -f .tmp_quiet_recordmcount<br></code></pre></td></tr></table></figure>
+<p>向上找到<code>LD</code>的定义位置(我这里是328行)：</p>
+<figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs makefile">LD		= <span class="hljs-variable">$(CROSS_COMPILE)</span>ld<br></code></pre></td></tr></table></figure>
+<p>回到<code>426</code>行那里，将那块代码修改为这样：</p>
+<figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs makefile"><span class="hljs-comment"># Basic helpers built in scripts/</span><br>PHONY += scripts_basic<br><span class="hljs-section">scripts_basic:</span><br>	@echo <span class="hljs-string">&quot;============CROSS_COMPILE=<span class="hljs-variable">$(CROSS_COMPILE)</span>&quot;</span><br>	@echo <span class="hljs-string">&quot;============LD=<span class="hljs-variable">$(LD)</span>&quot;</span><br>	<span class="hljs-variable">$(Q)</span><span class="hljs-variable">$(MAKE)</span> <span class="hljs-variable">$(build)</span>=scripts/basic<br>	<span class="hljs-variable">$(Q)</span>rm -f .tmp_quiet_recordmcount<br></code></pre></td></tr></table></figure>
+<p>然后重新进行<code>brunch federer</code>编译工程，复现这个问题，将多出来的两行输出记下，重点关注多出来的第二行<code>LD</code>的输出。在我电脑上是这样的：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs text">============CROSS_COMPILE=/home/android233/android/lineage/prebuilts/gcc/linux-x86/aarch64/aarch64-linux-android-4.9/bin/aarch64-linux-android-<br>============LD=/home/android233/android/lineage/prebuilts/clang/host/linux-x86/clang-r450784d/bin/ld.lld<br></code></pre></td></tr></table></figure>
+<p>前往<code>LD</code>所在的目录，用<code>ls -al</code>查看目录下的详细结构。一般会发现缺少了<code>ld</code>这个文件，而且能看到有<code>lld</code>这个文件(或者软链接)。我的这个目录是这样的：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs text">...<br>lrwxrwxrwx  1 android233 android233         3  1月22日 14:47 ld.lld -&gt; lld<br>-rwxr-xr-x  1 android233 android233  56810672  1月22日 14:47 lld<br>...<br></code></pre></td></tr></table></figure>
+<p>我们可以看到，<code>lld</code>是个二进制文件，但<code>ld.lld</code>是个链接。我们只需要为<code>lld</code>再创建一个名为<code>ld</code>的链接到当前目录即可(当然复制也不是不行23333)。具体操作就是，这么执行命令：<code>ln -sf lld ld</code>(或者干脆<code>cp lld ld</code>)。<br>最后，重新编译项目<code>brunch federer</code>，解决！</p>
+<h3 id="Problem-26"><a href="#Problem-26" class="headerlink" title="Problem 26"></a>Problem 26</h3><blockquote>
+<p>device&#x2F;huawei&#x2F;federer&#x2F;init&#x2F;init_heap.cpp:74:5: error: use of undeclared identifier ‘property_set’</p>
+</blockquote>
+<p>经过核查，相比<a target="_blank" rel="noopener" href="http://aospxref.com/android-10.0.0_r47/xref/system/core/init/property_service.h">安卓10</a>,自<a target="_blank" rel="noopener" href="http://aospxref.com/android-11.0.0_r21/xref/system/core/init/property_service.h">安卓11</a>开始，<code>property_set</code>已从命名空间<code>android::init::</code>下删除，并且同基线CPU的其他设备也弃用了这个参数初始化文件。此更改同步到了安卓13。打开<code>/home/android233/android/lineage/device/huawei/federer/init/init_heap.cpp</code>，将涉及到该命名空间的所有行全注释。</p>
+<h3 id="Problem-27"><a href="#Problem-27" class="headerlink" title="Problem 27"></a>Problem 27</h3><blockquote>
+<p>system&#x2F;libbase&#x2F;include&#x2F;android-base&#x2F;result.h:378:1: error: too many template parameters in template redeclaration<br>template &lt;typename T, typename E, bool include_message&gt;</p>
+</blockquote>
+<p>打开<code>system/libbase/include/android-base/result.h</code>，把378行所在的模板类定义及其结构体一整个删除</p>
+<h3 id="Problem-28"><a href="#Problem-28" class="headerlink" title="Problem 28"></a>Problem 28</h3><blockquote>
+<p>ld.lld: error: duplicate symbol: yylloc</p>
+</blockquote>
+<p>打开<code>/home/android233/android/lineage/kernel/huawei/t2-common/scripts/dtc/dtc-lexer.lex.c_shipped</code>，将<code>extern YYLTYPE yylloc;</code>修改为<code>YYLTYPE yylloc;</code></p>
+<h3 id="Problem-29"><a href="#Problem-29" class="headerlink" title="Problem 29"></a>Problem 29</h3><blockquote>
+<p>一连串的devicetable-offsets.c:27:2: error: unexpected token at start of statement: DEVID_FIELD(hid_device_id, vendor);报错(同文件不同行)</p>
+</blockquote>
+<p>打开<code>/home/android233/android/lineage/kernel/huawei/t2-common/Makefile</code>，将<code>KBUILD_CFLAGS	+= $(call cc-disable-warning,maybe-uninitialized,)</code>替换为<code>KBUILD_CFLAGS	+= $(call cc-disable-warning,uninitialized,)</code><br>参见<a target="_blank" rel="noopener" href="https://github.com/MiCode/Xiaomi_Kernel_OpenSource/issues/2469">此issue</a>,打开<code>/home/android233/android/lineage/kernel/huawei/t2-common/include/linux/kbuild.h</code>,将<code>asm volatile(&quot;\n-&gt;&quot; #sym &quot; %0 &quot; #val : : &quot;i&quot; (val))</code>替换为<code>asm volatile(&quot;\n.ascii \&quot;-&gt;&quot; #sym &quot; %0 &quot; #val &quot;\&quot;&quot; : : &quot;i&quot; (val))</code></p>
+<h3 id="Problem-30"><a href="#Problem-30" class="headerlink" title="Problem 30"></a>Problem 30</h3><blockquote>
+<p>&#x2F;bin&#x2F;sh: 1: cd: can’t cd to &#x2F;home&#x2F;android233&#x2F;android&#x2F;lineage&#x2F;out&#x2F;soong&#x2F;.intermediates&#x2F;vendor&#x2F;lineage&#x2F;build&#x2F;soong&#x2F;generated_kernel_includes&#x2F;gen</p>
+</blockquote>
+<p>进入<code>~/android/lineage/out/soong/.intermediates/vendor</code>执行<code>mkdir -p lineage/build/soong/generated_kernel_includes/gen</code></p>
+<h3 id="Problem-31"><a href="#Problem-31" class="headerlink" title="Problem 31"></a>Problem 31</h3><blockquote>
+<p>scripts&#x2F;mod&#x2F;file2alias.c:176:2: error: use of undeclared identifier</p>
+</blockquote>
+<p>。。。不修了，以后再说吧，太耗时间了，投入产出不成正比。</p>
+<h1 id="引用的文档和页面"><a href="#引用的文档和页面" class="headerlink" title="引用的文档和页面"></a>引用的文档和页面</h1><p><a target="_blank" rel="noopener" href="https://wiki.lineageos.org/devices/dipper/build/#prepare-the-device-specific-code">Lineage Wiki - Build LineageOS for Xiaomi Mi 8</a><br><a target="_blank" rel="noopener" href="https://review.lineageos.org/c/LineageOS/android_device_motorola_msm8916-common/+/324283">LineageOS Gerrit</a><br><a target="_blank" rel="noopener" href="https://github.com/LineageOS/android/tree/lineage-19.1">Github - LineageOS</a><br><a target="_blank" rel="noopener" href="http://developer.android.com/tools/device.html">Android Developers -  apps on a hardware device</a><br><a target="_blank" rel="noopener" href="https://source.android.google.cn/docs/setup/download">Android Developers - Source control tools</a><br><a target="_blank" rel="noopener" href="https://source.android.google.cn/docs/core/graphics/aidl-hwc?hl=zh-cn">Android Developers - 适用于硬件混合渲染器 HAL 的 AIDL</a><br><a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/67175341/build-error-with-clang-msm-3-18-kernel-android-q">Stack Overflow - Build error with Clang + msm-3.18 Kernel Android Q</a><br><a target="_blank" rel="noopener" href="https://www.reddit.com/r/LineageOS/comments/uarj83/help_building_lineage_171_for_porg_nvidia_jetson/">Reddit - [help] Building Lineage 17.1 for porg</a><br><a target="_blank" rel="noopener" href="https://mirrors.tuna.tsinghua.edu.cn/help/lineageOS/">清华大学开源镜像站 - lineageOS 源代码镜像使用帮助</a><br><a target="_blank" rel="noopener" href="https://developer.sony.com/open-source/aosp-on-xperia-open-devices/guides/aosp-build-instructions/build-aosp-android-14/">Sony - Build AOSP Android 14</a><br><a target="_blank" rel="noopener" href="https://github.com/LeCmnGend/How_to_build_ROM">Github - LeCmnGend&#x2F;How_to_build_ROM</a><br><a target="_blank" rel="noopener" href="https://blog.csdn.net/u010164190/article/details/131278747">CSDN - Android12之编译报错LOCAL_COPY_HEADERS is obsolete</a></p>
+<hr>
+<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/luoyesiqiu/p/10701419.html">cnblogs&#x2F;luoyesiqiu - 自己动手编译Android(LineageOS)源码</a><br><a target="_blank" rel="noopener" href="https://xdaforums.com/t/guide-how-to-building-lineageos-for-an-unsupported-device.4419263/">XDA Developers - [GUIDE&#x2F;HOW-TO] Building LineageOS for an Unsupported Device</a><br><a target="_blank" rel="noopener" href="https://android.stackexchange.com/questions/216435/how-to-build-lineageos-for-a-device-without-official-support">StackExchange - How to build lineageos for a device without official support</a></p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E5%85%B6%E4%BB%96%E7%9A%84%E5%BC%80%E5%8F%91%E6%9D%82%E8%AE%B0/" class="category-chain-item">其他的开发杂记</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>记一次未完成的Android编译....</div>
+      <div>http://blog.coolenoch.ink/2024/01/25/8记一次未完成的Android编译....-240125/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>CoolestEnoch</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2024年1月25日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2024/03/01/9%E8%AE%B0%E6%9C%AC%E7%A7%91%E6%AF%95%E4%B8%9A%E5%AE%9E%E4%B9%A0%E7%9A%84%E4%BB%A3%E7%A0%81-240301/" title="记本科毕业实习的代码">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">记本科毕业实习的代码</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2024/01/14/7iSH%E7%9A%84%E6%B5%85%E6%8A%98%E8%85%BE%E8%AE%B0%E5%BD%95-240114/" title="iSH的浅折腾记录">
+                        <span class="hidden-mobile">iSH的浅折腾记录</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+  
+<script src="/js/effect/GoTop/jquery.min.js"></script>
+<script src="/js/effect/lib/jquery-1.9.1.min.js"></script>
+<script src="/js/effect/lib/jquery-3.6.0.min.js"></script>
+<script src="/js/effect/clickeffect.js"></script>
+<script src="/js/effect/clickWord.js"></script>
+<script src="/js/effect/emojiCursor.js"></script>
+<script src="/js/effect/sakura-less.js"></script>
+<script src="/js/effect/sakana@1.0.8.js"></script>
+<script src="/js/effect/cuteTitle.js"></script>
+<script src="/js/effect/GoTop/szgotop.js"></script>
+<script src="/js/effect/Netease.js"></script>
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

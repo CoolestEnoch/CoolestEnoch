@@ -1,0 +1,750 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
+  <link rel="icon" href="/img/favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="CoolestEnoch">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="(封面图源知乎KDE 与 GNOME：什么是 Linux 桌面的终极选择？ | Linux 中国) tl;dr上周，KDE Plasma发布了6.0版本。可是，我还没做好更新的准备。在更新到KDE6之后，好多的小组件都不兼容了，比如panon、window buttons等，好多好多的都炸了。好巧不巧的是，我苏菲里的Arch Linux也有两个多月没滚了。还记得曾经最顶的一次五个月没滚，然后一滚直">
+<meta property="og:type" content="article">
+<meta property="og:title" content="从KDE到Gnome的旅程">
+<meta property="og:url" content="http://blog.coolenoch.ink/2024/03/15/11%E4%BB%8EKDE%E5%88%B0Gnome%E7%9A%84%E6%97%85%E7%A8%8B-240315/index.html">
+<meta property="og:site_name" content="Enoch的个人小站">
+<meta property="og:description" content="(封面图源知乎KDE 与 GNOME：什么是 Linux 桌面的终极选择？ | Linux 中国) tl;dr上周，KDE Plasma发布了6.0版本。可是，我还没做好更新的准备。在更新到KDE6之后，好多的小组件都不兼容了，比如panon、window buttons等，好多好多的都炸了。好巧不巧的是，我苏菲里的Arch Linux也有两个多月没滚了。还记得曾经最顶的一次五个月没滚，然后一滚直">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://picx.zhimg.com/70/v2-5b90d510defed2ed03f044f2d38e6ccd_1440w.avis?source=172ae18b&biz_tag=Post">
+<meta property="article:published_time" content="2024-03-15T10:00:00.000Z">
+<meta property="article:modified_time" content="2024-06-30T13:53:51.422Z">
+<meta property="article:author" content="CoolestEnoch">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://picx.zhimg.com/70/v2-5b90d510defed2ed03f044f2d38e6ccd_1440w.avis?source=172ae18b&biz_tag=Post">
+  
+  
+  
+  <title>从KDE到Gnome的旅程 - Enoch的个人小站</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+  
+<link rel="stylesheet" href="/css/effect/cursor.css">
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"blog.coolenoch.ink","root":"/","version":"1.9.7","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":true,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 7.2.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Enoch的个人小站</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/" target="_self">
+                <i class="iconfont icon-link-fill"></i>
+                <span>友链</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/airplane.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="从KDE到Gnome的旅程"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2024-03-15 18:00" pubdate>
+          2024年3月15日 晚上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          1.5k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          13 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">从KDE到Gnome的旅程</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <p><img src="https://picx.zhimg.com/70/v2-5b90d510defed2ed03f044f2d38e6ccd_1440w.avis?source=172ae18b&biz_tag=Post" srcset="/img/loading.gif" lazyload alt="封面"><br>(封面图源知乎<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/474769585">KDE 与 GNOME：什么是 Linux 桌面的终极选择？ | Linux 中国</a>)</p>
+<h1 id="tl-dr"><a href="#tl-dr" class="headerlink" title="tl;dr"></a>tl;dr</h1><p>上周，KDE Plasma发布了6.0版本。<del>可是，我还没做好更新的准备。</del>在更新到KDE6之后，好多的小组件都不兼容了，比如<code>panon</code>、<code>window buttons</code>等，好多好多的都炸了。<br>好巧不巧的是，我苏菲里的<code>Arch Linux</code>也有两个多月没滚了。还记得曾经最顶的一次五个月没滚，然后一滚直接炸（<br>于是这就致使了我这次的重装计划。</p>
+<h1 id="Live-CD阶段"><a href="#Live-CD阶段" class="headerlink" title="Live CD阶段"></a>Live CD阶段</h1><p>先一路跟着<a target="_blank" rel="noopener" href="https://wiki.archlinux.org/title/Installation_guide">Arch Wiki Installation Guide</a>把基本系统装好。</p>
+<p>从USB启动Live CD，先使用<a target="_blank" rel="noopener" href="https://wiki.archlinux.org/title/Iwd#iwctl">iwctl</a>进行联网：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_"># </span><span class="language-bash">进入iwctl</span><br>iwctl<br><span class="hljs-meta prompt_"># </span><span class="language-bash">获取设备列表</span><br>device list<br><span class="hljs-meta prompt_"># </span><span class="language-bash">扫WiFi</span><br>station &lt;device_name&gt; scan<br><span class="hljs-meta prompt_"># </span><span class="language-bash">看看扫到哪些WiFi了</span><br>station &lt;device_name&gt; get-networks<br><span class="hljs-meta prompt_"># </span><span class="language-bash">连WiFi</span><br>station &lt;device_name&gt; connect &lt;ssid&gt;<br><span class="hljs-meta prompt_"># </span><span class="language-bash">退出</span><br>exit<br></code></pre></td></tr></table></figure>
+
+<p>对磁盘进行分区</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_"># </span><span class="language-bash">看看电脑上有哪些磁盘分区</span><br>lsblk<br><span class="hljs-meta prompt_"># </span><span class="language-bash">格式化成ext4文件系统以装系统</span><br>mkfs.ext4 /dev/system_partition<br></code></pre></td></tr></table></figure>
+
+
+<p>给LiveCD换源</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs shell">vim /etc/pacman.d/mirrorlist<br><span class="hljs-meta prompt_"># </span><span class="language-bash">在首行添加这行:</span><br>Server = https://mirrors.tuna.tsinghua.edu.cn/archlinux/$repo/os/$arch<br>pacman -Sy<br></code></pre></td></tr></table></figure>
+
+<p>安装基本系统</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs shell">mount /dev/system_partition /mnt<br>mount --mkdir /dev/esp_partition /mnt/boot<br>pacstrap -K /mnt base linux linux-firmware<br></code></pre></td></tr></table></figure>
+
+<p>生成fstab</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">genfstab -U /mnt &gt;&gt; /mnt/etc/fstab<br></code></pre></td></tr></table></figure>
+
+
+<p>chroot进基本系统做一些初始操作</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><code class="hljs shell">arch-chroot /mnt<br><span class="hljs-meta prompt_"># </span><span class="language-bash">换源</span><br>vim /etc/pacman.d/mirrorlist<br><span class="hljs-meta prompt_"># </span><span class="language-bash">在首行添加这行:</span><br>Server = https://mirrors.tuna.tsinghua.edu.cn/archlinux/$repo/os/$arch<br><span class="hljs-meta prompt_"># </span><span class="language-bash">在 `/etc/pacman.conf` 文件末尾添加以下两行：</span><br>[archlinuxcn]<br>Server = https://mirrors.tuna.tsinghua.edu.cn/archlinuxcn/$arch<br><span class="hljs-meta prompt_"># </span><span class="language-bash">之后通过以下命令安装 `archlinuxcn-keyring` 包导入 GPG key。</span><br>pacman -Sy archlinuxcn-keyring<br>pacman-key --lsign-key &quot;farseerfc@archlinux.org&quot;<br>pacman -Sy archlinuxcn-keyring<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">设置时区</span><br>ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime<br><span class="hljs-meta prompt_"># </span><span class="language-bash">同步时钟</span><br>hwclock --systohc<br><span class="hljs-meta prompt_"># </span><span class="language-bash">生成locale</span><br>vim /etc/locale.gen # 然后删除en_US.UTF-8和zh_CN.UTF-8 UTF-8前的#号<br>locale-gen<br><span class="hljs-meta prompt_"># </span><span class="language-bash">设置语言</span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">向/etc/locale.conf中写入LANG=en_US.UTF-8</span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">设置主机名: 向/etc/hostname写入你的主机名</span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">修改hosts</span><br>vim /etc/hosts<br><span class="hljs-meta prompt_"># </span><span class="language-bash">写入以下内容。其中hostname为你电脑的hostname</span><br>127.0.0.1 localhost<br>::1       localhost<br>127.0.1.1 hostname.localdomain hostname<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">设置root密码</span><br>passwd<br></code></pre></td></tr></table></figure>
+
+
+<p>安装grub和基本应用程序，这一步也在chroot中进行</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">pacman -S grub efibootmgr networkmanager os-prober mtools dosfstools base-devel linux-headers git sudo<br></code></pre></td></tr></table></figure>
+
+<p>安装微码</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">pacman -S intel-ucode # AMD则是amd-ucode<br></code></pre></td></tr></table></figure>
+
+<p>装grub</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_"># </span><span class="language-bash">去掉os-prober让grub可以扫到windows</span><br>vim /etc/default/grub<br><span class="hljs-meta prompt_"># </span><span class="language-bash">解除这行的注释GRUB_DISABLE_OS_PROBER=<span class="hljs-literal">false</span></span><br>grub-install --target=x86_64-efi --efi-directory=/boot --bootloader-id=Arch<br><span class="hljs-meta prompt_"># </span><span class="language-bash">生成grub.cfg</span><br>grub-mkconfig -o /boot/grub/grub.cfg<br></code></pre></td></tr></table></figure>
+
+<p>然后重启电脑</p>
+<h1 id="重启进本地系统操作"><a href="#重启进本地系统操作" class="headerlink" title="重启进本地系统操作"></a>重启进本地系统操作</h1><p>登录root用户，用你之前设置的密码</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_"># </span><span class="language-bash">启动网络服务</span><br>systemctl enable --now NetworkManager<br><span class="hljs-meta prompt_"># </span><span class="language-bash">连WiFi</span><br>nmtui<br></code></pre></td></tr></table></figure>
+
+<p>新建用户</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_"># </span><span class="language-bash">wheel后面是你的用户名username</span><br>useradd -m -G wheel username<br></code></pre></td></tr></table></figure>
+<p>为用户创建密码</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">passwd username<br></code></pre></td></tr></table></figure>
+<p>授权</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell">EDITOR=vim visudo<br><span class="hljs-meta prompt_"># </span><span class="language-bash">然后找到 uncomment to allow members of group wheel to execute any <span class="hljs-built_in">command</span>的下一行，取消注释</span><br></code></pre></td></tr></table></figure>
+
+
+<h1 id="安装Gnome"><a href="#安装Gnome" class="headerlink" title="安装Gnome"></a>安装<code>Gnome</code></h1><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs shell">pacman -S gdm xorg-xwayland gnome gnome-tweaks nautilus-sendto gnome-nettool gnome-usage gnome-multi-writer adwaita-icon-theme xdg-user-dirs-gtk arc-gtk-theme<br><span class="hljs-meta prompt_"># </span><span class="language-bash">设置开机自启</span><br>sudo systemctl enable --now gdm<br></code></pre></td></tr></table></figure>
+
+<h1 id="安装中文输入法fcitx"><a href="#安装中文输入法fcitx" class="headerlink" title="安装中文输入法fcitx"></a>安装中文输入法<code>fcitx</code></h1><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">sudo pacman -S fcitx5-im fcitx5-chinese-addons fcitx5-rime<br></code></pre></td></tr></table></figure>
+<p>然后编辑环境变量，在<code>/etc/environment</code>追加写入：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs text"># /etc/environment<br>GTK_IM_MODULE=fcitx<br>QT_IM_MODULE=fcitx<br>XMODIFIERS=@im=fcitx<br>SDL_IM_MODULE=fcitx<br></code></pre></td></tr></table></figure>
+
+<h1 id="安装paru以安装aur包"><a href="#安装paru以安装aur包" class="headerlink" title="安装paru以安装aur包"></a>安装<code>paru</code>以安装<code>aur</code>包</h1><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs shell">sudo pacman -S base-devel<br>git clone --depth=1 https://aur.archlinux.org/paru.git<br>cd paru<br>makepkg -si<br></code></pre></td></tr></table></figure>
+
+<h1 id="安装oh-my-zsh及其常用的两个插件"><a href="#安装oh-my-zsh及其常用的两个插件" class="headerlink" title="安装oh-my-zsh及其常用的两个插件"></a>安装<code>oh-my-zsh</code>及其常用的两个插件</h1><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs shell">sudo pacman -S zsh<br>chsh -s $(which zsh)<br>sh -c &quot;$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)&quot;<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">安装代码高亮和自动补全插件</span><br>cd $HOME/.oh-my-zsh/plugins<br>git clone --depth=1 https://github.com/zsh-users/zsh-syntax-highlighting.git<br>git clone --depth=1 https://github.com/zsh-users/zsh-autosuggestions.git<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">然后打开~/.zshrc找到plugins=()，在括号里添加git和zsh-syntax-highlighting和zsh-autosuggestions，一行一个，然后保存退出</span><br>source ~/.zshrc<br></code></pre></td></tr></table></figure>
+
+<h1 id="安装蓝牙音频"><a href="#安装蓝牙音频" class="headerlink" title="安装蓝牙音频"></a>安装蓝牙音频</h1><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell">pacman -S bluez bluez-utils bluedevil pulseaudio-bluetooth<br>systemctl enable bluetooth<br></code></pre></td></tr></table></figure>
+
+<h1 id="更换Linux-surface内核"><a href="#更换Linux-surface内核" class="headerlink" title="更换Linux-surface内核"></a>更换<code>Linux-surface</code>内核</h1><p>参考<a target="_blank" rel="noopener" href="https://github.com/linux-surface/linux-surface/wiki/Installation-and-Setup">Linux-surface Wiki</a></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_"># </span><span class="language-bash">添加签名信息</span><br>curl -s https://raw.githubusercontent.com/linux-surface/linux-surface/master/pkg/keys/surface.asc | sudo pacman-key --add -<br><span class="hljs-meta prompt_"># </span><span class="language-bash">添加并信任签名</span><br>sudo pacman-key --finger 56C464BAAC421453<br>sudo pacman-key --lsign-key 56C464BAAC421453<br><span class="hljs-meta prompt_"># </span><span class="language-bash">在/etc/pacman.conf里像这样添加linux0surface仓库</span><br>[linux-surface]<br>Server = https://pkg.surfacelinux.com/arch/<br><span class="hljs-meta prompt_"># </span><span class="language-bash">装内核！</span><br>sudo pacman -Sy linux-surface linux-surface-headers iptsd<br></code></pre></td></tr></table></figure>
+<p><del><em>好了原版内核可以删了</em></del></p>
+<h1 id="安装Gnome插件"><a href="#安装Gnome插件" class="headerlink" title="安装Gnome插件"></a>安装Gnome插件</h1><p>先去<code>Chrome</code>插件商店安装<code>GNOME Shell integration</code>，然后安装<code>gnome-browser-connector</code>，就可以从Gnome插件商店下载插件啦！管理插件在<code>Extinctions</code>应用程序内进行。</p>
+<p>我用的插件</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs text"># 托盘图标。可能有人会说为什么不用Tray Icons: Reloades。因为这东西有问题，不能正确显示托盘图标，所以换了这个。<br>Appindicator and KStatusNotifierItem Support<br># 全局剪贴板历史记录<br>Clipboard Indicator<br># alt-tab切换特效<br>Coverflow Alt-Tab<br># 像Mac的dock栏<br>Dash to Dock<br># 桌面可以放文件<br>Desktop Icons NG (DING)<br># KDE Connect 的Gnome替代品<br>GSConnect<br># 一键闭麦<br>Nothing to Say<br># 窗口拖动时半透明<br>Transparent Window Moving<br># 资源监视器（看了半天就这个最合适）(这个已经没必要了，系统自带一个System Monitor插件，启用它就行)<br>System Monitor Tray Indicator<br># 桌面时钟 有点小bug，就是添加的第一个Widget无法删除<br>Desktop Clock<br># 顶栏图标位置整理插件<br>Top Bar Organizers<br></code></pre></td></tr></table></figure>
+
+
+<h1 id="设置开机自启脚本"><a href="#设置开机自启脚本" class="headerlink" title="设置开机自启脚本"></a>设置开机自启脚本</h1><p>在<code>~/.config/autostart</code>下创建<code>xxx.desktop</code>，写入以下内容，即可在<code>Tweaks</code>-<code>Startup Applications</code>中找到并配置它。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs desktop">[Desktop Entry]<br>Name=&lt;应用程序名&gt;<br>Type=Application<br>Exec=&lt;运行的命令&gt;<br>Icon=&lt;图标的完整路径,128x128,svg/png&gt;<br>Terminal=&lt;指定是否在终端内运行&gt;<br>StartupNotify=&lt;&gt;<br>Categories=&lt;类别&gt;<br>Encoding=&lt;编码&gt;<br></code></pre></td></tr></table></figure>
+
+<h1 id="遇到的问题"><a href="#遇到的问题" class="headerlink" title="遇到的问题"></a>遇到的问题</h1><p>安装好后没有性能模式选项：<br>安装<code>power-profiles-daemon</code>然后注销重新登陆。</p>
+<p>某些电脑上没有声卡驱动<br>安装<code>alsa-firmware</code>, <code>sof-firmware</code>和<code>alsa-ucm-conf</code>然后重启电脑。</p>
+<p><code>OBS-Studio</code>开启虚拟摄像头需要安装的插件: <code>v4l2loopback-dkms</code>。参考<a target="_blank" rel="noopener" href="https://aur.archlinux.org/packages/wemeet-bin">ArchWiki</a></p>
+<p>防止日志无限制的增长占用磁盘</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_"># </span><span class="language-bash">看看日志占了多少空间</span><br>sudo journalctl --disk-usage<br><span class="hljs-meta prompt_"># </span><span class="language-bash">超过5天的自动删除</span><br>sudo journalctl --vacuum-time=5d<br><span class="hljs-meta prompt_"># </span><span class="language-bash">超过500M的自动删除</span><br>sudo journalctl --vacuum-size=500M<br><span class="hljs-meta prompt_"># </span><span class="language-bash">核心转储</span><br>sudo rm /var/lib/systemd/coredump/*<br></code></pre></td></tr></table></figure>
+
+<p>打开文件夹的应用程序变成了vscode。解决方法：在终端运行：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">xdg-mime default org.gnome.Nautilus.desktop inode/directory<br></code></pre></td></tr></table></figure>
+
+<p>开机会自动挂载所有的磁盘。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">gsettings set org.gnome.desktop.media-handling automount false<br></code></pre></td></tr></table></figure>
+
+<p>删除某个扩展的配置文件</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_"># </span><span class="language-bash">查看有哪些扩展的配置可以被删除</span><br>dconf list /org/gnome/shell/extensions/<br><span class="hljs-meta prompt_"># </span><span class="language-bash">删除名为extension_name的扩展的配置</span><br>dconf reset -f /org/gnome/shell/extensions/extension_name/<br></code></pre></td></tr></table></figure>
+
+<p>想启用一些不支持的插件：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">gsettings set org.gnome.shell disable-extension-version-validation true<br></code></pre></td></tr></table></figure>
+
+<p>删除evince的浏览历史记录和浏览进度：删除这个文件即可</p>
+<blockquote>
+<p>~&#x2F;.local&#x2F;share&#x2F;gvfs-metadata&#x2F;home</p>
+</blockquote>
+<p>启用分数缩放：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">gsettings set org.gnome.mutter experimental-features &quot;[&#x27;scale-monitor-framebuffer&#x27;]&quot;<br></code></pre></td></tr></table></figure>
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Linux/" class="category-chain-item">Linux</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>从KDE到Gnome的旅程</div>
+      <div>http://blog.coolenoch.ink/2024/03/15/11从KDE到Gnome的旅程-240315/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>CoolestEnoch</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2024年3月15日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2024/03/16/12-VsCode%E6%90%AD%E5%BB%BAESP8266%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83-240316/" title="VsCode搭建ESP8266开发环境">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">VsCode搭建ESP8266开发环境</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2024/03/02/10%E6%8A%98%E8%85%BE%E4%B8%80%E7%95%AACloudFlare%20DDNS-240302/" title="折腾一番CloudFlare DDNS">
+                        <span class="hidden-mobile">折腾一番CloudFlare DDNS</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+  
+<script src="/js/effect/GoTop/jquery.min.js"></script>
+<script src="/js/effect/lib/jquery-1.9.1.min.js"></script>
+<script src="/js/effect/lib/jquery-3.6.0.min.js"></script>
+<script src="/js/effect/clickeffect.js"></script>
+<script src="/js/effect/clickWord.js"></script>
+<script src="/js/effect/emojiCursor.js"></script>
+<script src="/js/effect/sakura-less.js"></script>
+<script src="/js/effect/sakana@1.0.8.js"></script>
+<script src="/js/effect/cuteTitle.js"></script>
+<script src="/js/effect/GoTop/szgotop.js"></script>
+<script src="/js/effect/Netease.js"></script>
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
