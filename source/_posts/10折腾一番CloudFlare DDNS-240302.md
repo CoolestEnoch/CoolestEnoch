@@ -641,3 +641,809 @@ sudo ufw allow 1714:1764/tcp
 sudo ufw allow syncthing
 ```
 
+
+
+# 更新：使用域API实现
+这个是配置文件，按你的实际情况填写。不想要手动创建，先运行更新记录的脚本，如果脚本发现没有这个文件会自动创建，这里只是提示你这些键值对的意义。
+``` text
+zone_id=你的zoneID
+record_id=你要修改的记录的record_id
+api_key=去创建一个只有域权限的API key,只授权修改DNS记录，将API key填这里
+domain_main=你要修改的二级域名。比如你主域名是domain.com，你要给sub.domain.com添加解析记录，这里就填sub
+proxied=false 是否对此记录启用cloudflare proxy cdn保护
+record_type=A或者AAAA
+eth_card=使用本地方式获取ip绑定的网卡, 如eth0。此项仅在linux上生效。
+ip_index="internet" or "local",使用本地方式还是网络方式获取地址
+reset_ip=1为将ddns的ip改为localhost，2为手动输入ip，其他任意值为不是
+enable_cache=1为保存缓存文件,其他任意值为不保存。保存缓存文件可让下次ddns更新速度更快，但缓存文件泄漏需要你去把cf_global_api_key重新revoke一次，不然会造成隐私泄漏
+skip_connectivity_check=0为不跳过脚本最开始运行的时候的检查连接
+ip_file=ip.txt   保存地址信息的文件
+id_file=cloudflare.ids
+log_file=cloudflare.log
+```
+
+
+
+先获取你域下面所有的域名及其`record_id`：
+> python版兼任`linux`和`windows`，shell版适合性能差的设备。
+
+``` shell
+#!/bin/bash
+
+# 先用get获取到id,然后再填入配置文件
+# CHANGE THESE
+zone_id=""  # cloudFlare里域名的zone id
+record_id=""   # 你要修改的二级域名的record id,通过get脚本获取
+api_key="" # 你的API key,用于修改dns记录的key
+domain_main=""   # 你的主域名, 如google.com
+proxied="false"	# 是否要启用cdn。合法值只有true和false
+record_type=""             # A or AAAA,ipv4 或 ipv6解析
+
+eth_card=""             # 使用本地方式获取ip绑定的网卡, 如eth0
+ip_index="local"            # use "internet" or "local",使用本地方式还是网络方式获取地址
+
+reset_ip=0 # 1为将ddns的ip改为localhost，2为手动输入ip，其他任意值为不是
+enable_cache="0"              # 1为保存缓存文件,其他任意值为不保存。保存缓存文件可让下次ddns更新速度更快，但缓存文件泄漏需要你去把cf_global_api_key重新revoke一次，不然会造成隐私泄漏
+skip_connectivity_check="0" # 0为不跳过脚本最开始运行的时候的检查连接
+ip_file="ip.txt"            # 保存地址信息
+id_file="cloudflare.ids"
+log_file="cloudflare.log"
+
+# 默认配置。需要和上面的变量顺序相同
+default_config_arr=("","","","","false","","","local","0","0","0","ip.txt","cloudflare.ids","cloudflare.log")
+config_file="config.txt"
+
+create_default_config_file() {
+    echo "zone_id=" >> $config_file
+    echo "record_id=" >> $config_file
+    echo "api_key=" >> $config_file
+    echo "domain_main=" >> $config_file
+    echo "proxied=" >> $config_file
+    echo "record_type=" >> $config_file
+    echo "eth_card=" >> $config_file
+    echo "ip_index=local" >> $config_file
+    echo "reset_ip=0" >> $config_file
+    echo "enable_cache=0" >> $config_file
+    echo "skip_connectivity_check" >> $config_file
+    echo "ip_file=ip.txt" >> $config_file
+    echo "id_file=cloudflare.ids" >> $config_file
+    echo "log_file=cloudflare.log" >> $config_file
+}
+
+
+
+# 声明日志函数
+log() {
+    if [ "$1" ]; then
+        if [ "$enable_cache" -eq "1" ]; then
+            echo -e "[$(date)] - $1" >> $log_file
+        fi
+        echo "[$(date)] - $1"
+    fi
+}
+log "Init config"
+
+
+# 初始化配置文件
+
+if [ -e "$config_file" ]; then
+    log "File $config_file exists."
+else
+    log "File $config_file does not exist."
+    create_default_config_file
+    log "请将该配置文件填写完成:${config_file}"
+    exit 1
+fi
+
+read_config_key() {
+    key=$1
+    value=$(grep "^${key}=" $config_file | cut -d'=' -f2)
+    echo $value
+}
+
+zone_id=$(read_config_key "zone_id")
+record_id=$(read_config_key "record_id")
+api_key=$(read_config_key "api_key")
+domain_main=$(read_config_key "domain_main")
+proxied=$(read_config_key "proxied")
+record_type=$(read_config_key "record_type")
+eth_card=$(read_config_key "eth_card")
+ip_index=$(read_config_key "ip_index")
+reset_ip=$(read_config_key "reset_ip")
+enable_cache=$(read_config_key "enable_cache")
+skip_connectivity_check=$(read_config_key "skip_connectivity_check")
+ip_file=$(read_config_key "ip_file")
+id_file=$(read_config_key "id_file")
+log_file=$(read_config_key "log_file")
+
+
+# 检查配置文件是否存在以及是否有进行填写
+got_config=()
+got_config+=${zone_id}
+got_config+=${record_id}
+got_config+=${api_key}
+got_config+=${domain_main}
+got_config+=${proxied}
+got_config+=${record_type}
+got_config+=${eth_card}
+got_config+=${ip_index}
+got_config+=${reset_ip}
+got_config+=${enable_cache}
+got_config+=${skip_connectivity_check}
+got_config+=${ip_file}
+got_config+=${id_file}
+got_config+=${log_file}
+
+
+# 将数组默认配置连接成字符串
+def_str=""
+for element in "${default_config_arr[@]}"
+do
+    def_str="$def_str$element"
+done
+
+# 将获取到的配置连接成字符串
+got_str=""
+for element in "${got_config[@]}"
+do
+    got_str="$got_str$element"
+done
+
+# 判断字符串是否相等,即用户是否填写了配置文件
+if [ "$def_str" = "$got_str" ]; then
+    create_default_config_file
+    log "请将该配置文件填写完成:${config_file}"
+fi
+
+# 检查连接
+if [ "$skip_connectivity_check" -eq "0" ]; then
+    log "Checking connectivity to Cloudflare"
+    # 检查和api.cloudflare.com的连接性
+    if curl --connect-timeout 30 -s --head https://api.cloudflare.com/ > /dev/null; then
+        log "Successfully connected to api.cloudflare.com"
+        # 连接成功，可以在这里继续后续的命令
+    else
+        log "Error connecting to api.cloudflare.com. Stopping script execution."
+        exit 1
+    fi
+else
+    log "Skipping check connectivity to Cloudflare"
+fi
+
+
+curl --request GET \
+  --url "https://api.cloudflare.com/client/v4/zones/$zone_id/dns_records" \
+  --header 'Content-Type: application/json' \
+  --header "Authorization: Bearer $api_key"
+```
+
+
+
+这是python版的：
+> python版兼任`linux`和`windows`，shell版适合性能差的设备。
+
+``` python
+import requests
+import os
+import sys
+import datetime
+import platform
+import subprocess
+import re
+
+# 需要先安装以下pip包才能运行:
+# requests
+
+# 配置变量
+zone_id=""  # cloudFlare里域名的zone id
+record_id=""   # 你要修改的二级域名的record id,通过get脚本获取
+api_key="" # 你的API key,用于修改dns记录的key
+domain_main=""   # 你的主域名, 如google.com
+proxied="false"	# 是否要启用cdn。合法值只有true和false
+record_type = "AAAA"  # A or AAAA, ipv4 或 ipv6解析
+
+eth_card = ""  # 使用本地方式获取IP绑定的网卡, 如eth0。此设置项只在linux上生效
+ip_index = "local"  # 使用 "internet" 或 "local", 获取地址的方式
+
+reset_ip = 0 # 1为将ddns的ip改为localhost，2为手动输入ip，其他任意值为不是
+enable_cache = 0  # 1为保存缓存文件，其他任意值为不保存缓存文件
+skip_connectivity_check = 0 # 0为不跳过脚本最开始运行的时候的检查连接
+ip_file = "ip.txt"  # 保存地址信息的文件
+id_file = "cloudflare.ids"
+log_file = "cloudflare.log"
+
+
+# 按照这个格式填入config.txt
+example_config_file = {
+  "zone_id": "", # cloudFlare里域名的zone id
+  "record_id": "", # 你要修改的二级域名的record id,通过get脚本获取
+  "api_key": "", # 你的API key,用于修改dns记录的key
+  "domain_main": "", # 你的主域名, 如google.com
+  "proxied": "false", # 是否要启用cdn。合法值只有true和false
+  "record_type": "", # A or AAAA, ipv4 或 ipv6解析
+  "eth_card": "", # 使用本地方式获取IP绑定的网卡, 如eth0。此设置项只在linux上生效
+  "ip_index": "local", # 使用 "internet" 或 "local", 获取地址的方式。internal不支持获取ipv4地址
+  "reset_ip": 0, # 1为将ddns的ip改为localhost，其他任意值为不是
+  "enable_cache": 0, # 1为保存缓存文件，其他任意值为不保存缓存文件
+  "skip_connectivity_check": 0,# 0为不跳过脚本最开始运行的时候的检查连接
+  "ip_file": "ip.txt", # 不需要填写
+  "id_file": "cloudflare.ids", # 不需要填写
+  "log_file": "cloudflare.log" # 不需要填写
+}
+
+def log(message):
+    """日志函数"""
+    if message:
+        if enable_cache == 1:
+            with open(log_file, 'a') as f:
+                f.write(f"[{datetime.datetime.now()}] - {message}\n")
+        else:
+            print(f"[{datetime.datetime.now()}] - {message}")
+
+
+def init_value():
+    global zone_id, record_id, api_key, domain_main, proxied, record_type, eth_card, skip_connectivity_check, ip_index, reset_ip, enable_cache, ip_file, id_file, og_file
+    config_dict = {}
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+    config_path = os.path.join(script_dir, "config.txt")
+    try:
+        with open(config_path, 'r', encoding='utf-8') as file:
+            for line in file:
+                line = line.strip()
+                if line and '=' in line:
+                    key, value = line.split('=', 1)
+                    config_dict[key] = value
+            common_keys = set(config_dict.keys()) & set(example_config_file.keys())
+            different_values = {}
+            for key in common_keys:
+                if config_dict[key] != example_config_file[key]:
+                    different_values[key] = (config_dict[key], example_config_file[key])
+            if len(different_values) == 0:
+                print(f"请将该配置文件填写完成:{config_path}")
+                sys.exit()
+            log("File config.txt exists.")
+            zone_id = config_dict.get('zone_id')
+            record_id = config_dict.get('record_id')
+            api_key = config_dict.get('api_key')
+            domain_main = config_dict.get('domain_main')
+            proxied = config_dict.get('proxied')
+            record_type = config_dict.get('record_type')
+            eth_card = config_dict.get('eth_card')
+            ip_index = config_dict.get('ip_index')
+            reset_ip = int(config_dict.get('reset_ip'))
+            enable_cache = int(config_dict.get('enable_cache'))
+            skip_connectivity_check = int(config_dict.get('skip_connectivity_check'))
+            ip_file = config_dict.get('ip_file')
+            id_file = config_dict.get('id_file')
+            log_file = config_dict.get('log_file')
+    except FileNotFoundError:
+        with open(config_path, 'w', encoding='utf-8') as file:
+            for key, value in example_config_file.items():
+                file.write(f'{key}={value}\n')
+            #json.dump(example_config_file, file, ensure_ascii=False, indent=4)
+        print(f"请将该配置文件填写完成:{config_path}")
+        sys.exit()
+
+
+
+"""更新Cloudflare DNS记录"""
+def get_cloudflare_dns():    
+    headers = {
+        "Authorization": "Bearer " + api_key,
+        "Content-Type": "application/json",
+    }
+    update_response = requests.get("https://api.cloudflare.com/client/v4/zones/" + zone_id + "/dns_records", headers=headers)
+    print(update_response.json())
+
+
+
+# 主逻辑
+log("Init config")
+init_value()
+get_cloudflare_dns()
+```
+
+
+
+记住你的`zone_id`和`record_id`，填入配置文件中，然后使用下面的脚本更新解析记录：
+> python版兼任`linux`和`windows`，shell版适合性能差的设备。
+
+``` shell
+#!/bin/bash
+
+
+# 先用get获取到id,然后再填入配置文件
+# CHANGE THESE
+zone_id=""  # cloudFlare里域名的zone id
+record_id=""   # 你要修改的二级域名的record id,通过get脚本获取
+api_key="" # 你的API key,用于修改dns记录的key
+domain_main=""   # 你的主域名, 如google.com
+proxied="false"	# 是否要启用cdn。合法值只有true和false
+record_type=""             # A or AAAA,ipv4 或 ipv6解析
+
+eth_card=""             # 使用本地方式获取ip绑定的网卡, 如eth0
+ip_index="local"            # use "internet" or "local",使用本地方式还是网络方式获取地址
+
+reset_ip=0 # 1为将ddns的ip改为localhost，2为手动输入ip，其他任意值为不是
+enable_cache="0"              # 1为保存缓存文件,其他任意值为不保存。保存缓存文件可让下次ddns更新速度更快，但缓存文件泄漏需要你去把cf_global_api_key重新revoke一次，不然会造成隐私泄漏
+skip_connectivity_check="0" # 0为不跳过脚本最开始运行的时候的检查连接
+ip_file="ip.txt"            # 保存地址信息
+id_file="cloudflare.ids"
+log_file="cloudflare.log"
+
+# 默认配置。需要和上面的变量顺序相同
+default_config_arr=("","","","","false","","","local","0","0","0","ip.txt","cloudflare.ids","cloudflare.log")
+config_file="config.txt"
+
+create_default_config_file() {
+    echo "zone_id=" >> $config_file
+    echo "record_id=" >> $config_file
+    echo "api_key=" >> $config_file
+    echo "domain_main=" >> $config_file
+    echo "proxied=" >> $config_file
+    echo "record_type=" >> $config_file
+    echo "eth_card=" >> $config_file
+    echo "ip_index=local" >> $config_file
+    echo "reset_ip=0" >> $config_file
+    echo "enable_cache=0" >> $config_file
+    echo "skip_connectivity_check" >> $config_file
+    echo "ip_file=ip.txt" >> $config_file
+    echo "id_file=cloudflare.ids" >> $config_file
+    echo "log_file=cloudflare.log" >> $config_file
+}
+
+
+
+# 声明日志函数
+log() {
+    if [ "$1" ]; then
+        if [ "$enable_cache" -eq "1" ]; then
+            echo -e "[$(date)] - $1" >> $log_file
+        fi
+        echo "[$(date)] - $1"
+    fi
+}
+log "Init config"
+
+
+# 初始化配置文件
+
+if [ -e "$config_file" ]; then
+    log "File $config_file exists."
+else
+    log "File $config_file does not exist."
+    create_default_config_file
+    log "请将该配置文件填写完成:${config_file}"
+    exit 1
+fi
+
+read_config_key() {
+    key=$1
+    value=$(grep "^${key}=" $config_file | cut -d'=' -f2)
+    echo $value
+}
+
+zone_id=$(read_config_key "zone_id")
+record_id=$(read_config_key "record_id")
+api_key=$(read_config_key "api_key")
+domain_main=$(read_config_key "domain_main")
+proxied=$(read_config_key "proxied")
+record_type=$(read_config_key "record_type")
+eth_card=$(read_config_key "eth_card")
+ip_index=$(read_config_key "ip_index")
+reset_ip=$(read_config_key "reset_ip")
+enable_cache=$(read_config_key "enable_cache")
+skip_connectivity_check=$(read_config_key "skip_connectivity_check")
+ip_file=$(read_config_key "ip_file")
+id_file=$(read_config_key "id_file")
+log_file=$(read_config_key "log_file")
+
+
+# 检查配置文件是否存在以及是否有进行填写
+got_config=()
+got_config+=${zone_id}
+got_config+=${record_id}
+got_config+=${api_key}
+got_config+=${domain_main}
+got_config+=${proxied}
+got_config+=${record_type}
+got_config+=${eth_card}
+got_config+=${ip_index}
+got_config+=${reset_ip}
+got_config+=${enable_cache}
+got_config+=${skip_connectivity_check}
+got_config+=${ip_file}
+got_config+=${id_file}
+got_config+=${log_file}
+
+
+# 将数组默认配置连接成字符串
+def_str=""
+for element in "${default_config_arr[@]}"
+do
+    def_str="$def_str$element"
+done
+
+# 将获取到的配置连接成字符串
+got_str=""
+for element in "${got_config[@]}"
+do
+    got_str="$got_str$element"
+done
+
+# 判断字符串是否相等,即用户是否填写了配置文件
+if [ "$def_str" = "$got_str" ]; then
+    create_default_config_file
+    log "请将该配置文件填写完成:${config_file}"
+fi
+
+# 检查连接
+if [ "$skip_connectivity_check" -eq "0" ]; then
+    log "Checking connectivity to Cloudflare"
+    # 检查和api.cloudflare.com的连接性
+    if curl --connect-timeout 30 -s --head https://api.cloudflare.com/ > /dev/null; then
+        log "Successfully connected to api.cloudflare.com"
+        # 连接成功，可以在这里继续后续的命令
+    else
+        log "Error connecting to api.cloudflare.com. Stopping script execution."
+        exit 1
+    fi
+else
+    log "Skipping check connectivity to Cloudflare"
+fi
+
+
+# 开始根据读取到的配置进行ddns设置
+log "Starting DDNS"
+if [ $record_type = "AAAA" ];then
+	if [ "$reset_ip" -eq "1" ]; then
+		ip="::1"
+		log "Reset DDNS address to loopback..."
+	elif [ "$reset_ip" -eq "2" ]; then
+		read -p "Please enter an AAAA record IP:\n" ip
+		log "Got it, now setting DDNS..."
+	else
+		if [ $ip_index = "internet" ];then
+			ip=$(curl -6 ip.sb)
+		elif [ $ip_index = "local" ];then
+			if [ "$user" = "root" ];then
+				# ip=$(ifconfig $eth_card | grep 'inet6'| grep -v '::1'|grep -v 'fe80' | cut -f2 | awk '{ print $2}' | head -1)
+				ip=$(ifconfig $eth_card | awk '/inet6 24/' | awk '{print $2}' | head -1)
+			else
+				ip=$(/sbin/ifconfig $eth_card | grep 'inet6'| grep -v '::1'|grep -v 'fe80' | cut -f2 | awk '{ print $2}' | head -1)
+			fi
+		else
+			log "Error IP index, please input the right type"
+			exit 0
+		fi
+	fi
+elif [ $record_type = "A" ];then
+	if [ "$reset_ip" -eq "1" ]; then
+		ip="127.0.0.1"
+		log "Reset DDNS address to loopback..."
+	elif [ "$reset_ip" -eq "2" ]; then
+		read -p "Please enter an A record IP:\n" ip
+		log "Got it, now setting DDNS..."
+	else
+		if [ $ip_index = "internet" ];then
+			ip=$(curl -4 ip.sb)
+		elif [ $ip_index = "local" ];then
+			if [ "$user" = "root" ];then
+				ip=$(ifconfig $eth_card | grep 'inet'| grep -v '127.0.0.1' | grep -v 'inet6'|cut -f2 | awk '{ print $2}')
+			else
+				ip=$(/sbin/ifconfig $eth_card | grep 'inet'| grep -v '127.0.0.1' | grep -v 'inet6'|cut -f2 | awk '{ print $2}')
+			fi
+		else
+			log "Error IP index, please input the right type"
+			exit 0
+		fi
+	fi
+else
+    log "Error DNS type"
+    exit 0
+fi
+
+# SCRIPT START
+log "Check Initiated"
+log "Your ip is:    ${ip}"
+
+# 判断ip是否发生变化
+if [ "$enable_cache" -eq "1" ]; then
+    if [ -f $ip_file ]; then
+        old_ip=$(cat $ip_file)
+        if [ $ip == $old_ip ]; then
+            log "IP has not changed."
+            exit 0
+        fi
+    fi
+fi
+
+
+# 更新DNS记录
+update=$(curl --request PATCH \
+  --url "https://api.cloudflare.com/client/v4/zones/$zone_id/dns_records/$record_id" \
+  --header 'Content-Type: application/json' \
+  --header "Authorization: Bearer $api_key" \
+  --data "{\"content\": \"$ip\", \"proxied\": $proxied, \"type\": \"$record_type\", \"comment\": \"DDNS\", \"ttl\": 1}")
+
+echo "$update"
+
+
+
+# 输出DDNS更新情况
+if [[ $update == *"\"success\":true"* ]]; then
+    message="$api_key -> $ip"
+    if [ "$enable_cache" -eq "1" ]; then
+        echo "$message" > $ip_file
+    fi
+    log "$message"
+else
+    message="API UPDATE FAILED. DUMPING RESULTS:\n$update"
+    log "$message"
+    exit 1
+fi
+```
+
+
+
+这是python版的：
+> python版兼任`linux`和`windows`，shell版适合性能差的设备。
+
+``` python
+import requests
+import os
+import sys
+import datetime
+import platform
+import subprocess
+import re
+
+# 需要先安装以下pip包才能运行:
+# requests
+
+# 配置变量
+zone_id=""  # cloudFlare里域名的zone id
+record_id=""   # 你要修改的二级域名的record id,通过get脚本获取
+api_key="" # 你的API key,用于修改dns记录的key
+domain_main=""   # 你的主域名, 如google.com
+proxied="false"	# 是否要启用cdn。合法值只有true和false
+record_type = "AAAA"  # A or AAAA, ipv4 或 ipv6解析
+
+eth_card = ""  # 使用本地方式获取IP绑定的网卡, 如eth0。此设置项只在linux上生效
+ip_index = "local"  # 使用 "internet" 或 "local", 获取地址的方式
+
+reset_ip = 0 # 1为将ddns的ip改为localhost，2为手动输入ip，其他任意值为不是
+enable_cache = 0  # 1为保存缓存文件，其他任意值为不保存缓存文件
+skip_connectivity_check = 0 # 0为不跳过脚本最开始运行的时候的检查连接
+ip_file = "ip.txt"  # 保存地址信息的文件
+id_file = "cloudflare.ids"
+log_file = "cloudflare.log"
+
+
+# 按照这个格式填入config.txt
+example_config_file = {
+  "zone_id": "", # cloudFlare里域名的zone id
+  "record_id": "", # 你要修改的二级域名的record id,通过get脚本获取
+  "api_key": "", # 你的API key,用于修改dns记录的key
+  "domain_main": "", # 你的主域名, 如google.com
+  "proxied": "false", # 是否要启用cdn。合法值只有true和false
+  "record_type": "", # A or AAAA, ipv4 或 ipv6解析
+  "eth_card": "", # 使用本地方式获取IP绑定的网卡, 如eth0。此设置项只在linux上生效
+  "ip_index": "local", # 使用 "internet" 或 "local", 获取地址的方式。internal不支持获取ipv4地址
+  "reset_ip": 0, # 1为将ddns的ip改为localhost，其他任意值为不是
+  "enable_cache": 0, # 1为保存缓存文件，其他任意值为不保存缓存文件
+  "skip_connectivity_check": 0,# 0为不跳过脚本最开始运行的时候的检查连接
+  "ip_file": "ip.txt", # 不需要填写
+  "id_file": "cloudflare.ids", # 不需要填写
+  "log_file": "cloudflare.log" # 不需要填写
+}
+
+def log(message):
+    """日志函数"""
+    if message:
+        if enable_cache == 1:
+            with open(log_file, 'a') as f:
+                f.write(f"[{datetime.datetime.now()}] - {message}\n")
+        else:
+            print(f"[{datetime.datetime.now()}] - {message}")
+
+
+def init_value():
+    global zone_id, record_id, api_key, domain_main, proxied, record_type, eth_card, skip_connectivity_check, ip_index, reset_ip, enable_cache, ip_file, id_file, og_file
+    config_dict = {}
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+    config_path = os.path.join(script_dir, "config.txt")
+    try:
+        with open(config_path, 'r', encoding='utf-8') as file:
+            for line in file:
+                line = line.strip()
+                if line and '=' in line:
+                    key, value = line.split('=', 1)
+                    config_dict[key] = value
+            common_keys = set(config_dict.keys()) & set(example_config_file.keys())
+            different_values = {}
+            for key in common_keys:
+                if config_dict[key] != example_config_file[key]:
+                    different_values[key] = (config_dict[key], example_config_file[key])
+            if len(different_values) == 0:
+                print(f"请将该配置文件填写完成:{config_path}")
+                sys.exit()
+            log("File config.txt exists.")
+            zone_id = config_dict.get('zone_id')
+            record_id = config_dict.get('record_id')
+            api_key = config_dict.get('api_key')
+            domain_main = config_dict.get('domain_main')
+            proxied = config_dict.get('proxied')
+            record_type = config_dict.get('record_type')
+            eth_card = config_dict.get('eth_card')
+            ip_index = config_dict.get('ip_index')
+            reset_ip = int(config_dict.get('reset_ip'))
+            enable_cache = int(config_dict.get('enable_cache'))
+            skip_connectivity_check = int(config_dict.get('skip_connectivity_check'))
+            ip_file = config_dict.get('ip_file')
+            id_file = config_dict.get('id_file')
+            log_file = config_dict.get('log_file')
+    except FileNotFoundError:
+        with open(config_path, 'w', encoding='utf-8') as file:
+            for key, value in example_config_file.items():
+                file.write(f'{key}={value}\n')
+            #json.dump(example_config_file, file, ensure_ascii=False, indent=4)
+        print(f"请将该配置文件填写完成:{config_path}")
+        sys.exit()
+
+def get_ipv6_address_windows():
+    """在Windows上获取临时IPv6地址"""
+    try:
+        # 执行ipconfig命令并捕获输出
+        output = subprocess.check_output(["ipconfig"], text=True)
+        # 使用正则表达式查找临时IPv6地址
+        match = re.search(r"临时 IPv6 地址.*: ([a-fA-F0-9:]+)", output)
+        if match:
+            return match.group(1)
+        else:
+            return None
+    except Exception as e:
+        print(f"Error: {e}")
+        return None
+
+def get_ipv6_address_linux():
+    """在Linux上获取Global IPv6地址"""
+    try:
+        # 执行ip -6 addr show命令并捕获输出
+        output = subprocess.check_output(["ip", "-6", "addr", "show", eth_card], text=True)
+        # 使用正则表达式查找global scope的IPv6地址
+        match = re.search(r"inet6\s+([a-fA-F0-9:]+)/\d+\s+scope global", output)
+        if match:
+            return match.group(1)
+        else:
+            return None
+    except Exception as e:
+        print(f"Error: {e}")
+        return None
+
+def get_ipv6_platform():
+    if platform.system() == "Windows":
+        return get_ipv6_address_windows()
+    elif platform.system() == "Linux":
+        return get_ipv6_address_linux()
+    else:
+        return None
+
+def get_ip():
+    """获取IP地址"""
+    if record_type == "AAAA":
+        if reset_ip == 1:
+            log("Reset DDNS address to loopback...")
+            return "::1"
+        elif reset_ip == 2:
+            ip = input("Please enter an AAAA record IP:\n")
+            log("Got it, now setting DDNS...")
+            return ip
+        else:
+            if ip_index == "internet":
+                return requests.get('https://api64.ipify.org?format=json').json()['ip']
+            elif ip_index == "local":
+                return get_ipv6_platform()
+                pass
+    elif record_type == "A":
+        if reset_ip == 1:
+            log("Reset DDNS address to loopback...")
+            return "127.0.0.1"
+        elif reset_ip == 2:
+            ip = input("Please enter an A record IP:\n")
+            log("Got it, now setting DDNS...")
+            return ip
+        else:
+            if ip_index == "internet":
+                return requests.get('https://api.ipify.org?format=json').json()['ip']
+            elif ip_index == "local":
+                return input("输入你的ipv4地址\n")
+                pass
+    else:
+        log("Error DNS type")
+        exit(0)
+        
+
+"""更新Cloudflare DNS记录"""
+def update_cloudflare_dns(ip):
+    # 更新DNS记录
+    
+    proxied_tmp = False
+    if proxied == "true":
+        proxied_tmp = True
+    
+    headers = {
+        "Authorization": "Bearer " + api_key,
+        "Content-Type": "application/json",
+    }
+    data = {
+        "content": ip,
+        "name": domain_main,
+        "proxied": proxied_tmp,
+        "type": record_type,
+        "comment": "DDNS",
+        "ttl": "1"
+    }
+    update_response = requests.patch("https://api.cloudflare.com/client/v4/zones/" + zone_id + "/dns_records/" + record_id, headers=headers, json=data)
+    return update_response.json()
+
+
+
+# 主逻辑
+log("Init config")
+init_value()
+log("Starting DDNS")
+if skip_connectivity_check == 0:
+    # 检查连接性
+    log("Checking connectivity to cloudflare")
+    try:
+        response = requests.get("https://api.cloudflare.com", timeout=30)
+        # 如果请求成功，状态码为200
+        if response.ok:
+            log("Successfully connected to https://api.cloudflare.com")
+        else:
+            log("Connected to https://api.cloudflare.com but received a non-success status code:", response.status_code)
+    except requests.exceptions.RequestException as e:
+        # 处理连接错误
+        log("Error connecting to https://api.cloudflare.com")
+        log(e)
+        sys.exit()
+    except requests.exceptions.Timeout:
+        # 处理连接超时
+        log("Timeout connecting to https://api.cloudflare.com")
+        log(e)
+        sys.exit()
+    log("Check Initiated")
+else:
+    log("Skipping check connectivity to Cloudflare")
+
+# 获取IP地址
+ip = get_ip()
+log(f"Your ip is:    {ip}")
+
+# 判断IP是否发生变化
+old_ip = None
+if enable_cache == 1 and os.path.exists(ip_file):
+    with open(ip_file) as f:
+        old_ip = f.read().strip()
+if ip == old_ip:
+    if ip == None:
+        log("Check your Internet connection.")
+    else:
+        log("IP has not changed.")
+    exit(0)
+
+# 更新DNS记录
+update_result = update_cloudflare_dns(ip)
+if update_result['success']:
+    message = f"Now {record_id} -> {ip}"
+    if enable_cache == 1:
+        with open(ip_file, 'w') as f:
+            f.write(message)
+    log(message)
+else:
+    message = f"API UPDATE FAILED. DUMPING RESULTS:\n{update_result}"
+    log(message)
+    exit(1)
+
+```
