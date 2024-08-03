@@ -74,6 +74,14 @@ sudo systemctl start waydroid-container
 waydroid show-full-ui
 ```
 
+# 配置防火墙
+不放通防火墙会导致Waydroid连不上网，甚至你无法使用`adb connect`进行调试。如果你跟我一样使用`ufw`防火墙，可以参考[ArchWiki](https://wiki.archlinux.org/title/Waydroid#Network)这样进行操作：
+``` shell
+ufw allow 67
+ufw allow 53
+ufw default allow FORWARD
+```
+
 
 **安装libhoudini**
 ``` bash
