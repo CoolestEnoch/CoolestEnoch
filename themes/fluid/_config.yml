@@ -1067,7 +1067,7 @@ links:
 
 
 # RSS
-rss: /atom.xml
+#rss: /rss2.xml
 
 #---------------------------
 # 以下是配置 JS CSS 等静态资源的 URL 前缀，可以自定义成 CDN 地址，
