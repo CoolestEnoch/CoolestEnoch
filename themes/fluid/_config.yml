@@ -1019,7 +1019,7 @@ links:
       title: "IcebearのTinyWebsite",
       intro: "同学的博客",
       link: "http://37147v95r9.goho.co:8088",
-      avatar: "http://37147v95r9.goho.co:8081/upload/20180814203759_mkyfd.jpeg"
+      avatar: "http://37147v95r9.goho.co:8088/upload/20180814203759_mkyfd.jpeg"
     }
     - {
       title: "沈阳大学20届自动化部分科目题库",
@@ -1065,6 +1065,9 @@ links:
     # Options: utterances | disqus | gitalk | valine | waline | changyan | livere | remark42 | twikoo | cusdis | giscus | discuss
     type: disqus
 
+
+# RSS
+rss: /atom.xml
 
 #---------------------------
 # 以下是配置 JS CSS 等静态资源的 URL 前缀，可以自定义成 CDN 地址，
