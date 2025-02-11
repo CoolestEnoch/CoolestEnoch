@@ -1,14 +1,22 @@
 (function () {
     var a_idx = 0;
+    var sourceStr = [
+        "嘤嘤嘤(⁠｡⁠･⁠ω⁠･⁠｡⁠)⁠ﾉ⁠♡",
+        "诶豆(⁠๑⁠•⁠﹏⁠•⁠)?",
+        "❤欧尼酱❤",
+        "好耶(⁠人⁠*⁠´⁠∀⁠｀⁠)⁠｡⁠*ﾟ⁠+",
+        "Ciallo～(∠・ω< )⌒★",
+        "☆⌒( ≥m・∠)～ollɐıɔ"
+    ];
     window.onclick = function (event) {
-        var a = new Array("❤嘤嘤嘤❤", "❤诶豆?❤", "❤你好❤", "❤欧尼酱❤");
 
         var heart = document.createElement("b"); //创建b元素
         heart.onselectstart = new Function('event.returnValue=false'); //防止拖动
 
-        document.body.appendChild(heart).innerHTML = a[a_idx]; //将b元素添加到页面上
-        a_idx = (a_idx + 1) % a.length;
-        heart.style.cssText = "position: fixed;left:-100%;"; //给p元素设置样式
+        document.body.appendChild(heart).innerHTML = sourceStr[a_idx]; //将b元素添加到页面上
+        // a_idx = (a_idx + 1) % sourceStr.length;
+        a_idx = Math.floor(Math.random() * sourceStr.length);
+        heart.style.cssText = "position: fixed;left:-100%;z-index: 4;"; //给p元素设置样式
 
         var f = 16, // 字体大小
             x = event.clientX - f / 2, // 横坐标
@@ -22,7 +30,7 @@
                 document.body.removeChild(heart);
                 clearInterval(timer);
             } else {
-                heart.style.cssText = "font-size:16px;cursor: default;position: fixed;color:" +
+                heart.style.cssText = "z-index: 4;font-size:16px;cursor: default;position: fixed;color:" +
                     c + ";left:" + x + "px;top:" + y + "px;opacity:" + a + ";transform:scale(" +
                     s + ");";
 
@@ -37,7 +45,7 @@
     function randomColor() {
 
         return "rgb(" + (~~(Math.random() * 255)) + "," + (~~(Math.random() * 255)) + "," + (~~(Math
-        .random() * 255)) + ")";
+            .random() * 255)) + ")";
 
     }
 }());

@@ -2,10 +2,10 @@
 title: Android12的SplashScreen适配
 category: Android
 date: 2023-08-23 18:00:00
-index_img: https://www.gstatic.cn/devrel-devsite/prod/vf01e53c189c374f4b844e7f928194555d40bd3ee38d62d21b64d81f753f3c6a2/android/images/rebrand/lockup.svg
+index_img: https://developer.android.google.cn/images/cluster-illustrations/android-basics-kotlin.svg
 ---
 
-![封面](https://www.gstatic.cn/devrel-devsite/prod/vf01e53c189c374f4b844e7f928194555d40bd3ee38d62d21b64d81f753f3c6a2/android/images/rebrand/lockup.svg)
+![封面](https://developer.android.google.cn/images/cluster-illustrations/android-basics-kotlin.svg)
 
 废话不多说，直接上代码
 
