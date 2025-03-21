@@ -243,7 +243,7 @@ custom_js:
  - /js/effect/cuteTitle.js
  - /js/effect/GoTop/szgotop.js
  - /js/effect/Netease.js
- - /js/effect/cxk.js
+ - /js/effect/cxkChrome.js
 
 # 指定自定义 .css 文件路径，用法和 custom_js 相同
 # The usage is the same as custom_js
@@ -1021,9 +1021,15 @@ links:
     - {
       title: "IcebearのTinyWebsite",
       intro: "同学的博客",
-      link: "http://37147v95r9.goho.co:8088",
-      avatar: "http://37147v95r9.goho.co:8088/upload/20180814203759_mkyfd.jpeg"
+      link: "https://blog.doralab.tech/",
+      avatar: "http://a.doralab.tech/p/BLOG/photo/website_themes_sources/logo.jpg"
     }
+    #- {
+    #  title: "IcebearのTinyWebsite",
+    #  intro: "同学的博客",
+    #  link: "http://37147v95r9.goho.co:8088",
+    #  avatar: "http://37147v95r9.goho.co:8088/upload/20180814203759_mkyfd.jpeg"
+    #}
     - {
       title: "沈阳大学20届自动化部分科目题库",
       intro: "部署在GitHub上的",
