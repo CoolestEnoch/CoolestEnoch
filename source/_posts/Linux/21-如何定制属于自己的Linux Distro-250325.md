@@ -2,11 +2,11 @@
 title: 如何定制属于自己的Linux Distro
 category: Linux
 date: 2025-03-25 00:00:00
-index_img: https://i2.hdslb.com/bfs/archive/ce0253f0da7b8d792a1a47439ec381d0cbcdee42.jpg
+index_img: https://pic1.zhimg.com/v2-4f012cc71dad073eb27f14c5fdac4dac_r.jpg
 ---
 
 
- ![封面](https://i2.hdslb.com/bfs/archive/ce0253f0da7b8d792a1a47439ec381d0cbcdee42.jpg)
+ ![封面](https://pic1.zhimg.com/v2-4f012cc71dad073eb27f14c5fdac4dac_r.jpg)
 
 
 # TL;DR
