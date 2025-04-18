@@ -3,8 +3,8 @@
 ## Source: https://github.com/hexojs/hexo/
 
 # Site
-title: Enoch的个人小站
-subtitle: 'Enoch is here.'
+title: Default Title
+subtitle: 'Default Subtitle'
 description: ''
 keywords:
 author: CoolestEnoch
@@ -111,5 +111,5 @@ theme: fluid
 ## Docs: https://hexo.io/docs/one-command-deployment
 deploy:
   type: git
-  repository: git@github.com:CoolestEnoch/CoolestEnoch.git
-  branch: pages-blog
+  repository: git@github.com:CoolestEnoch/dummy.git
+  branch: pages-blog-dummy

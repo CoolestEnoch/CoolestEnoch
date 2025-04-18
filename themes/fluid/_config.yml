@@ -232,18 +232,18 @@ font:
 # 指定自定义 .js 文件路径，支持列表；路径是相对 source 目录，如 /js/custom.js 对应存放目录 source/js/custom.js
 # Specify the path of your custom js file, support list. The path is relative to the source directory, such as `/js/custom.js` corresponding to the directory `source/js/custom.js`
 custom_js:
- - /js/effect/GoTop/jquery.min.js
+#  - /js/effect/GoTop/jquery.min.js
  - /js/effect/lib/jquery-1.9.1.min.js
  - /js/effect/lib/jquery-3.6.0.min.js
- - /js/effect/clickeffect.js
- - /js/effect/clickWord.js
- - /js/effect/emojiCursor.js
  - /js/effect/sakura-less.js
- - /js/effect/sakana@1.0.8.js
  - /js/effect/cuteTitle.js
- - /js/effect/GoTop/szgotop.js
+#  - /js/effect/GoTop/szgotop.js
  - /js/effect/Netease.js
- - /js/effect/cxkChrome.js
+#  - /js/effect/emojiCursor.js
+#  - /js/effect/clickeffect.js
+#  - /js/effect/clickWord.js
+#  - /js/effect/cxkChrome.js
+#  - /js/effect/sakana@1.0.8.js
 
 # 指定自定义 .css 文件路径，用法和 custom_js 相同
 # The usage is the same as custom_js
@@ -337,7 +337,7 @@ iconfont: //at.alicdn.com/t/font_1736178_lbnruvf0jn.css
 navbar:
   # 导航栏左侧的标题，为空则按 hexo config 中 `title` 显示
   # The title on the left side of the navigation bar. If empty, it is based on `title` in hexo config
-  blog_title: "Enoch的个人小站"
+  blog_title: "Enoch的小日记本"
 
   # 导航栏毛玻璃特效，实验性功能，可能会造成页面滚动掉帧和抖动，部分浏览器不支持会自动不生效
   # Navigation bar frosted glass special animation. It is an experimental feature
@@ -358,7 +358,7 @@ navbar:
   menu:
     - { key: "home", link: "/", icon: "iconfont icon-home-fill" }
     - { key: "archive", link: "/archives/", icon: "iconfont icon-archive-fill" }
-    - { key: "category", link: "/categories/", icon: "iconfont icon-category-fill" }
+    # - { key: "category", link: "/categories/", icon: "iconfont icon-category-fill" }
     # - { key: "tag", link: "/tags/", icon: "iconfont icon-tags-fill" }
     - { key: "about", link: "/about/", icon: "iconfont icon-user-fill" }
     - { key: "links", link: "/links/", icon: "iconfont icon-link-fill" }
@@ -492,7 +492,7 @@ index:
 
     # 为空则按 hexo config.subtitle 显示
     # If empty, text based on `subtitle` in hexo config
-    text: "Keep Exploring."
+    text: "Something worth to mark."
 
     # 通过 API 接口作为首页副标题的内容，必须返回的是 JSON 格式，如果请求失败则按 text 字段显示，该功能必须先开启 typing 打字机功能
     # Subtitle of the homepage through the API, must be returned a JSON. If the request fails, it will be displayed in `text` value. This feature must first enable the typing animation
@@ -545,7 +545,7 @@ index:
 # Post Page
 #---------------------------
 post:
-  banner_img: /img/background/1.jpg
+  banner_img: /img/background/banner_post.jpg
   banner_img_height: 70
   banner_mask_alpha: 0.3
 
@@ -908,7 +908,7 @@ discuss:
 # Archive Page
 #---------------------------
 archive:
-  banner_img: /img/background/2.jpg
+  banner_img: /img/background/banner_archive.jpg
   banner_img_height: 60
   banner_mask_alpha: 0.3
 
@@ -919,7 +919,7 @@ archive:
 #---------------------------
 category:
   enable: true
-  banner_img: /img/background/3.jpg
+  banner_img: /img/background/banner_category.jpg
   banner_img_height: 60
   banner_mask_alpha: 0.3
 
@@ -948,7 +948,7 @@ category:
 #---------------------------
 tag:
   enable: false
-  banner_img: /img/background/4.jpg
+  banner_img: /img/background/banner_tag.jpg
   banner_img_height: 80
   banner_mask_alpha: 0.3
   tagcloud:
@@ -965,7 +965,7 @@ tag:
 #---------------------------
 about:
   enable: true
-  banner_img: /img/background/5.jpg
+  banner_img: /img/background/banner_about.jpg
   banner_img_height: 60
   banner_mask_alpha: 0.3
   avatar: /img/favicon.png
@@ -987,7 +987,7 @@ about:
 # Custom Page through `hexo new page`
 #---------------------------
 page:
-  banner_img: /img/background/6.jpg
+  banner_img: /img/background/banner_cust.jpg
   banner_img_height: 60
   banner_mask_alpha: 0.3
 
@@ -998,7 +998,7 @@ page:
 #---------------------------
 page404:
   enable: true
-  banner_img: /img/background/7.jpg
+  banner_img: /img/background/banner_404.jpg
   banner_img_height: 85
   banner_mask_alpha: 0.3
   # 重定向到首页的延迟(毫秒)
@@ -1012,12 +1012,18 @@ page404:
 #---------------------------
 links:
   enable: true
-  banner_img: /img/background/8.jpg
+  banner_img: /img/background/banner_links.jpg
   banner_img_height: 60
   banner_mask_alpha: 0.3
   # 友链的成员项
   # Member item of page
   items:
+    - {
+      title: "我的个人博客",
+      intro: "如题",
+      link: "https://blog.coolenoch.ink/",
+      avatar: "https://blog.coolenoch.ink/img/favicon.png"
+    }
     - {
       title: "IcebearのTinyWebsite",
       intro: "Icebear的博客",

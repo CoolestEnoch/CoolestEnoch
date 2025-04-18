@@ -6,3 +6,6 @@ node_modules/
 public/
 .deploy*/
 _multiconfig.yml
+source/_posts/diary_here/*
+!source/_posts/diary_here/dummy
+themes/fluid/source/resources
