@@ -1,7 +1,8 @@
 ---
-title: 如何在Windows上为PyTorch配置CUDA加速
+title: 如何在Windows和Linux上为PyTorch配置CUDA加速
 category: 其他的开发杂记
 date: 2025-05-23 00:00:00
+updated: 2025-09-05 00:00:00
 index_img: https://pic1.zhimg.com/v2-4f012cc71dad073eb27f14c5fdac4dac_r.jpg
 ---
 
@@ -13,7 +14,18 @@ index_img: https://pic1.zhimg.com/v2-4f012cc71dad073eb27f14c5fdac4dac_r.jpg
 ~~*这是一篇水文*~~
 
 
+# 20250905一改：新增Arch Linux下配置环境教程
+
+
 # 安装CUDA
+## Arch Linux前置条件
+先安装如下软件包：
+``` shell
+sudo pacman -S nvidia-dkms nvidia-utils opencl-nvidia cuda
+```
+
+
+## 开始操作
 在cmd里运行`nvidia-smi`，看输出的`CUDA Version`是多少：
 ``` text
 C:\Users\admin> nvidia-smi
@@ -49,7 +61,8 @@ Thu Jan 14 11:45:14 2025
 [进入老黄cuDNN下载站！](https://developer.nvidia.com/rdp/cudnn-archive)
 可能要你注册账号再下载，注册一个就行，下载对应你CUDA版本的最新版本zip。
 将压缩包里的`bin`、`include`、`lib`文件夹解压到CUDA对应版本安装目录，比如`C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v12.6`。
-然后将以下两个目录添加到系统`PATH`中：
+Arch Linux下是放到`/opt/cuda/`中。
+如果你是Windows系统，然后将以下两个目录添加到系统`PATH`中：
 ``` text
 C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v12.6\bin
 C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v12.6\libnvvp
