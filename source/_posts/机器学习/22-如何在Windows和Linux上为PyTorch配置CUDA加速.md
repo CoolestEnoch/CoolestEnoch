@@ -1,6 +1,6 @@
 ---
-title: 如何在Windows和Linux上为PyTorch配置CUDA加速
-category: 其他的开发杂记
+title: 如何在Windows上为PyTorch配置CUDA加速
+category: 机器学习
 date: 2025-05-23 00:00:00
 updated: 2025-09-05 00:00:00
 index_img: https://pic1.zhimg.com/v2-4f012cc71dad073eb27f14c5fdac4dac_r.jpg
