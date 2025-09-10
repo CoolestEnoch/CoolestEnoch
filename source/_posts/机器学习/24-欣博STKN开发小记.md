@@ -2,7 +2,7 @@
 title: 欣博STKN开发小记
 category: 机器学习
 date: 2025-09-05 00:00:00
-updated: 2025-09-10 00:00:00
+updated: 2025-09-05 00:00:00
 index_img: http://www.symboltek.com/img/logo.png
 ---
 
@@ -52,7 +52,7 @@ export STRIP=riscv64-unknown-linux-gnu-strip
 
 ## 模型准备
 ### 转换为`onnx`格式
-***二更！和甲方交流后得知这个东西其实是支持yolo v8的！所以后面会在v8相关的地方做注明。但不保证移植能用，只是做个尝试的记录！~~我这跑人眼跟踪给我乱画框呢~~***
+***二更！和甲方交流后得知这个东西其实是支持yolo v8的！所以后面会在v8相关的地方做注明。***
 
 首先，你得要有一个已经训练好了的yolo模型。它可以是v5的，也可以是v7的。但我手里的是v8的，用不了（悲），就只能用他们厂家提供的了。
 
@@ -114,7 +114,7 @@ ${dir}/yolov8.bin: ${onnx} ${table}
 ``` cmake
 stkn_add_example(yolov8 ${models}/yolov8 ${images}/yolov8.jpg)
 ```
-然后在`images`目录下创建`images/yolov8.png`，从别的地方找一张你的模型适用的图片就行。
+然后在`images`目录下创建`images/yolov8.jpg`，从别的地方找一张你的模型适用的图片就行。
 
 # 编译主程序
 我这里就编译了`C_MODEL`模式的，直接进入`demo`目录然后`make`就行。
