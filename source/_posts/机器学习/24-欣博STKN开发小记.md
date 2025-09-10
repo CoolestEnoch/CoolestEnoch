@@ -2,7 +2,7 @@
 title: 欣博STKN开发小记
 category: 机器学习
 date: 2025-09-05 00:00:00
-updated: 2025-09-05 00:00:00
+updated: 2025-09-10 00:00:00
 index_img: http://www.symboltek.com/img/logo.png
 ---
 
@@ -52,6 +52,8 @@ export STRIP=riscv64-unknown-linux-gnu-strip
 
 ## 模型准备
 ### 转换为`onnx`格式
+***二更！和甲方交流后得知这个东西其实是支持yolo v8的！所以后面会在v8相关的地方做注明。但不保证移植能用，只是做个尝试的记录！~~我这跑人眼跟踪给我乱画框呢~~***
+
 首先，你得要有一个已经训练好了的yolo模型。它可以是v5的，也可以是v7的。但我手里的是v8的，用不了（悲），就只能用他们厂家提供的了。
 
 那么我们就要对模型进行格式转换。欣博他们有自己的一套框架，格式是`STKN`，由`xxx.bin`和`xxx.param`构成。为了兼容性，他们提供了一套工具用来把`onnx`模型转换成`STKN`格式的。~~*这一步怎么那么像LLVM的IR啊*~~。
@@ -82,12 +84,42 @@ make -C ${STKN}/tools \ # 指定 make 执行${STKN}/tools/Makefile
 	shape=640,-1 \ # 量化模型时，将图像的宽度缩放为 640，高度保持宽高比
 	pixel=RGB \ # 量化模型时，输入图像的格式
 ```
+或者用我的这个v8命令：
+``` shell
+make -C ${STKN}/tools onnx=${STKN}/models/yolov8/yolov8.onnx image=${STKN}/images/COCO_val2017_500 mean=0.0,0.0,0.0 norm=0.00392157,0.00392157,0.00392157 shape=640,-1 pixel=RGB
+```
 
 
+# 对v8支持的测试
+既然厂家说是支持v8的，但是文档和案例里都没给出相关代码。我这里记录下我的移植尝试：
+## 修改MakeFile和cpp文件
+先在`models`文件夹下创建`yolov8`文件夹，然后放入转换成`onnx`格式的`yolov8.onnx`，并创建如下`Makefile`:
+``` Makefile
+dir ?= $(abspath $(dir $(lastword $(MAKEFILE_LIST))))
+stkn ?= $(abspath ${dir}/../..)
+
+onnx ?= ${dir}/yolov8.onnx
+table ?= ${dir}/yolov8.table
+conf_threshold ?= 0.25
+
+${dir}/yolov8.bin: ${onnx} ${table}
+	make -C ${stkn}/tools onnx=${onnx} table=${table} conf_threshold=${conf_threshold}
+
+```
+复制`demo/yolov7-tiny.cpp` -> `demo/yolov8.cpp`，并将里面对`v7tiny`的引用改成`v8`的。
+
+
+## 添加单元测试
+修改`demo/CMakeLists.txt`，在最后的`add_example`里依葫芦画瓢加上：
+``` cmake
+stkn_add_example(yolov8 ${models}/yolov8 ${images}/yolov8.jpg)
+```
+然后在`images`目录下创建`images/yolov8.png`，从别的地方找一张你的模型适用的图片就行。
 
 # 编译主程序
 我这里就编译了`C_MODEL`模式的，直接进入`demo`目录然后`make`就行。
 完成后会在`demo/build-c_model`下生成`face_detect`, `plate_detect`, `yolov5s`, `yolov7-tiny`, `yolov7-tiny_float`五个可执行文件，我们接下来就可以用它们来进行识别了。
+按照`yolov8`移植的做了之后，还会有个`yolov8`的二进制文件。
 
 
 # 运行识别demo
@@ -96,4 +128,6 @@ make -C ${STKN}/tools \ # 指定 make 执行${STKN}/tools/Makefile
 LD_LIBRARY_PATH=${STKN}/c_model/lib ${STKN}/demo/build-c_model/yolov7-tiny ${STKN}/models/yolov7-tiny ${STKN}/images/bus.jpg
 ```
 在添加`LD_LIBRARY_PATH`后，给`yolov7-tiny`这个二进制传递两个参数即可，第一个参数是模型所在文件夹，要包含`STKN`格式模型的两个文件，第二个参数是你要识别的图片。随后会将识别好带框的图片存在二进制程序所在目录下，和二进制程序同名的jpg。
+
+`yolov8`的用法和上面的一样。
 
