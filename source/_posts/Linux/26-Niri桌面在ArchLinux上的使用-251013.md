@@ -13,7 +13,7 @@ index_img: https://yalter.github.io/niri/_assets/icons/logo.svg
 
 
 # TL;DR
-在用了KDE和Gnome后，感觉有点索然无味了。KDE确实好看，但太重了；Gnome的平铺动态多工作区模式确实效率高，但~~*果味十足*~~可自定义性没KDE强。那怎么办呢，不如来看看`niri`吧！这是一个用RUST写的桌面合成器，我配好桌面+附加组建后开机空载就只吃1.3G内存！老机狂喜！
+在用了KDE和Gnome后，感觉有点索然无味了。KDE确实好看，但太重了；Gnome的平铺动态多工作区模式确实效率高，但~~*果味十足*~~可自定义性没KDE强。那怎么办呢，不如来看看`niri`吧！这是一个用***RUST***写的桌面合成器，我配好桌面+附加组建后开机空载就只吃1.3G内存！老机狂喜！
 
 
 ![Rust Meme](https://tse2.mm.bing.net/th/id/OIP.HQ5ZqfbrekQ_gZ6TdS4KdgHaH7?cb=12&rs=1&pid=ImgDetMain&o=7&rm=3)
