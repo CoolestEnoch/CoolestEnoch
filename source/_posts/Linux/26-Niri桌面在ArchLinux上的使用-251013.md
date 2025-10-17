@@ -62,7 +62,7 @@ systemctl --user add-wants niri.service swaybg.service
 
 
 # 添加配置文件
-将我的仓库克隆下来，运行`deploy.sh`即可。
+将[我的仓库](https://github.com/CoolestEnoch/niriconfig)克隆下来，运行`deploy.sh`即可。
 > ⚠️注
 > 如您使用的是我的配置文件，均包含后文所述修改和问题的解决方案，并且自动化部署脚本`deploy.sh`都会帮你去做好，您只需手动安装对应的软件包即可。
 
