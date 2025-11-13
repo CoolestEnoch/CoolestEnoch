@@ -108,9 +108,142 @@ ${dir}/yolov8.bin: ${onnx} ${table}
 ```
 复制`demo/yolov7-tiny.cpp` -> `demo/yolov8.cpp`，并将里面对`v7tiny`的引用改成`v8`的。
 
+这里附上我改的，~~*不一定能运行*~~
+``` cpp
+#include "stkn.h"
+
+namespace { struct Object
+{
+    cv::Rect_<float> rect;
+    int label;
+    float prob;
+}; }
+
+static const char* names[] = {"eye"};
+
+static void draw_objects(cv::Mat& img, const std::vector<Object>& objects)
+{
+    for (const Object& obj : objects)
+    {
+        cv::rectangle(img, obj.rect, cv::Scalar(255, 0, 0));
+
+        char text[256];
+        int i = snprintf(text, sizeof(text), "%s %.0f%%", names[obj.label], obj.prob * 100);
+
+        int baseLine = 0;
+        cv::Size label_size = cv::getTextSize(text, cv::FONT_HERSHEY_SIMPLEX, 0.5, 1, &baseLine);
+
+        int x = obj.rect.x;
+        int y = obj.rect.y - label_size.height - baseLine;
+        if (y < 0)
+            y = 0;
+        if (x + label_size.width > img.cols)
+            x = img.cols - label_size.width;
+
+        cv::rectangle(img, cv::Rect(cv::Point(x, y), cv::Size(label_size.width, label_size.height + baseLine)),
+                      cv::Scalar(255, 255, 255), -1);
+
+        cv::putText(img, text, cv::Point(x, y + label_size.height),
+                    cv::FONT_HERSHEY_SIMPLEX, 0.5, cv::Scalar(0, 0, 0));
+    }
+}
+
+#if USE_GTEST
+extern "C" int test_yolov8(int argc, char** argv)
+#else
+int main(int argc, char** argv)
+#endif
+{
+    tpu_init(0x20000000, 0x20000000);
+
+    const std::unique_ptr<stkn::Net> net(stkn::net_create(
+        (std::string(argv[1]) + "/yolov8.param").c_str(),
+        (std::string(argv[1]) + "/yolov8.bin").c_str(),
+        std::vector<const char*>{"259", "293", "327"}
+    ));
+
+    stkn::Mat yuv = stkn::imread(argv[2]);
+
+    int t;
+    tpu_us(&t);
+
+    int dst_w = 640;
+    int dst_h = 640;
+    if (yuv.w < yuv.h)
+        dst_w = dst_h * yuv.w / yuv.h + 16 & -32;
+    else/*  */
+        dst_h = dst_w * yuv.h / yuv.w + 16 & -32;
+    float scale_w = (float)yuv.w / dst_w;
+    float scale_h = (float)yuv.h / dst_h;
+
+    stkn::Extractor ex(net.get());
+#if YOLOV8_END2END
+    ex.input_nv12(yuv.data, yuv.h, yuv.w, yuv.w, dst_h, dst_w, 1, 0, yuv.w * yuv.h, 0, 0, 640 - dst_h, 640 - dst_w);
+
+    stkn::Mat out;
+    ex("num_dets", out);
+
+    std::vector<Object> objects(out.h);
+    Object* obj = objects.data();
+    const float* ptr = out;
+    for (int i = 0; i < out.h; ++i) {
+        obj->label = *ptr++ + 1; // +1 for prepend background class
+        obj->prob = *ptr++;
+        obj->rect.x = *ptr++ * scale_w;
+        obj->rect.y = *ptr++ * scale_h;
+        obj->rect.width = *ptr++ * scale_w - obj->rect.x;
+        obj->rect.height = *ptr++ * scale_h - obj->rect.y;
+        obj++;
+    }
+#else
+    ex.input_nv12(yuv.data, yuv.h, yuv.w, yuv.w, dst_h, dst_w, 1, 0);
+
+    std::vector<stkn::Mat> mats;
+    ex(mats);
+
+    fprintf(stderr, "yolov8 %fms\n", tpu_us(&t) / 1000.f);
+    tpu_us(&t);
+
+    const static std::vector<float> anchors{12.f, 16.f, 19.f, 36.f, 40.f, 28.f,
+                                            36.f, 75.f, 76.f, 55.f, 72.f, 146.f,
+                                            142.f, 110.f, 192.f, 243.f, 459.f, 401.f};
+    float score_threshold = 0.25;
+    float iou_threshold = 0.45;
+
+    std::vector<std::unique_ptr<stkn::Object> > picked =
+        stkn::yolov5_detect(net, mats, 8, anchors, score_threshold, iou_threshold);
+
+    std::vector<Object> objects(picked.size());
+    Object* obj = objects.data();
+    for (const std::unique_ptr<stkn::Object>& src : picked) {
+        obj->label = src->label + 1; // +1 for prepend background class
+        obj->prob = src->prob;
+        obj->rect.x = src->x0 * scale_w;
+        obj->rect.y = src->y0 * scale_h;
+        obj->rect.width = src->x1 * scale_w - obj->rect.x;
+        obj->rect.height = src->y1 * scale_h - obj->rect.y;
+        obj++;
+    }
+#endif
+
+    fprintf(stderr, "yolov8 %fms\n", tpu_us(&t) / 1000.f);
+    for (const Object& obj : objects)
+        fprintf(stderr, "%s %.0f%% %.0f,%.0f %.0fx%.0f\n", names[obj.label], obj.prob * 100,
+                obj.rect.x, obj.rect.y, obj.rect.width, obj.rect.height);
+
+    stkn::Mat bgr = stkn::im2bgr(yuv);
+    cv::Mat img(bgr.h, bgr.w, CV_8UC3, bgr.data);
+    draw_objects(img, objects);
+    cv::imwrite("yolov8.jpg", img);
+
+    return 0;
+}
+
+```
+
 
 ## 添加单元测试
-修改`demo/CMakeLists.txt`，在最后的`add_example`里依葫芦画瓢加上：
+修改`demo/CMakeLists.txt`，在最后的`stkn_add_example`里依葫芦画瓢加上：
 ``` cmake
 stkn_add_example(yolov8 ${models}/yolov8 ${images}/yolov8.jpg)
 ```
