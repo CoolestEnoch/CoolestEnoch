@@ -7,6 +7,10 @@ index_img: https://dl.winehq.org/share/images/winehq_logo_glass.png
 ---
 
 
+ ![封面](https://dl.winehq.org/share/images/winehq_logo_glass.pngg)
+(封面图源[wine官网](https://www.winehq.org)
+
+
 # TL;DR
 一时兴起，想搭个云游戏平台。尝试了`solarkennedy/wine-x11-novnc-docker`等几个，要么是都没达到我的要求，有的停更好几年了。
 
