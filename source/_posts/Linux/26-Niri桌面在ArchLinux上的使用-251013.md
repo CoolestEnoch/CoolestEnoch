@@ -11,6 +11,9 @@ index_img: https://yalter.github.io/niri/_assets/icons/logo.svg
 (封面图源[Niri@Github](https://github.com/YaLTeR/niri))
 
 
+> ⚠️注意
+> 本博客内容可能存在过时，具体参考[我的GitHub仓库Readme](https://github.com/CoolestEnoch/niriconfig/blob/main/readme.md)。
+
 
 # TL;DR
 在用了KDE和Gnome后，感觉有点索然无味了。KDE确实好看，但太重了；Gnome的平铺动态多工作区模式确实效率高，但~~*果味十足*~~可自定义性没KDE强。那怎么办呢，不如来看看`niri`吧！这是一个用RUST写的桌面合成器，我配好桌面+附加组建后开机空载就只吃1.3G内存！老机狂喜！
@@ -171,6 +174,27 @@ gamescope -W 1920 -H 1080 -r 60 -- your_program
 --expose-wayland
 ```
 这时，你只需要去修改微信的启动脚本，在前面添加`gamescope`即可
+
+
+# 没法屏幕共享、屏幕共享和KDE冲突怎么办
+安装`xdg-desktop-portal xdg-desktop-portal-kde xdg-desktop-portal-wlr`，然后创建`.config/xdg-desktop-portal/kde-portals.conf`：
+``` conf
+[preferred]
+default=kde
+```
+再创建`.config/xdg-desktop-portal/niri-portals.conf`：
+``` conf
+[preferred]
+# [...](asc_slot://start-slot-7)屏幕共享和截图使用 wlr 后端
+org.freedesktop.impl.portal.ScreenCast=wlr
+org.freedesktop.impl.portal.Screenshot=wlr
+
+# [...](asc_slot://start-slot-9)其他功能（如文件选择器、设置等）推荐使用 GTK 后端
+# 因为 wlr 后端只有截图录屏功能，没有文件选择器
+# 如果你没安装 xdg-desktop-portal-gtk，可以先尝试不填或填 kde (但不推荐在niri用kde的文件选择器)
+default=kde
+```
+
 
 
 # 引用的文档和页面
