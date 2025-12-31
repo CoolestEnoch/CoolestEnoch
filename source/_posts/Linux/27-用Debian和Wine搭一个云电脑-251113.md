@@ -65,6 +65,20 @@ EOF
 ```
 
 
+修改locales，增加中文和英文字体支持，防止容器内出现某些字体不存在导致的乱码：
+``` shell
+apt install locales
+sed -i '/zh_CN.UTF-8/s/^# //g' /etc/locale.gen
+sed -i '/en_US.UTF-8/s/^# //g' /etc/locale.gen
+locale-gen
+
+# 后面三行是选做，做了会把终端默认语言改成中文
+echo "export LANG=zh_CN.UTF-8" >> ~/.bashrc
+echo "export LANGUAGE=zh_CN:zh" >> ~/.bashrc
+echo "export LC_ALL=zh_CN.UTF-8" >> ~/.bashrc
+```
+
+
 安装~~*虎哥*~~VNC Server：
 ``` shell
 apt install tigervnc-standalone-server tigervnc-common tightvncserver
@@ -114,15 +128,30 @@ alwaysshared
 ``` shell
 export DISPLAY=:1
 
-rm -r /tmp/.X*
-rm /root/.config/tigervnc/*.pid
-rm /root/.config/tigervnc/*.log
+rm -v core*
+rm -v /core.*
+for pid_file in ~/.config/tigervnc/*.pid; do
+    [[ -f "$pid_file" ]] || continue
 
-vncserver -localhost no -geometry 1280x768
+    port=${pid_file##*:}
+    port=${port%.pid}
+
+    vncserver -kill ":$port"
+done
+
+rm -rv /tmp/.X*
+rm -rv /root/.config/tigervnc/*.pid
+rm -rv /root/.config/tigervnc/*.log
+
+vncserver -localhost no -geometry 1280x720
 sleep 5
 
 websockify -D --web=/usr/share/novnc/ 5999 localhost:5901
 sleep 5
+
+export LANG=zh_CN.UTF-8
+export LC_ALL=zh_CN.UTF-8
+export LANGUAGE=zh_CN:zh
 
 wine explorer
 ```
@@ -137,6 +166,8 @@ dpkg --add-architecture i386 && apt update
 apt install ​wine wine32 wine64 libwine libwine:i386 fonts-wine
 ```
 
+> ⚠️注意
+> 记得去把Windows的字体复制进去
 
 接下来，就和正常在电脑上开wine一样方便，直接`wine program.exe`即可。
 
