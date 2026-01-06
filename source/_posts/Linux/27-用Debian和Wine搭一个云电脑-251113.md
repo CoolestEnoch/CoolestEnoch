@@ -8,7 +8,7 @@ index_img: https://dl.winehq.org/share/images/winehq_logo_glass.png
 
 
  ![封面](https://dl.winehq.org/share/images/winehq_logo_glass.pngg)
-(封面图源[wine官网](https://www.winehq.org)
+(封面图源[wine官网](https://www.winehq.org))
 
 
 # TL;DR
@@ -50,14 +50,14 @@ docker exec -it wine_novnc /bin/bash
 ``` shell
 tee /etc/apt/sources.list.d/debian.sources > /dev/null << 'EOF'
 Types: deb
-URIs: https://mirrors.tuna.tsinghua.edu.cn/debian
+URIs: http://mirrors.tuna.tsinghua.edu.cn/debian
 Suites: sid
 Components: main contrib non-free non-free-firmware
 Signed-By: /usr/share/keyrings/debian-archive-keyring.gpg
 
 # 默认取消注释了源码镜像，如有需要可自行注释
 Types: deb-src
-URIs: https://mirrors.tuna.tsinghua.edu.cn/debian
+URIs: http://mirrors.tuna.tsinghua.edu.cn/debian
 Suites: sid
 Components: main contrib non-free non-free-firmware
 Signed-By: /usr/share/keyrings/debian-archive-keyring.gpg
@@ -142,6 +142,7 @@ done
 rm -rv /tmp/.X*
 rm -rv /root/.config/tigervnc/*.pid
 rm -rv /root/.config/tigervnc/*.log
+find . -name "core.*" -exec echo {} \; -exec rm {} +
 
 vncserver -localhost no -geometry 1280x720
 sleep 5
@@ -163,7 +164,7 @@ wine explorer
 apt install wine wine64 libwine fonts-wine
 # 32位软件支持
 dpkg --add-architecture i386 && apt update
-apt install ​wine wine32 wine64 libwine libwine:i386 fonts-wine
+apt install wine wine32 wine64 libwine libwine:i386 fonts-wine
 ```
 
 > ⚠️注意

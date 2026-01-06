@@ -16,7 +16,7 @@ index_img: https://yalter.github.io/niri/_assets/icons/logo.svg
 
 
 # TL;DR
-在用了KDE和Gnome后，感觉有点索然无味了。KDE确实好看，但太重了；Gnome的平铺动态多工作区模式确实效率高，但~~*果味十足*~~可自定义性没KDE强。那怎么办呢，不如来看看`niri`吧！这是一个用RUST写的桌面合成器，我配好桌面+附加组建后开机空载就只吃1.3G内存！老机狂喜！
+在用了KDE和Gnome后，感觉有点索然无味了。KDE确实好看，但太重了；Gnome的平铺动态多工作区模式确实效率高，但~~*果味十足*~~可自定义性没KDE强。那怎么办呢，不如来看看`niri`吧！这是一个用RUST写的桌面合成器，我配好桌面+附加组件后开机空载就只吃1.3G内存！老机狂喜！
 
 
 ![Rust Meme](https://tse2.mm.bing.net/th/id/OIP.HQ5ZqfbrekQ_gZ6TdS4KdgHaH7?cb=12&rs=1&pid=ImgDetMain&o=7&rm=3)
@@ -26,7 +26,7 @@ index_img: https://yalter.github.io/niri/_assets/icons/logo.svg
 当然，它***只***是个***桌面合成器***而已，***仅此而已***，所以你还需要自己安装状态栏、锁屏界面、通知栏等一系列工具。
 
 # 安装基础软件包
-这是`niri`桌面和依赖的一些组建。
+这是`niri`桌面和依赖的一些组件。
 ``` shell
 sudo pacman -S --needed niri alacritty fuzzel swaylock swayidle waybar swaybg xwayland-satellite swaync
 ```
@@ -157,7 +157,7 @@ Mod+V       { toggle-window-floating; }
 
 
 # 微信右键消息没法弹出菜单、表情等小弹窗乱飞怎么办
-用`gamescope`，具体可参考[这个WiKi](https://wiki.archlinux.org/title/Gamescope)。它需要你安装好了`mesa`驱动组建，具体可以看[这个WiKi](https://wiki.archlinux.org/title/Intel_graphics)。
+用`gamescope`，具体可参考[这个WiKi](https://wiki.archlinux.org/title/Gamescope)。它需要你安装好了`mesa`驱动组件，具体可以看[这个WiKi](https://wiki.archlinux.org/title/Intel_graphics)。
 总的来说，你只需要安装这三个包就行（对于像我一样的`Intel`核显机器）：
 ``` shell
 sudo pacman -S gamescope mesa vulkan-intel
