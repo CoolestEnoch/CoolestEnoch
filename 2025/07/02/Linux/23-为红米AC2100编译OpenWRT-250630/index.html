@@ -1,0 +1,771 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
+  <link rel="icon" href="/img/favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="CoolestEnoch">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="(封面图源小米商城) TL;DR在23年下半年的某一天，我一个室友给我安利了这台路由器，但我嫌他贵就没买。后来想象可惜，24年上半年想玩的时候发现下架了！淦，现在又想玩了，就上网上二手收了一台。这个机器是MIPS架构的，RAM和硬盘都只有128MB。对的，是MB，你没看错。确实能买更好的机器，但这个机器拿来练手还是很不错的。 思路先给机器降级，然后利用旧版系统漏洞刷入Breed，通过Breed来">
+<meta property="og:type" content="article">
+<meta property="og:title" content="为红米AC2100编译OpenWRT">
+<meta property="og:url" content="http://blog.coolenoch.ink/2025/07/02/Linux/23-%E4%B8%BA%E7%BA%A2%E7%B1%B3AC2100%E7%BC%96%E8%AF%91OpenWRT-250630/index.html">
+<meta property="og:site_name" content="Enoch的个人小站">
+<meta property="og:description" content="(封面图源小米商城) TL;DR在23年下半年的某一天，我一个室友给我安利了这台路由器，但我嫌他贵就没买。后来想象可惜，24年上半年想玩的时候发现下架了！淦，现在又想玩了，就上网上二手收了一台。这个机器是MIPS架构的，RAM和硬盘都只有128MB。对的，是MB，你没看错。确实能买更好的机器，但这个机器拿来练手还是很不错的。 思路先给机器降级，然后利用旧版系统漏洞刷入Breed，通过Breed来">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://i1.mifile.cn/f/i/2019/rm2100/summary/head.jpg">
+<meta property="article:published_time" content="2025-07-01T16:00:00.000Z">
+<meta property="article:modified_time" content="2025-07-30T16:00:00.000Z">
+<meta property="article:author" content="CoolestEnoch">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://i1.mifile.cn/f/i/2019/rm2100/summary/head.jpg">
+  
+  
+  
+  <title>为红米AC2100编译OpenWRT - Enoch的个人小站</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+  
+<link rel="stylesheet" href="/css/effect/cursor.css">
+<link rel="stylesheet" href="/css/effect/blur.css">
+<link rel="stylesheet" href="/css/effect/head-rotate.css">
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"blog.coolenoch.ink","root":"/","version":"1.9.7","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":true,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":"❡"},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 7.2.0"><link rel="alternate" href="/feed.xml" title="Enoch的个人小站" type="application/rss+xml">
+</head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Enoch的个人小站</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/" target="_self">
+                <i class="iconfont icon-link-fill"></i>
+                <span>友链</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/background/1.jpg') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="为红米AC2100编译OpenWRT"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2025-07-02 00:00" pubdate>
+          2025年7月2日 凌晨
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          2.1k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          18 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">为红米AC2100编译OpenWRT</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <p> <img src="https://i1.mifile.cn/f/i/2019/rm2100/summary/head.jpg" srcset="/img/loading.gif" lazyload alt="封面"><br>(封面图源<a target="_blank" rel="noopener" href="https://www.mi.com/rm2100">小米商城</a>)</p>
+<h1 id="TL-DR"><a href="#TL-DR" class="headerlink" title="TL;DR"></a>TL;DR</h1><p>在23年下半年的某一天，我一个室友给我安利了这台路由器，但我<del><em>嫌他贵</em></del>就没买。后来想象可惜，24年上半年想玩的时候发现下架了！淦，现在又想玩了，就上网上二手收了一台。这个机器是<code>MIPS</code>架构的，RAM和硬盘都只有<code>128MB</code>。对的，是MB，你没看错。确实能买更好的机器，但这个机器拿来练手还是很不错的。</p>
+<h1 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h1><p>先给机器降级，然后利用旧版系统漏洞刷入<code>Breed</code>，通过Breed来刷入OpenWRT。因为Breed这个bootloader会在你无法开机或手动进入的时候，起一个<code>192.168.1.1</code>的webui用来让你救转&#x2F;刷入新系统。</p>
+<h1 id="刷入Breed"><a href="#刷入Breed" class="headerlink" title="刷入Breed"></a>刷入Breed</h1><p>我们先系统降级，下载<a target="_blank" rel="noopener" href="http://cdn.cnbj1.fds.api.mi-img.com/xiaoqiang/rom/rm2100/miwifi_rm2100_firmware_d6234_2.0.7.bin">固件包</a>，再到路由器后台的手动升级里安装这个老版本系统就行。对的没错，小米这个路由器系统做的还算人性化，可以在系统更新里降级系统。</p>
+<h2 id="检查硬盘坏快情况-可选操作"><a href="#检查硬盘坏快情况-可选操作" class="headerlink" title="检查硬盘坏快情况(可选操作)"></a>检查硬盘坏快情况(可选操作)</h2><p>毕竟是二手收来的，成色全靠抽。我这台有三个坏快，淦。。<br>把电脑通过网线插到路由器的LAN口，进入路由器后台获取你的STOK，替换掉下面的<code>CCCCCCCCCCC</code>，然后打开这个连接，等待一会儿，你的路由器名字会变成<code>Toshiba</code>或者<code>ESMT</code>，后面有可能会接上数字，这个数字就是坏快所在盘块：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs url">http://192.168.31.1/cgi-bin/luci/;stok=CCCCCCCCCCC/api/misystem/set_config_iotdev?bssid=Xiaomi&amp;user_id=longdike&amp;ssid=%0A%5B%20-z%20%22%24(dmesg%20%7C%20grep%20ESMT)%22%20%5D%20%26%26%20B%3D%22Toshiba%22%20%7C%7C%20B%3D%22ESMT%22%0Auci%20set%20wireless.%24(uci%20show%20wireless%20%7C%20awk%20-F%20&#x27;.&#x27;%20&#x27;%2Fwl1%2F%20%7Bprint%20%242%7D&#x27;).ssid%3D%22%24B%20%24(dmesg%20%7C%20awk%20&#x27;%2FBad%2F%20%7Bprint%20%245%7D&#x27;)%22%0A%2Fetc%2Finit.d%2Fnetwork%20restart%0A<br></code></pre></td></tr></table></figure>
+
+
+<h1 id="刷入Breed-1"><a href="#刷入Breed-1" class="headerlink" title="刷入Breed"></a>刷入Breed</h1><p>Breed我是在b站<a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1114y1X7TA">这个视频</a>简介里获取到的。<br>这段链接是刷入Breed的：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs url">http://192.168.31.1/cgi-bin/luci/;stok=CCCCCCCCCCC/api/misystem/set_config_iotdev?bssid=Xiaomi&amp;user_id=longdike&amp;ssid=%0Acd%20%2Ftmp%0Acurl%20-o%20B%20-O%20https%3A%2F%2Fbreed.hackpascal.net%2Fr1286%2520%255b2020-10-09%255d%2Fbreed-mt7621-xiaomi-r3g.bin%20-k%20-g%0A%5B%20-z%20%22%24(sha256sum%20B%20%7C%20grep%20242d42eb5f5aaa67ddc9c1baf1acdf58d289e3f792adfdd77b589b9dc71eff85)%22%20%5D%20%7C%7C%20mtd%20-r%20write%20B%20Bootloader%0A<br></code></pre></td></tr></table></figure>
+<p>这个刷入链接引用了外部URL，如果你家网络不是特别好，个人建议先下载下来然后部署一个web服务器，把固件传上去，然后获取内网链接，替换掉它刷入链接里的链接和<code>sha256sum</code>值就行。</p>
+<blockquote>
+<p>如果路由器在60秒内重启则代表刷BREED成功(灯会从蓝变橘，最终变蓝进入系统)。<br>如果没重启，可能是stok过期了。进入后台复制新的stok即可。也有可能下载的BREED损坏，重新运行代码，或考虑本地起一个web服务器。</p>
+</blockquote>
+<h2 id="手动进入Breed"><a href="#手动进入Breed" class="headerlink" title="手动进入Breed"></a>手动进入Breed</h2><p>拔掉电源，按住reset同时接上电源等10秒即可进入breed。需要注意的是如果闪蓝灯那就是BREED。</p>
+<h1 id="编译OpenWRT系统"><a href="#编译OpenWRT系统" class="headerlink" title="编译OpenWRT系统"></a>编译OpenWRT系统</h1><h2 id="装依赖"><a href="#装依赖" class="headerlink" title="装依赖"></a>装依赖</h2><p>我的环境是<code>Arch Linux</code>，所以只要下载一个<code>AUR</code>里的包<code>openwrt-devel</code>即可，或者也可以手动安装：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">pacman -S --needed base-devel bash bzip2 git libelf libxslt ncurses openssl rsync swig time unzip util-linux wget which zlib<br></code></pre></td></tr></table></figure>
+<p>如果你是Debian系发行版，安装这些依赖：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">sudo apt install build-essential clang flex bison g++ gawk gcc-multilib g++-multilib gettext git libncurses5-dev libssl-dev python3-setuptools rsync swig unzip zlib1g-dev file wget<br></code></pre></td></tr></table></figure>
+
+
+<h2 id="准备源码并选择分支"><a href="#准备源码并选择分支" class="headerlink" title="准备源码并选择分支"></a>准备源码并选择分支</h2><p>下载官方源码：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs shell">git clone https://git.openwrt.org/openwrt/openwrt.git<br><span class="hljs-meta prompt_"># </span><span class="language-bash">或者用ImmortalWRT分支: https://github.com/immortalwrt/immortalwrt</span><br>cd openwrt # 如果用了上面那个分支, 就是 cd immortalwrt<br>git pull<br></code></pre></td></tr></table></figure>
+<p>查看所有分支：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell">git branch -a<br>git tag<br></code></pre></td></tr></table></figure>
+<p>切换到指定分支(以我现在用的<code>24.10</code>为例)：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">git checkout openwrt-24.10<br></code></pre></td></tr></table></figure>
+<p>更新feeds：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell">./scripts/feeds update -a<br>./scripts/feeds install -a<br></code></pre></td></tr></table></figure>
+
+
+<h2 id="修改配置并编译"><a href="#修改配置并编译" class="headerlink" title="修改配置并编译"></a>修改配置并编译</h2><p>修改配置：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">make menuconfig<br></code></pre></td></tr></table></figure>
+
+<p>把前三行分别改成这样：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs config">Target System (MediaTek Ralink MIPS)  ---&gt;<br>Subtarget (MT7621 based boards)  ---&gt;<br>Target Profile (Xiaomi Redmi Router AC2100)  ---&gt;<br></code></pre></td></tr></table></figure>
+
+<p>开始编译：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">make -j$(nproc) download world<br></code></pre></td></tr></table></figure>
+<blockquote>
+<p>注意⚠️：<br>期间会联网下载依赖和部分源码包，请保证首次编译时网络畅通。</p>
+</blockquote>
+<h1 id="刷入系统"><a href="#刷入系统" class="headerlink" title="刷入系统"></a>刷入系统</h1><p>编译产物会放在<code>/project_root/bin/targets/ramips/mt7621</code>下。<br>此时，我们将路由器重启到<code>Breed</code>，在<code>固件更新</code>界面里将<code>闪存布局</code>选为<code>小米 R3G OpenWRT</code>，然后上传<code>kernel1</code>和<code>rootfs0</code>即可。</p>
+<blockquote>
+<p>注意⚠️：<br>刷机前记得做备份，在<code>Breed</code>的<code>固件备份</code>里。</p>
+</blockquote>
+<h1 id="后续"><a href="#后续" class="headerlink" title="后续"></a>后续</h1><h2 id="修改网段"><a href="#修改网段" class="headerlink" title="修改网段"></a>修改网段</h2><p>在<code>Network - Interfaces - LAN</code>里，点编辑，把<code>IPv4 addres</code>改掉就行，记得遵循局域网ip段的规则哦～</p>
+<h2 id="无线中继"><a href="#无线中继" class="headerlink" title="无线中继"></a>无线中继</h2><h3 id="启用无线中继"><a href="#启用无线中继" class="headerlink" title="启用无线中继"></a>启用无线中继</h3><p>在<code>Network - Wireless</code>里，<code>radio0</code>是<code>2.4GHz</code>的，因为是<code>802.11b/g/n</code>；<code>radio1</code>是<code>5GHz</code>的，因为是<code>802.11ac/n</code>。根据你的需求，选择要中继网络的频段，点<code>scan</code>，勾选<code>Replace wireless configuration</code>和<code>Lock to BSSID</code>，然后在<code>WPA passphrase</code>里输入密码，随后一路<code>Submit</code>和<code>Save</code>即可，最后<code>Save &amp; Apply</code>。</p>
+<h3 id="停止无线中继"><a href="#停止无线中继" class="headerlink" title="停止无线中继"></a>停止无线中继</h3><p>还是在<code>Network - Wireless</code>里，把添加中继的网络全部<code>Remove</code>掉，然后在<code>radio_</code>右边点<code>Add</code>，在<code>Interface Configuration</code>里选择<code>Network</code>为<code>LAN</code>，配置好5GHz频段wifi的ESSID、密码等安全设置后，保存即可。</p>
+<h2 id="美化"><a href="#美化" class="headerlink" title="美化"></a>美化</h2><p>进入菜单：<code>System - Software</code> ，先更新列表，然后下载并安装<code>luci-theme-argon</code>即可，主题就会自动变好看。<br>Argon主题的管理面板：下载<code>luci-app-argon-config</code>这个包即可，随后即可在<code>System - Argon Config</code>里管理主题，比如登录页面背景。<br>或者直接编译进系统，这样可以免去开机再下载:<br>主题：<code>LuCI &gt; 4. Themes &gt; luci-theme-argon</code><br>主题管理面板：<code>LuCI &gt; 3. Applications &gt; luci-app-argon-config</code></p>
+<h2 id="常用工具补齐-直接编译进系统"><a href="#常用工具补齐-直接编译进系统" class="headerlink" title="常用工具补齐(直接编译进系统)"></a>常用工具补齐(直接编译进系统)</h2><p>464xlat: <code>Network -&gt; 464xlat</code><br>tcpdump: <code>Network &gt; tcpdump</code><br>curl: <code>Network &gt; File Transfer &gt; curl</code><br>openssh-sftp-server: <code>Network &gt; SSH &gt; openssh-sftp-server</code><br>iptables-nft: <code>Network &gt; Firewall &gt; iptables-nft</code><br>openssl: <code>Utilities &gt; openssl-util</code><br>jq: <code>Utilities -&gt; jq</code><br>file: <code>Utilities -&gt; file</code><br>luci-app-wol: <code>LuCI &gt; 3. Applications &gt; luci-app-wol</code><br>luci-app-nft-qos: <code>LuCI -&gt; 3. Applications -&gt; luci-app-nft-qos</code>x</p>
+<blockquote>
+<p>如果你要运行<code>tun</code>设备的话，还需要补全下面这几个模块，不过体积也大不到哪里去，就几个KB<br>kmod-inet-diag: <code>Kernel modules &gt; Network Support &gt; kmod-inet-diag</code><br>kmod-tun: <code>Kernel modules &gt; Network Support &gt; kmod-tun</code><br>kmod-nft-socket: <code>Kernel modules &gt; Netfilter Extensions &gt; kmod-nft-socket</code><br>kmod-nft-tproxy: <code>Kernel modules &gt; Netfilter Extensions &gt; kmod-nft-tproxy</code></p>
+</blockquote>
+<blockquote>
+<p>如果你需要运行sshfs的话，需要补齐这个依赖：<br>kmod-fuse: <code>Kernel modules &gt; Filesystems &gt; kmod-fuse</code><br>sshfs: <code>Network &gt; Filesystem &gt; sshfs</code><br>如果第一次运行没反应，在命令后面添加参数<code>-d -o debug,sshfs_debug,loglevel=debug</code>然后看看是什么原因，基本都是首次连接没有信任主机</p>
+</blockquote>
+<h2 id="ZRAM-SWAP"><a href="#ZRAM-SWAP" class="headerlink" title="ZRAM-SWAP"></a>ZRAM-SWAP</h2><blockquote>
+<p>注意⚠️<br>需要你在编译时启用了<code>kmod-zram</code>内核模块，不然会安装报错。<br>路径：<code>Kernel modules &gt; Other modules &gt; kmod-zram</code></p>
+</blockquote>
+<p>也是在<code>System - Software</code> 里，下载<code>zram-swap</code>这个包并安装即可。<br>或者在 <code>Base system &gt; zram-swap</code><br>注意，他默认zram大小是内存的一半，对于这种小内存机器肯定不够用，我是搬的安卓上那一套，80%左右的zram，所以需要去修改配置文件。<br>编辑<code>/etc/init.d/zram</code>这个文件，找到这一段：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs shell">if [ -z &quot;$zram_size&quot; ]; then  <br>    # e.g. 6mb for 16mb-routers or 61mb for 128mb-routers  <br>    echo $(( ram_size / 2048 ))<br>else<br></code></pre></td></tr></table></figure>
+<p>看到那个<code>2048</code>了吗？把它改成<code>1280</code>，保存后重启，这样就能启用80%大小的zram，<del><em>就跟安卓机一样</em></del></p>
+<h2 id="内网DNS"><a href="#内网DNS" class="headerlink" title="内网DNS"></a>内网DNS</h2><p>在<code>Network - DHCP and DNS - DNS Records</code>里，然后就跟你的域名控制台里管理一样的操作，配置各种解析就行。</p>
+<h2 id="TTL-128"><a href="#TTL-128" class="headerlink" title="TTL 128"></a>TTL 128</h2><p>安装<code>iptables-nft</code>这个包，以便方便兼容iptables语法修改防火墙规则。<br>创建<code>/etc/nftables.d/12-mangle-ttl-128.nft</code>，并写入以下规则：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs nftables">chain mangle_postrouting_ttl128 &#123;<br>  type filter hook postrouting priority 300; policy accept;<br>  counter ip ttl set 128<br>&#125;<br><br>chain mangle_prerouting_ttl128 &#123;<br>  type filter hook prerouting priority 300; policy accept;<br>  counter ip ttl set 128<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>再重启防火墙：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">service firewall restart<br></code></pre></td></tr></table></figure>
+
+<p>然后就能在<code>Status - Firewall</code>里看到这条新增的规则：</p>
+<hr>
+<h4 id="Traffic-filter-chain-“mangle-prerouting-ttl128”"><a href="#Traffic-filter-chain-“mangle-prerouting-ttl128”" class="headerlink" title="Traffic filter chain “mangle_prerouting_ttl128”"></a>Traffic filter chain “mangle_prerouting_ttl128”</h4><ul>
+<li>Hook: <strong>prerouting</strong> (Capture incoming packets before any routing decision), Priority: <strong>300</strong></li>
+<li>Policy: <strong>accept</strong> (Continue processing unmatched packets</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>Rule matches</th>
+<th>Rule actions</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>20.4 KB<br><br>Traffic matched by rule: 191 Packets, 20.4 KBytes<br><br><em>Any packet</em></td>
+<td>Set header field <em>ip.ttl</em> to <strong>128</strong></td>
+</tr>
+</tbody></table>
+<hr>
+<h1 id="刷回原厂"><a href="#刷回原厂" class="headerlink" title="刷回原厂"></a>刷回原厂</h1><p>在<code>Breed</code>里的<code>固件更新</code>，闪存布局选择<code>小米 R3G 原厂</code>，只把<code>miwifi_rm2100_firmware_d6234_2.0.7_breed.bin</code>上传到<code>固件</code>里，刷入后等待重启，随后在小米系统里进行一次系统更新，就能把Breed清除，彻底回到小米系统。</p>
+<blockquote>
+<p>注意⚠️：<br>如果上传固件后无法进入系统，回到breed，在<code>环境变量编辑</code>页面里删除<code>normal_firmware_md5</code>。</p>
+</blockquote>
+<h1 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h1><h2 id="OpenWRT官方页面"><a href="#OpenWRT官方页面" class="headerlink" title="OpenWRT官方页面"></a>OpenWRT官方页面</h2><p><a target="_blank" rel="noopener" href="https://openwrt.org/toh/hwdata/xiaomi/xiaomi_redmi_router_ac2100#techdataxiaomi_redmi_router_ac2100">Techdata: Xiaomi Redmi Router AC2100</a><br><a target="_blank" rel="noopener" href="https://openwrt.org/toh/xiaomi/xiaomi_redmi_router_ac2100">Xiaomi Redmi Router AC2100</a><br><a target="_blank" rel="noopener" href="https://openwrt.org/docs/guide-developer/toolchain/install-buildsystem">Build System Setup （装依赖教程）</a><br><a target="_blank" rel="noopener" href="https://openwrt.org/docs/guide-developer/toolchain/use-buildsystem">Build System Usage</a></p>
+<h2 id="Github页面"><a href="#Github页面" class="headerlink" title="Github页面"></a>Github页面</h2><p><a target="_blank" rel="noopener" href="https://github.com/immortalwrt/immortalwrt">ImmortalWRT</a></p>
+<h2 id="其他页面"><a href="#其他页面" class="headerlink" title="其他页面"></a>其他页面</h2><p><a target="_blank" rel="noopener" href="https://www.mi.com/rm2100">小米商城 - 红米AC2100</a><br><a target="_blank" rel="noopener" href="https://www.right.com.cn/forum/forum.php?mod=viewthread&tid=4066963&extra=page=1&page=1">恩山论坛 - 小米 红米【AC2100】一键刷BREED【30秒刷完】小白帅小伙专用 检查坏块 | 无需Telnet</a><br><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1114y1X7TA">哔哩哔哩 - 红米AC2100路由器一键刷入BREED刷入第三方openwrt+老毛子固件+能刷回小米官方固件</a><br><a target="_blank" rel="noopener" href="https://www.hetong-re4per.com/posts/multi-device-detection">校园网防止多设备检测指北</a></p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Linux/" class="category-chain-item">Linux</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>为红米AC2100编译OpenWRT</div>
+      <div>http://blog.coolenoch.ink/2025/07/02/Linux/23-为红米AC2100编译OpenWRT-250630/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>CoolestEnoch</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2025年7月2日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2025/09/05/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/24-%E6%AC%A3%E5%8D%9ASTKN%E5%BC%80%E5%8F%91%E5%B0%8F%E8%AE%B0/" title="欣博STKN开发小记">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">欣博STKN开发小记</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2025/05/23/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/22-%E5%A6%82%E4%BD%95%E5%9C%A8Windows%E5%92%8CLinux%E4%B8%8A%E4%B8%BAPyTorch%E9%85%8D%E7%BD%AECUDA%E5%8A%A0%E9%80%9F/" title="如何在Windows上为PyTorch配置CUDA加速">
+                        <span class="hidden-mobile">如何在Windows上为PyTorch配置CUDA加速</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  <script>
+  Fluid.utils.createScript('https://lib.baomitu.com/mermaid/8.14.0/mermaid.min.js', function() {
+    mermaid.initialize({"theme":"default"});
+
+    Fluid.utils.listenDOMLoaded(function() {
+      Fluid.events.registerRefreshCallback(function() {
+        if ('mermaid' in window) {
+          mermaid.init();
+        }
+      });
+    });
+  });
+</script>
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+  
+<script src="/js/effect/GoTop/jquery.min.js"></script>
+<script src="/js/effect/lib/jquery-1.9.1.min.js"></script>
+<script src="/js/effect/lib/jquery-3.6.0.min.js"></script>
+<script src="/js/effect/clickeffect.js"></script>
+<script src="/js/effect/clickWord.js"></script>
+<script src="/js/effect/emojiCursor.js"></script>
+<script src="/js/effect/sakura-less.js"></script>
+<script src="/js/effect/sakana@1.0.8.js"></script>
+<script src="/js/effect/cuteTitle.js"></script>
+<script src="/js/effect/GoTop/szgotop.js"></script>
+<script src="/js/effect/Netease.js"></script>
+<script src="/js/effect/cxkChrome.js"></script>
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

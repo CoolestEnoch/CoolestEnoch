@@ -1,0 +1,813 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
+  <link rel="icon" href="/img/favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="CoolestEnoch">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="(封面图源 小米商城) 前情提要在去年1月25号的时候，我尝试给非官方支持的设备编译LineageOS 20,但却以失败告终。这次，重新尝试一台官方支持的设备，且系统为Lineage 22.1。⚠️万字长文预警  环境配置部分，同上期文章。  硬件和软件环境我用的是平时拿来干活的笔记本。硬件方面：i5-10300H的处理器，32GB 2933MHz的主存，开启了16GB SWAP智慧运存，编译环境">
+<meta property="og:type" content="article">
+<meta property="og:title" content="填坑！编译小米5的LineageOS22.1">
+<meta property="og:url" content="http://blog.coolenoch.ink/2025/02/11/%E5%85%B6%E4%BB%96%E7%9A%84%E5%BC%80%E5%8F%91%E6%9D%82%E8%AE%B0/20-%E5%A1%AB%E5%9D%91%EF%BC%81%E7%BC%96%E8%AF%91%E5%B0%8F%E7%B1%B35%E7%9A%84LineageOS22.1-250211/index.html">
+<meta property="og:site_name" content="Enoch的个人小站">
+<meta property="og:description" content="(封面图源 小米商城) 前情提要在去年1月25号的时候，我尝试给非官方支持的设备编译LineageOS 20,但却以失败告终。这次，重新尝试一台官方支持的设备，且系统为Lineage 22.1。⚠️万字长文预警  环境配置部分，同上期文章。  硬件和软件环境我用的是平时拿来干活的笔记本。硬件方面：i5-10300H的处理器，32GB 2933MHz的主存，开启了16GB SWAP智慧运存，编译环境">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://c1.mifile.cn/f/i/16/mi5/index/h-12.jpg">
+<meta property="article:published_time" content="2025-02-11T10:00:00.000Z">
+<meta property="article:modified_time" content="2026-05-21T09:08:57.556Z">
+<meta property="article:author" content="CoolestEnoch">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://c1.mifile.cn/f/i/16/mi5/index/h-12.jpg">
+  
+  
+  
+  <title>填坑！编译小米5的LineageOS22.1 - Enoch的个人小站</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+  
+<link rel="stylesheet" href="/css/effect/cursor.css">
+<link rel="stylesheet" href="/css/effect/blur.css">
+<link rel="stylesheet" href="/css/effect/head-rotate.css">
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"blog.coolenoch.ink","root":"/","version":"1.9.7","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":true,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":"❡"},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 7.2.0"><link rel="alternate" href="/feed.xml" title="Enoch的个人小站" type="application/rss+xml">
+</head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Enoch的个人小站</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/" target="_self">
+                <i class="iconfont icon-link-fill"></i>
+                <span>友链</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/background/1.jpg') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="填坑！编译小米5的LineageOS22.1"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2025-02-11 18:00" pubdate>
+          2025年2月11日 晚上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          3.2k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          27 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">填坑！编译小米5的LineageOS22.1</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <p><img src="https://c1.mifile.cn/f/i/16/mi5/index/h-12.jpg" srcset="/img/loading.gif" lazyload alt="封面"><br>(封面图源 <a target="_blank" rel="noopener" href="https://www.mi.com/mi5">小米商城</a>)</p>
+<h1 id="前情提要"><a href="#前情提要" class="headerlink" title="前情提要"></a>前情提要</h1><p>在去年1月25号的时候，我尝试给非官方支持的设备编译LineageOS 20,但却以失败告终。这次，重新尝试一台官方支持的设备，且系统为Lineage 22.1。<br><em><strong>⚠️万字长文预警</strong></em></p>
+<blockquote>
+<p>环境配置部分，同上期文章。</p>
+</blockquote>
+<h1 id="硬件和软件环境"><a href="#硬件和软件环境" class="headerlink" title="硬件和软件环境"></a>硬件和软件环境</h1><p>我用的是平时拿来干活的笔记本。硬件方面：<code>i5-10300H</code>的处理器，<code>32GB 2933MHz</code>的主存，开启了<code>16GB SWAP</code><del><em>智慧运存</em></del>，编译环境用的硬盘是<code>Samsung Evo 870 1TB</code>；软件方面：采用<code>Debian 12</code>系统。<del><em>主要是Ubuntu太臃肿了</em></del></p>
+<blockquote>
+<p>是的我今年加了一根16GB的内存条，去年编译的时候物理内存和<del><em>融合内存</em></del>SWAP都吃满了，今年除了在<code>ninja</code>初次启动的时候两个都吃满，平时编译基本上只吃了80%的物理内存。</p>
+</blockquote>
+<blockquote>
+<p>⚠️本次编译的初次编译耗时一天一夜，CPU平均频率为3.5GHz，请合理评估和安排您的编译时间。后续增量编译平均耗时十分钟，主要耗时部分为打包系统镜像写回硬盘。</p>
+</blockquote>
+<h1 id="装依赖"><a href="#装依赖" class="headerlink" title="装依赖"></a>装依赖</h1><h2 id="Part-1-下载和解压"><a href="#Part-1-下载和解压" class="headerlink" title="Part 1: 下载和解压"></a>Part 1: 下载和解压</h2><p>第一个要装的就是<code>adb</code>和<code>fastboot</code>。</p>
+<blockquote>
+<p>⚠️ 注意！不要去<code>apt</code>源里下载，那里的版本太老了。前往谷歌官方下载：<code>https://dl.google.com/android/repository/platform-tools-latest-linux.zip</code></p>
+</blockquote>
+<p>按照<code>Lineage</code>官方的<a target="_blank" rel="noopener" href="https://wiki.lineageos.org/devices/gemini/build/#install-the-platform-tools">说法</a>，把他解压到<code>~</code>下吧：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">unzip platform-tools-latest-linux.zip -d ~<br></code></pre></td></tr></table></figure>
+<p>现在你确定一下<code>~</code>目录下是否存在<code>platform-tools</code>文件夹，如果存在则继续。<br>打开你的<code>~/.profile</code>或者<code>~/.zshrc</code>(本文全文将以<code>.zshrc</code>进行举例说明)，在<code>source $ZSH/oh-my-zsh.sh</code>前添加以下代码：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># add Android SDK platform tools to path</span><br><span class="hljs-keyword">if</span> [ -d <span class="hljs-string">&quot;<span class="hljs-variable">$HOME</span>/platform-tools&quot;</span> ] ; <span class="hljs-keyword">then</span><br>    <span class="hljs-built_in">export</span> PATH=<span class="hljs-string">&quot;<span class="hljs-variable">$HOME</span>/platform-tools:<span class="hljs-variable">$PATH</span>&quot;</span><br><span class="hljs-keyword">fi</span><br></code></pre></td></tr></table></figure>
+<p>然后，<code>source</code>它，再<code>echo $PATH</code>一下看看环境变量里是否存在<code>~/platform-tools</code>，存在就可以进行下一步。</p>
+<h2 id="Part-2-从apt源安装"><a href="#Part-2-从apt源安装" class="headerlink" title="Part 2: 从apt源安装"></a>Part 2: 从apt源安装</h2><p>使用apt把这些都装进去：<code>bc bison build-essential ccache curl flex g++-multilib gcc-multilib git git-lfs gnupg gperf imagemagick lib32readline-dev lib32z1-dev libelf-dev liblz4-tool libsdl1.2-dev libssl-dev libxml2 libxml2-utils lzop pngcrush rsync schedtool squashfs-tools xsltproc zip zlib1g-dev</code><br>对于我使用的<code>Debian 12</code>系统，再安装这些:<code>lib32ncurses-dev libncurses5 libncurses5-dev</code></p>
+<p>对于<code>Ubuntu</code>用户，请按照<code>Lineage</code>官网说法进行操作：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_"># </span><span class="language-bash">For Ubuntu 23.10 (mantic), install libncurses5 from 23.04 (lunar) as follows:</span><br>wget http://archive.ubuntu.com/ubuntu/pool/universe/n/ncurses/libtinfo5_6.4-2_amd64.deb &amp;&amp; sudo dpkg -i libtinfo5_6.4-2_amd64.deb &amp;&amp; rm -f libtinfo5_6.4-2_amd64.deb<br>wget http://archive.ubuntu.com/ubuntu/pool/universe/n/ncurses/libncurses5_6.4-2_amd64.deb &amp;&amp; sudo dpkg -i libncurses5_6.4-2_amd64.deb &amp;&amp; rm -f libncurses5_6.4-2_amd64.deb<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">While <span class="hljs-keyword">for</span> Ubuntu versions older than 23.10 (mantic), simply install:</span><br>lib32ncurses5-dev libncurses5 libncurses5-dev<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">Additionally, <span class="hljs-keyword">for</span> Ubuntu versions older than 20.04 (focal), install also:</span><br>libwxgtk3.0-dev<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">While <span class="hljs-keyword">for</span> Ubuntu versions older than 16.04 (xenial), install:</span><br>libwxgtk2.8-dev<br></code></pre></td></tr></table></figure>
+
+
+<h2 id="Part-3-OpenJDK的安装"><a href="#Part-3-OpenJDK的安装" class="headerlink" title="Part 3: OpenJDK的安装"></a>Part 3: OpenJDK的安装</h2><p><code>OpenJDK</code>的版本取决于你想要编译的<code>Lineage OS</code>版本。根据官方的提示，我们需要安装Java 11。<br>下面的信息来自于上面提到的<code>Lineage</code>官网教程。<br><code>LineageOS</code> 18.1及更高版本: <code>openjdk-11 openjdk-11-source</code><br><code>LineageOS</code> 16.0-17.1: <code>openjdk-9 openjdk-9-source</code><br><code>LineageOS</code> 14.1-15.1: <code>openjdk-8-jdk</code></p>
+<blockquote>
+<p>⚠️注意: 构建这些版本时你需要在<code>/etc/java-8-openjdk/security/java.security</code>中从<code>jdk.tls.disabledAlgorithms</code>中移除<code>TLSv1</code>和<code>TLSv1.1</code>相关的东西。</p>
+</blockquote>
+<p><code>LineageOS</code> 11.0-13.0: <code>openjdk-7-jdk</code></p>
+<blockquote>
+<p><del><code>Ubuntu 16.04</code>及更新版本的软件源中已将<code>OpenJDK 1.7</code>移除了。解决方案参考<code>Ask Ubuntu</code>上的问题<a target="_blank" rel="noopener" href="http://askubuntu.com/questions/761127/how-do-i-install-openjdk-7-on-ubuntu-16-04-or-higher">“How do I install openjdk 7 on Ubuntu 16.04 or higher?”</a>。注意热评里那个叫你添加<code>ppa</code>源的老登，因为<code>ppa</code>源缺乏安全性维护，所以别看他的回答，看后面一个叫你去Debian官网下载的回答。</del><br><del>笔者评：截止写稿时，<code>Debian 12</code>源上的<code>openjdk</code>只有<code>17</code>版本了。所以只能去网站上下载<code>.deb</code>包然后安装。这里提供两个下载站：<a target="_blank" rel="noopener" href="https://jdk.java.net/archive/">OpenJDK Archive(无需登陆但没有deb)</a>；<a target="_blank" rel="noopener" href="https://www.oracle.com/java/technologies/downloads/archive/">Java SE Archive(概率登陆但有deb)</a>。</del></p>
+</blockquote>
+<blockquote>
+<p>但是！我们是不是可以整点活？比如直接去隔壁<code>Ubuntu</code>的镜像源网站上下载？比如清华源：<br>Ubuntu系统前往这里下载：<a target="_blank" rel="noopener" href="https://mirrors.tuna.tsinghua.edu.cn/ubuntu/pool/universe/o/openjdk-lts/">下载jdk11-universe</a><a target="_blank" rel="noopener" href="https://mirrors.tuna.tsinghua.edu.cn/ubuntu/pool/main/o/openjdk-lts/">下载jdk11-main</a>；<a target="_blank" rel="noopener" href="https://mirrors.tuna.tsinghua.edu.cn/ubuntu/pool/universe/o/openjdk-9/">下载jdk9-universe</a>；<a target="_blank" rel="noopener" href="https://mirrors.tuna.tsinghua.edu.cn/ubuntu/pool/universe/o/openjdk-8/">下载jdk8-universe</a><a target="_blank" rel="noopener" href="https://mirrors.tuna.tsinghua.edu.cn/ubuntu/pool/main/o/openjdk-8/">下载jdk8-main</a>；<a target="_blank" rel="noopener" href="https://mirrors.tuna.tsinghua.edu.cn/ubuntu/pool/main/o/openjdk-7/">下载jdk7-main</a><br>Debian系统前往这里下载：<a target="_blank" rel="noopener" href="https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/o/openjdk-11/">下载jdk11-main</a><a target="_blank" rel="noopener" href="https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/o/openjdk-8/">下载jdk8-main</a><br>使用此方法时如提示缺失依赖则需要补全依赖然后再安装，否则<code>apt</code>会报错：<code>ca-certificates-java java-common libc6</code><br>需要把<code>openjdk-xx-jdk</code>及其<code>headless</code>版本、<code>openjdk-xx-jre</code>及其<code>headless</code>版本和<code>openjdk-xx-source</code>都安装上再继续。</p>
+</blockquote>
+<h2 id="Part-4-Python的安装"><a href="#Part-4-Python的安装" class="headerlink" title="Part 4: Python的安装"></a>Part 4: Python的安装</h2><p><del><em>啥？这都什么年代了还教咋装Python？</em></del>要不是因为不同<code>Lineage</code>版本要求的Python版本不一样，<del>我也懒得写了</del><br><code>LineageOS</code> 17.1及更高版本: <code>python3</code><br><code>LineageOS</code> 11.0-16.0: <code>python2</code><br>如果你电脑上有多个<del>蟒蛇</del><code>Python</code>互相冲突，<code>Lineage</code>官网推荐的解决方案是用<code>venv</code>。相关的东西这里不再赘述。</p>
+<blockquote>
+<p>⚠️ 值得一提的是现在Debian源里python的包名改了，如果你要装Python3则需要安装<code>python-is-python3</code>，如果是Python2的话需要安装<code>python-is-python2</code>。</p>
+</blockquote>
+<h1 id="进入准备工作！"><a href="#进入准备工作！" class="headerlink" title="进入准备工作！"></a>进入准备工作！</h1><h2 id="建立工作目录"><a href="#建立工作目录" class="headerlink" title="建立工作目录"></a>建立工作目录</h2><blockquote>
+<p>⚠️ Lineage和清华源上的教程写的不一样，这里冲突部分采用的是Lineage官网教程。</p>
+</blockquote>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">mkdir</span> -p ~/bin<br><span class="hljs-built_in">mkdir</span> -p ~/android/lineage<br></code></pre></td></tr></table></figure>
+<p>其中<code>~/bin</code>存放<code>git-repo</code>工具，<code>~/android/lineage</code>存放<code>LineageOS</code>的源码。</p>
+<h2 id="安装repo工具"><a href="#安装repo工具" class="headerlink" title="安装repo工具"></a>安装repo工具</h2><blockquote>
+<p>这是个啥？<br><code>repo</code>是个由Google开发的<code>git</code>的增强工具，和<code>git</code>配合食用。<a target="_blank" rel="noopener" href="https://source.android.google.cn/docs/setup/download">参考Google官方文档。</a></p>
+</blockquote>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">mkdir</span> ~/bin<br>PATH=~/bin:<span class="hljs-variable">$PATH</span><br>curl https://mirrors.tuna.tsinghua.edu.cn/git/git-repo &gt; ~/bin/repo<br><span class="hljs-built_in">chmod</span> a+x ~/bin/repo<br></code></pre></td></tr></table></figure>
+<p>更新repo使用这个命令：<code>export REPO_URL=&#39;https://mirrors.tuna.tsinghua.edu.cn/git/git-repo&#39;</code><br>然后再使用上面添加<code>adb</code>的方法将<code>~/bin</code>目录添加到环境变量中，编辑<code>.zshrc</code>…:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># set PATH so it includes user&#x27;s private bin if it exists</span><br><span class="hljs-keyword">if</span> [ -d <span class="hljs-string">&quot;<span class="hljs-variable">$HOME</span>/bin&quot;</span> ] ; <span class="hljs-keyword">then</span><br>    PATH=<span class="hljs-string">&quot;<span class="hljs-variable">$HOME</span>/bin:<span class="hljs-variable">$PATH</span>&quot;</span><br><span class="hljs-keyword">fi</span><br></code></pre></td></tr></table></figure>
+<p>别忘了再次<code>source</code>它一下！</p>
+<h2 id="配置Git"><a href="#配置Git" class="headerlink" title="配置Git"></a>配置Git</h2><p>没啥好说的，设置一下用户名和邮箱，这步没做的话下一步初始化仓库的时候命令行里也会叫你提供这两个信息。</p>
+<blockquote>
+<p>⚠️ 注意: 这里的操作是对整个电脑全局的设置。如果你只想在编译系统的源码仓库文件夹内设置这两个信息，则请跳过设置信息这一步，直接进行<code>lfs</code>初始化。</p>
+</blockquote>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">git config --global user.email <span class="hljs-string">&quot;you@example.com&quot;</span><br>git config --global user.name <span class="hljs-string">&quot;Your Name&quot;</span><br></code></pre></td></tr></table></figure>
+
+<p>为了能让<code>git</code>存放大文件，需要初始化一下<code>Large File Storage</code>：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">git lfs install<br></code></pre></td></tr></table></figure>
+
+<p>设置<code>Git</code>的<code>Change-Id</code>：<code>Lineage</code>官方说为了防止重复的<code>Change-Id</code>,就要这么操作一下。但是我没有进行这一步设置。</p>
+<blockquote>
+<p>To avoid duplicated Change-Id: trailers in commit messages, especially when cherry-picking changes, make Change-Id: a known trailer to git:</p>
+</blockquote>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">git config --global trailer.changeid.key <span class="hljs-string">&quot;Change-Id&quot;</span><br></code></pre></td></tr></table></figure>
+
+
+<h2 id="配置编译缓存"><a href="#配置编译缓存" class="headerlink" title="配置编译缓存"></a>配置编译缓存</h2><p>这是用<code>ccache</code>来加快编译的。将这些内容放入<code>.zshrc</code>中然后再<code>source</code>一下：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">export</span> USE_CCACHE=1<br><span class="hljs-built_in">export</span> CCACHE_EXEC=/usr/bin/ccache<br></code></pre></td></tr></table></figure>
+<p>然后回到命令行终端，设置<code>ccache</code>大小:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">ccache -M 50G<br></code></pre></td></tr></table></figure>
+<p><code>ccache</code>大小影响你的编译速度。如果只编译一个设备，那么给<code>20-50GB</code>就够了；如果编译多个设备(不共享内核源码)，则建议配置<code>75-100GB</code>。<br>当然，你也可以启用压缩：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs bash">ccache -o compression=<span class="hljs-literal">true</span><br>````<br>&gt; 启用压缩后，一台设备大概给`20G`就够了。<br><br><br><br><span class="hljs-comment"># 初始化LineagOS仓库并换源</span><br>&gt; ⚠️先进入`~/android/lineage`目录，再初始化仓库。<br>``` shell<br>repo init -u https://mirrors.tuna.tsinghua.edu.cn/git/lineageOS/LineageOS/android.git -b lineage-22.1 --git-lfs --no-clone-bundle<br></code></pre></td></tr></table></figure>
+<p>确保网络通畅，待同步完成后，打开<code>~/android/lineage/.repo/manifests/default.xml</code>，做如下修改：<br>将</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">remote</span>  <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;github&quot;</span></span><br><span class="hljs-tag">         <span class="hljs-attr">fetch</span>=<span class="hljs-string">&quot;..&quot;</span></span><br><span class="hljs-tag">         <span class="hljs-attr">review</span>=<span class="hljs-string">&quot;review.lineageos.org&quot;</span> /&gt;</span><br></code></pre></td></tr></table></figure>
+<p>改成</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">remote</span>  <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;github&quot;</span></span><br><span class="hljs-tag">         <span class="hljs-attr">fetch</span>=<span class="hljs-string">&quot;https://github.com/&quot;</span> /&gt;</span><br><br><span class="hljs-tag">&lt;<span class="hljs-name">remote</span>  <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;lineage&quot;</span></span><br><span class="hljs-tag">         <span class="hljs-attr">fetch</span>=<span class="hljs-string">&quot;https://mirrors.tuna.tsinghua.edu.cn/git/lineageOS/&quot;</span></span><br><span class="hljs-tag">         <span class="hljs-attr">review</span>=<span class="hljs-string">&quot;review.lineageos.org&quot;</span> /&gt;</span><br></code></pre></td></tr></table></figure>
+<p>将</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">remote</span>  <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;aosp&quot;</span></span><br><span class="hljs-tag">         <span class="hljs-attr">fetch</span>=<span class="hljs-string">&quot;https://android.googlesource.com&quot;</span></span><br><span class="hljs-tag">         <span class="hljs-attr">xxx</span>=<span class="hljs-string">&quot;...&quot;</span>/&gt;</span><br></code></pre></td></tr></table></figure>
+<p>改成</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">remote</span>  <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;aosp&quot;</span></span><br><span class="hljs-tag">         <span class="hljs-attr">fetch</span>=<span class="hljs-string">&quot;https://mirrors.tuna.tsinghua.edu.cn/git/AOSP&quot;</span></span><br><span class="hljs-tag">         <span class="hljs-attr">xxx</span>=<span class="hljs-string">&quot;...&quot;</span>/&gt;</span><br></code></pre></td></tr></table></figure>
+<p>将</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">default</span> <span class="hljs-attr">revision</span>=<span class="hljs-string">&quot;...&quot;</span></span><br><span class="hljs-tag">         <span class="hljs-attr">remote</span>=<span class="hljs-string">&quot;github&quot;</span></span><br><span class="hljs-tag">         <span class="hljs-attr">xxx</span>=<span class="hljs-string">&quot;...&quot;</span>/&gt;</span><br></code></pre></td></tr></table></figure>
+<p>改成</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">default</span> <span class="hljs-attr">revision</span>=<span class="hljs-string">&quot;...&quot;</span></span><br><span class="hljs-tag">         <span class="hljs-attr">remote</span>=<span class="hljs-string">&quot;lineage&quot;</span></span><br><span class="hljs-tag">         <span class="hljs-attr">xxx</span>=<span class="hljs-string">&quot;...&quot;</span>/&gt;</span><br></code></pre></td></tr></table></figure>
+
+
+<p>随后，同步源码树：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">repo sync<br></code></pre></td></tr></table></figure>
+<p>在我家这边，同步源码树的平均网速为10MB&#x2F;s，整个过程大约耗时一小时左右。</p>
+<h2 id="准备设备专属代码"><a href="#准备设备专属代码" class="headerlink" title="准备设备专属代码"></a>准备设备专属代码</h2><h3 id="需要下载的内容"><a href="#需要下载的内容" class="headerlink" title="需要下载的内容"></a>需要下载的内容</h3><p>进入<code>~/android/lineage</code>目录，执行以下代码：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell">souce build/envsetup.sh<br>breakfest gemini<br></code></pre></td></tr></table></figure>
+<blockquote>
+<p>⚠️此处需要保证网络通畅，能正常连接到GitHub，否则会同步失败。</p>
+</blockquote>
+<h3 id="不需要下载的内容"><a href="#不需要下载的内容" class="headerlink" title="不需要下载的内容"></a>不需要下载的内容</h3><p>掏出你的小米5，插上数据线，给<code>shell</code>进程赋予root权限，再打开开发者选项中的<code>使用Root身份进行ADB调试</code>。<br>进入<code>~/android/lineage/device/xiaomi/gemini</code>再运行：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">./extract-files.sh<br></code></pre></td></tr></table></figure>
+<p>等待其文件提取完成，这一步提取的是闭源驱动，比如摄像头驱动.so。</p>
+<h1 id="开始构建！"><a href="#开始构建！" class="headerlink" title="开始构建！"></a>开始构建！</h1><p>可以通过<code>croot</code>命令回到<code>~/android/lineage</code>，或手动回去都行。然后运行：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">brunch gemimi<br></code></pre></td></tr></table></figure>
+<p>就可以开始构建系统了。当构建完成后，系统包会存放在<code>out/target/product/gemini/lineage-22.1-YYYYMMDD-UNOFFICIAL-gemini.zip</code>，使用<code>out/target/product/gemini/recovery.img</code>将其通过<code>adb sideload</code>刷入。</p>
+<p>好了，享受自编译的系统吧！</p>
+<h1 id="一些可能要用到的细节信息"><a href="#一些可能要用到的细节信息" class="headerlink" title="一些可能要用到的细节信息"></a>一些可能要用到的细节信息</h1><p>内核编译使用的<code>defconfig</code>是<code>kernel/xiaomi/msm8996/arch/arm64/configs/vendor/xiaomi/mi8996_defconfig</code>，和<code>kernel/xiaomi/msm8996/arch/arm64/configs/vendor/xiaomi/gemini.config</code>。<br>相关配置文件可参考<code>device/xiaomi/msm8996-common/BoardConfigCommon.mk</code>。<br>LineageOS的关于页面的彩蛋源码位于<code>packages/apps/LineageParts/src/org/lineageos/lineageparts/logo/PlatLogoActivity.java</code>， 我们可以根据需求进行定制。</p>
+<h1 id="番外：不受支持的Lindroid"><a href="#番外：不受支持的Lindroid" class="headerlink" title="番外：不受支持的Lindroid"></a>番外：不受支持的<code>Lindroid</code></h1><p>开源项目地址是<a target="_blank" rel="noopener" href="https://github.com/Linux-on-droid/">这个</a>，主要依据<a target="_blank" rel="noopener" href="https://github.com/Linux-on-droid/vendor_lindroid/tree/lindroid-22.1">vendor_lindroid仓库的readme</a>进行操作。<br><strong>1. 向内核的defconfig（此处是<code>kernel/xiaomi/msm8996/arch/arm64/configs/vendor/xiaomi/gemini.config</code>）添加以下内容:</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs config">CONFIG_SYSVIPC=y<br>CONFIG_UTS_NS=y<br>CONFIG_PID_NS=y<br>CONFIG_IPC_NS=y<br>CONFIG_USER_NS=y<br>CONFIG_NET_NS=y<br>CONFIG_CGROUP_DEVICE=y<br>CONFIG_KERNEL_CGROUP_FREEZER=y<br></code></pre></td></tr></table></figure>
+
+<p><strong>2. 将以下仓库clone到源码树:</strong></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs shell">git clone --depth=1 https://github.com/example/vendor_lindroid vendor/lindroid<br>git clone --depth=1 https://github.com/example/external_lxc external/lxc<br>git clone --depth=1 https://github.com/example/libhybris external/libhybris<br></code></pre></td></tr></table></figure>
+
+<p><strong>3. 修改设备配置信息:</strong><br>向<code>device/xiaomi/gemini/device.mk</code>添加一行：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_">$</span><span class="language-bash">(call inherit-product, vendor/lindroid/lindroid.mk)</span><br></code></pre></td></tr></table></figure>
+
+<p><strong>4. 将SELinux设置为Permissive:</strong><br>打开<code>device/xiaomi/msm8996-common/BoardConfigCommon.mk</code>，在<code>Kernel</code>部分的添加一行启动参数：</p>
+<figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs makefile">BOARD_KERNEL_CMDLINE += androidboot.selinux=permissive<br></code></pre></td></tr></table></figure>
+<blockquote>
+<p>⚠️注意：关闭SELinux会令设备处于安全风险之中，请自行处理好该设备上的信息安全。</p>
+</blockquote>
+<p><strong>5. 修改Lineage源码以修复一些作者提到的问题</strong><br>应用这个<a target="_blank" rel="noopener" href="https://gerrit.libremobileos.com/c/LMODroid/platform_frameworks_native/+/12936">Patch</a>，或手动修改：<br>打开<code>frameworks/native/services/inputflinger/reader/EventHub.cpp</code>：<br>将</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs c">ALOGV(<span class="hljs-string">&quot;  name:       \&quot;%s\&quot;\n&quot;</span>, identifier.name.c_str());<br>ALOGV(<span class="hljs-string">&quot;  location:   \&quot;%s\&quot;\n&quot;</span>, identifier.location.c_str());<br>ALOGV(<span class="hljs-string">&quot;  unique id:  \&quot;%s\&quot;\n&quot;</span>, identifier.uniqueId.c_str());<br>ALOGV(<span class="hljs-string">&quot;  descriptor: \&quot;%s\&quot;\n&quot;</span>, identifier.descriptor.c_str());<br>ALOGV(<span class="hljs-string">&quot;  driver:     v%d.%d.%d\n&quot;</span>, driverVersion &gt;&gt; <span class="hljs-number">16</span>, (driverVersion &gt;&gt; <span class="hljs-number">8</span>) &amp; <span class="hljs-number">0xff</span>,<br>      driverVersion &amp; <span class="hljs-number">0xff</span>);<br><br><span class="hljs-comment">// Load the configuration file for the device.</span><br>device-&gt;loadConfigurationLocked();<br><br><span class="hljs-comment">// Figure out the kinds of events the device reports.</span><br>device-&gt;readDeviceBitMask(EVIOCGBIT(EV_KEY, <span class="hljs-number">0</span>), device-&gt;keyBitmask);<br>device-&gt;readDeviceBitMask(EVIOCGBIT(EV_ABS, <span class="hljs-number">0</span>), device-&gt;absBitmask);<br>device-&gt;readDeviceBitMask(EVIOCGBIT(EV_REL, <span class="hljs-number">0</span>), device-&gt;relBitmask);<br>device-&gt;readDeviceBitMask(EVIOCGBIT(EV_SW, <span class="hljs-number">0</span>), device-&gt;swBitmask);<br>device-&gt;readDeviceBitMask(EVIOCGBIT(EV_LED, <span class="hljs-number">0</span>), device-&gt;ledBitmask);<br>device-&gt;readDeviceBitMask(EVIOCGBIT(EV_FF, <span class="hljs-number">0</span>), device-&gt;ffBitmask);<br>device-&gt;readDeviceBitMask(EVIOCGBIT(EV_MSC, <span class="hljs-number">0</span>), device-&gt;mscBitmask);<br>device-&gt;readDeviceBitMask(EVIOCGPROP(<span class="hljs-number">0</span>), device-&gt;propBitmask);<br></code></pre></td></tr></table></figure>
+<p>修改为：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><code class="hljs c">ALOGV(<span class="hljs-string">&quot;  name:       \&quot;%s\&quot;\n&quot;</span>, identifier.name.c_str());<br>ALOGV(<span class="hljs-string">&quot;  location:   \&quot;%s\&quot;\n&quot;</span>, identifier.location.c_str());<br>ALOGV(<span class="hljs-string">&quot;  unique id:  \&quot;%s\&quot;\n&quot;</span>, identifier.uniqueId.c_str());<br>ALOGV(<span class="hljs-string">&quot;  descriptor: \&quot;%s\&quot;\n&quot;</span>, identifier.descriptor.c_str());<br>ALOGV(<span class="hljs-string">&quot;  driver:     v%d.%d.%d\n&quot;</span>, driverVersion &gt;&gt; <span class="hljs-number">16</span>, (driverVersion &gt;&gt; <span class="hljs-number">8</span>) &amp; <span class="hljs-number">0xff</span>,<br>      driverVersion &amp; <span class="hljs-number">0xff</span>);<br><br><span class="hljs-comment">// Load the configuration file for the device.</span><br>device-&gt;loadConfigurationLocked();<br><br><span class="hljs-comment">// Disable device if device config property set</span><br><span class="hljs-keyword">if</span> (device-&gt;configuration &amp;&amp;<br>    device-&gt;configuration-&gt;getBool(<span class="hljs-string">&quot;device.disabled&quot;</span>)) &#123;<br>    device-&gt;disable();<br>    ALOGV(<span class="hljs-string">&quot;Disabling device with id %d\n&quot;</span>, device-&gt;id);<br>&#125;<br><br><span class="hljs-comment">// Figure out the kinds of events the device reports.</span><br>device-&gt;readDeviceBitMask(EVIOCGBIT(EV_KEY, <span class="hljs-number">0</span>), device-&gt;keyBitmask);<br>device-&gt;readDeviceBitMask(EVIOCGBIT(EV_ABS, <span class="hljs-number">0</span>), device-&gt;absBitmask);<br>device-&gt;readDeviceBitMask(EVIOCGBIT(EV_REL, <span class="hljs-number">0</span>), device-&gt;relBitmask);<br>device-&gt;readDeviceBitMask(EVIOCGBIT(EV_SW, <span class="hljs-number">0</span>), device-&gt;swBitmask);<br>device-&gt;readDeviceBitMask(EVIOCGBIT(EV_LED, <span class="hljs-number">0</span>), device-&gt;ledBitmask);<br>device-&gt;readDeviceBitMask(EVIOCGBIT(EV_FF, <span class="hljs-number">0</span>), device-&gt;ffBitmask);<br>device-&gt;readDeviceBitMask(EVIOCGBIT(EV_MSC, <span class="hljs-number">0</span>), device-&gt;mscBitmask);<br>device-&gt;readDeviceBitMask(EVIOCGPROP(<span class="hljs-number">0</span>), device-&gt;propBitmask);<br></code></pre></td></tr></table></figure>
+<p>其中修改的部分是：新增了这一段代码：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-comment">// Disable device if device config property set</span><br><span class="hljs-keyword">if</span> (device-&gt;configuration &amp;&amp;<br>    device-&gt;configuration-&gt;getBool(<span class="hljs-string">&quot;device.disabled&quot;</span>)) &#123;<br>    device-&gt;disable();<br>    ALOGV(<span class="hljs-string">&quot;Disabling device with id %d\n&quot;</span>, device-&gt;id);<br>&#125;<br></code></pre></td></tr></table></figure>
+
+
+<p><strong>接下来，就是重新增量编译系统！</strong><br>如果你遇到了<code>CONFIG_SYSVIPC</code>和<code>FCM</code>相关的报错：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs text">For kernel requirements at matrix level 5, Kernel config errors:<br>    For config CONFIG_SYSVIPC, value = y but required n<br>: Success<br></code></pre></td></tr></table></figure>
+<p>那就去<code>kernel/configs/*/*/android-base.config</code>里删掉<code># CONFIG_SYSVIPC is not set</code>。是的没错，是<code>kernel/configs</code>下每个子文件夹里的所有子文件夹里的<code>android-base.config</code>再重新编译。</p>
+<p>如果在开机后遇到了<code>overlayfs</code>无法挂载的错误，应用这个<a target="_blank" rel="noopener" href="https://github.com/android-kxxt/android_kernel_xiaomi_sm8450/commit/ae700d3d04a2cd8b34e1dae434b0fdc9cde535c7">补丁</a>，或手动修改：<br>打开<code>fs/overlayfs/util.c</code>：<br>找到这段代码，将这段代码：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">bool</span> <span class="hljs-title function_">ovl_dentry_weird</span><span class="hljs-params">(<span class="hljs-keyword">struct</span> dentry *dentry)</span><br>&#123;<br>	<span class="hljs-keyword">return</span> dentry-&gt;d_flags &amp; (DCACHE_NEED_AUTOMOUNT |<br>				  DCACHE_MANAGE_TRANSIT |<br>				  DCACHE_OP_HASH |<br>				  DCACHE_OP_COMPARE);<br>				  DCACHE_MANAGE_TRANSIT);<br>&#125;<br><br><span class="hljs-keyword">enum</span> ovl_path_type <span class="hljs-title function_">ovl_path_type</span><span class="hljs-params">(<span class="hljs-keyword">struct</span> dentry *dentry)</span><br></code></pre></td></tr></table></figure>
+<p>修改为：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">bool</span> <span class="hljs-title function_">ovl_dentry_weird</span><span class="hljs-params">(<span class="hljs-keyword">struct</span> dentry *dentry)</span><br>&#123;<br>	<span class="hljs-keyword">return</span> dentry-&gt;d_flags &amp; (DCACHE_NEED_AUTOMOUNT |<br>				  DCACHE_MANAGE_TRANSIT);<br>&#125;<br><br><span class="hljs-keyword">enum</span> ovl_path_type <span class="hljs-title function_">ovl_path_type</span><span class="hljs-params">(<span class="hljs-keyword">struct</span> dentry *dentry)</span><br></code></pre></td></tr></table></figure>
+<p>但是很可惜，我的小米5遇到了这段<code>overlayfs</code>的报错：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs text">02-10 21:18:16.334  3495  3494 I perspectived_lxc: test: overlay - external/lxc/src/lxc/storage/overlay.c:ovl_mount:483 - Invalid argument - Failed to mount &quot;/data/lindroid/lxc/rootfs_ro&quot; on &quot;/data/lindroid/lxc/rootfs&quot; with options &quot;upperdir=/data/lindroid/lxc/container/test/rootfs,lowerdir=/data/lindroid/lxc/rootfs_ro,workdir=/data/lindroid/lxc/container/test/work&quot;. Retrying without workdir<br>02-10 21:18:16.334     0     0 E overlayfs: filesystem on &#x27;/data/lindroid/lxc/container/test/rootfs&#x27; not supported as upperdir<br>02-10 21:18:16.336  3495  3494 E perspectived_lxc: test: overlay - external/lxc/src/lxc/storage/overlay.c:ovl_mount:491 - Invalid argument - Failed to mount &quot;/data/lindroid/lxc/rootfs_ro&quot; on &quot;/data/lindroid/lxc/rootfs&quot; with options &quot;upperdir=/data/lindroid/lxc/container/test/rootfs,lowerdir=/data/lindroid/lxc/rootfs_ro&quot;<br>02-10 21:18:16.336  3495  3494 E perspectived_lxc: test: conf - external/lxc/src/lxc/conf.c:lxc_mount_rootfs:1238 - Failed to mount rootfs &quot;/data/lindroid/lxc/rootfs_ro:/data/lindroid/lxc/container/test/rootfs&quot; onto &quot;/data/lindroid/lxc/rootfs&quot; with options &quot;(null)&quot;<br></code></pre></td></tr></table></figure>
+<p>但我的内核里并不存在<code>util.c</code>。Lindroid作者的回复是，4.4内核太老了，就算修了这个问题，后面会遇到的问题也会很多。<br><del><em>后面的路，以后再来探索吧！</em></del></p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E5%85%B6%E4%BB%96%E7%9A%84%E5%BC%80%E5%8F%91%E6%9D%82%E8%AE%B0/" class="category-chain-item">其他的开发杂记</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>填坑！编译小米5的LineageOS22.1</div>
+      <div>http://blog.coolenoch.ink/2025/02/11/其他的开发杂记/20-填坑！编译小米5的LineageOS22.1-250211/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>CoolestEnoch</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2025年2月11日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2025/03/25/Linux/21-%E5%A6%82%E4%BD%95%E5%AE%9A%E5%88%B6%E5%B1%9E%E4%BA%8E%E8%87%AA%E5%B7%B1%E7%9A%84Linux%20Distro-250325/" title="如何定制属于自己的Linux Distro">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">如何定制属于自己的Linux Distro</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2025/01/23/Linux/19-%E9%AB%98%E9%80%9A410%E9%9A%8F%E8%BA%ABWiFi%E6%A3%92%E5%AD%90%E5%88%B7Linux%E5%90%8E%E6%8A%98%E8%85%BE%E6%97%A5%E8%AE%B0-250128/" title="高通410随身WiFi棒子刷Linux后折腾日记">
+                        <span class="hidden-mobile">高通410随身WiFi棒子刷Linux后折腾日记</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  <script>
+  Fluid.utils.createScript('https://lib.baomitu.com/mermaid/8.14.0/mermaid.min.js', function() {
+    mermaid.initialize({"theme":"default"});
+
+    Fluid.utils.listenDOMLoaded(function() {
+      Fluid.events.registerRefreshCallback(function() {
+        if ('mermaid' in window) {
+          mermaid.init();
+        }
+      });
+    });
+  });
+</script>
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+  
+<script src="/js/effect/GoTop/jquery.min.js"></script>
+<script src="/js/effect/lib/jquery-1.9.1.min.js"></script>
+<script src="/js/effect/lib/jquery-3.6.0.min.js"></script>
+<script src="/js/effect/clickeffect.js"></script>
+<script src="/js/effect/clickWord.js"></script>
+<script src="/js/effect/emojiCursor.js"></script>
+<script src="/js/effect/sakura-less.js"></script>
+<script src="/js/effect/sakana@1.0.8.js"></script>
+<script src="/js/effect/cuteTitle.js"></script>
+<script src="/js/effect/GoTop/szgotop.js"></script>
+<script src="/js/effect/Netease.js"></script>
+<script src="/js/effect/cxkChrome.js"></script>
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

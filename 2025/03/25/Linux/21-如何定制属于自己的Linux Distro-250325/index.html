@@ -1,0 +1,764 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
+  <link rel="icon" href="/img/favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="CoolestEnoch">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="TL;DR正如RMS所言，计算自由是十分重要的，其中就包括自由的重新分发软件。正好截至写稿日，Linux内核是以GPL v2发布的。 前期准备我使用的电脑是Arch Linux系统，所以后续都基于此前提进行讲述。安装依赖库，不然编译会出错： 1sudo pacman -S bc cpio isolinux syslinux genisoimage cdrtools man-pages qemu">
+<meta property="og:type" content="article">
+<meta property="og:title" content="如何定制属于自己的Linux Distro">
+<meta property="og:url" content="http://blog.coolenoch.ink/2025/03/25/Linux/21-%E5%A6%82%E4%BD%95%E5%AE%9A%E5%88%B6%E5%B1%9E%E4%BA%8E%E8%87%AA%E5%B7%B1%E7%9A%84Linux%20Distro-250325/index.html">
+<meta property="og:site_name" content="Enoch的个人小站">
+<meta property="og:description" content="TL;DR正如RMS所言，计算自由是十分重要的，其中就包括自由的重新分发软件。正好截至写稿日，Linux内核是以GPL v2发布的。 前期准备我使用的电脑是Arch Linux系统，所以后续都基于此前提进行讲述。安装依赖库，不然编译会出错： 1sudo pacman -S bc cpio isolinux syslinux genisoimage cdrtools man-pages qemu">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://pic1.zhimg.com/v2-4f012cc71dad073eb27f14c5fdac4dac_r.jpg">
+<meta property="article:published_time" content="2025-03-24T16:00:00.000Z">
+<meta property="article:modified_time" content="2026-05-21T09:08:57.551Z">
+<meta property="article:author" content="CoolestEnoch">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://pic1.zhimg.com/v2-4f012cc71dad073eb27f14c5fdac4dac_r.jpg">
+  
+  
+  
+  <title>如何定制属于自己的Linux Distro - Enoch的个人小站</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+  
+<link rel="stylesheet" href="/css/effect/cursor.css">
+<link rel="stylesheet" href="/css/effect/blur.css">
+<link rel="stylesheet" href="/css/effect/head-rotate.css">
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"blog.coolenoch.ink","root":"/","version":"1.9.7","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":true,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":"❡"},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 7.2.0"><link rel="alternate" href="/feed.xml" title="Enoch的个人小站" type="application/rss+xml">
+</head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Enoch的个人小站</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/" target="_self">
+                <i class="iconfont icon-link-fill"></i>
+                <span>友链</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/background/1.jpg') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="如何定制属于自己的Linux Distro"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2025-03-25 00:00" pubdate>
+          2025年3月25日 凌晨
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          2.5k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          21 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">如何定制属于自己的Linux Distro</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <p> <img src="https://pic1.zhimg.com/v2-4f012cc71dad073eb27f14c5fdac4dac_r.jpg" srcset="/img/loading.gif" lazyload alt="封面"></p>
+<h1 id="TL-DR"><a href="#TL-DR" class="headerlink" title="TL;DR"></a>TL;DR</h1><p>正如RMS所言，计算自由是十分重要的，其中就包括自由的重新分发软件。正好截至写稿日，<code>Linux</code>内核是以<code>GPL v2</code>发布的。</p>
+<h1 id="前期准备"><a href="#前期准备" class="headerlink" title="前期准备"></a>前期准备</h1><p>我使用的电脑是<code>Arch Linux</code>系统，所以后续都基于此前提进行讲述。<br>安装依赖库，不然编译会出错：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">sudo pacman -S bc cpio isolinux syslinux genisoimage cdrtools man-pages qemu<br></code></pre></td></tr></table></figure>
+<p>然后准备好<code>Linux</code>主线内核（我使用的是<code>6.14</code>）就行，假如你放在<code>~/LinuxDistroExp/linux</code>文件夹下。</p>
+<h1 id="内核"><a href="#内核" class="headerlink" title="内核"></a>内核</h1><h2 id="处理配置文件"><a href="#处理配置文件" class="headerlink" title="处理配置文件"></a>处理配置文件</h2><p>通过<code>make help</code>我们可以看到默认可以给32位和64位机器进行构建：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs config">i386_defconfig              - Build for i386<br>x86_64_defconfig            - Build for x86_64<br></code></pre></td></tr></table></figure>
+<p>当然，我们使用最小配置进行编译(在上面的输出里可以看到这个配置)：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">make tinyconfig<br></code></pre></td></tr></table></figure>
+<p>然后使用<code>menuconfig</code>进行配置：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">make menuconfig<br></code></pre></td></tr></table></figure>
+<p>接下来就是要去修改一系列的设置，按顺序启用以下设置：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs config">64-bit kernel<br>General setup &gt; Initial RAM filesystem and RAM disk (initramfs/initrd) support<br>    然后取消掉下面的各种压缩选项(这步可做可不做)<br>General setup &gt; Configure standard kernel features (expert users)<br>General setup &gt; Configure standard kernel features (expert users) &gt; Enable support for printk<br>Device Drivers &gt; Character devices &gt; Enable TTY<br>Executable file formats &gt; Kernel support for ELF binaries<br></code></pre></td></tr></table></figure>
+<p>然后退出再保存。</p>
+<h2 id="预构建"><a href="#预构建" class="headerlink" title="预构建"></a>预构建</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">make -j$(nproc) <br></code></pre></td></tr></table></figure>
+<p>然后它会提示你内核构建好了放在哪里。</p>
+<h2 id="测试预构建的内核"><a href="#测试预构建的内核" class="headerlink" title="测试预构建的内核"></a>测试预构建的内核</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">qemu-system-x86_64 -kernel arch/x86/boot/bzImage<br></code></pre></td></tr></table></figure>
+<p>如果你能看到因为找不到<code>init</code>的<del><em>内核怕怕</em></del><code>kernel panic</code>，那么恭喜你，可以进入下一阶段了！</p>
+<h1 id="初始化内存盘"><a href="#初始化内存盘" class="headerlink" title="初始化内存盘"></a>初始化内存盘</h1><h2 id="初探init"><a href="#初探init" class="headerlink" title="初探init"></a>初探<code>init</code></h2><p>接下来再新建一个文件夹，作为我们的<code>initrd</code>开发目录。<br>我们需要一个<code>init</code>进程，但他需要放在初始化内存盘里。于是我们可以写一个十分简单的<code>shell</code>程序作为<code>init</code>进程:</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-comment">// shell.c</span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;unistd.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;sys/types.h&gt;</span> <span class="hljs-comment">// pid_t</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;sys/wait.h&gt;</span>  <span class="hljs-comment">// siginfo_t P_ALL WEXITED</span></span><br><br><span class="hljs-type">int</span> <span class="hljs-title function_">main</span><span class="hljs-params">()</span><br>&#123;<br>    <span class="hljs-type">char</span> command[<span class="hljs-number">255</span>];<br>    <span class="hljs-keyword">for</span> (;;)<br>    &#123;<br>        write(<span class="hljs-number">1</span>, <span class="hljs-string">&quot;# &quot;</span>, <span class="hljs-number">2</span>);<br>        <span class="hljs-type">int</span> count = read(<span class="hljs-number">0</span>, command, <span class="hljs-number">255</span>);<br>        command[count - <span class="hljs-number">1</span>] = <span class="hljs-number">0</span>; <span class="hljs-comment">// 替换掉command结尾的\n变成\0</span><br>        <span class="hljs-type">pid_t</span> fork_result = fork();<br>        <span class="hljs-keyword">if</span> (fork_result == <span class="hljs-number">0</span>)<br>        &#123;<br>            execve(command, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>);<br>            <span class="hljs-keyword">break</span>;<br>        &#125;<br>        <span class="hljs-keyword">else</span><br>        &#123;<br>            <span class="hljs-type">siginfo_t</span> info;<br>            waitid(P_ALL, <span class="hljs-number">0</span>, &amp;info, WEXITED); <span class="hljs-comment">// 等待所有进程都退出了再进入下一次shell</span><br>        &#125;<br>    &#125;<br>    _exit(<span class="hljs-number">0</span>);<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>然后编译它：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">gcc shell.c -o shell<br></code></pre></td></tr></table></figure>
+<p>在本地直接运行它进行测试，注意所有命令都要打绝对路径：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><code class="hljs shell">┌─[admin@dell] - [~/LinuxDistroExp/initrd] - [Tue Mar 25, 11:45]<br>└─[$] &lt;&gt; ./shell<br><span class="hljs-meta prompt_"># </span><span class="language-bash">/bin/ls</span><br>shell  shell.c<br><span class="hljs-meta prompt_"># </span><span class="language-bash">/bin/neofetch</span><br>                   -`<br>                  .o+`<br>                 `ooo/                   admin@dell <br>                `+oooo:                  ---------- <br>               `+oooooo:                 OS: Arch Linux x86_64 <br>               -+oooooo+:                Host: G5 5500 <br>             `/:-:++oooo+:               Kernel: 6.13.7-arch1-1 <br>            `/++++/+++++++:              Uptime: 1 hour, 32 mins <br>           `/++++++++++++++:             Packages: 1086 (pacman) <br>          `/+++ooooooooooooo/`           Shell: zsh 5.9 <br>         ./ooosssso++osssssso+`          Resolution: 1920x1080 <br>        .oossssso-````/ossssss+`         Terminal: code <br>       -osssssso.      :ssssssso.        CPU: Intel i5-10300H (8) @ 4.500GHz <br>      :osssssss/        osssso+++.       GPU: NVIDIA GeForce GTX 1650 Ti Mobile <br>     /ossssssss/        +ssssooo/-       GPU: Intel CometLake-H GT2 [UHD Graphics] <br>   `/ossssso+/:-        -:/+osssso+-     Memory: 4891MiB / 31888MiB <br>  `+sso+:-`                 `.-/+oso:<br> `++:.                           `-/+/                           <br> .`                                 `/                           <br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">^C</span><br>┌─[admin@dell] - [~/LinuxDistroExp/initrd] - [Tue Mar 25, 11:45]<br>└─[$] &lt;&gt;<br></code></pre></td></tr></table></figure>
+<p>但问题是，这个shell是动态链接的：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs shell">┌─[admin@dell] - [~/LinuxDistroExp/initrd] - [Tue Mar 25, 11:45]<br>└─[$] &lt;&gt; gcc shell.c -o shell<br>┌─[admin@dell] - [~/LinuxDistroExp/initrd] - [Tue Mar 25, 11:45]<br>└─[$] &lt;&gt; ldd ./shell                                                  <br>        linux-vdso.so.1 (0x000076bb9ceb1000)<br>        libc.so.6 =&gt; /usr/lib/libc.so.6 (0x000076bb9cc8b000)<br>        /lib64/ld-linux-x86-64.so.2 =&gt; /usr/lib64/ld-linux-x86-64.so.2 (0x000076bb9ceb3000)<br></code></pre></td></tr></table></figure>
+<p>这好吗？这不好，因为我们的实验不要包含<code>GNU</code>动态链接库。所以我们要静态链接的版本：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">gcc -static shell.c -o shell<br></code></pre></td></tr></table></figure>
+<p>这样得到的文件就是静态链接的了:</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs shell">┌─[admin@dell] - [~/LinuxDistroExp/initrd] - [Tue Mar 25, 11:45]<br>└─[$] &lt;&gt; gcc -static shell.c -o shell<br>┌─[admin@dell] - [~/LinuxDistroExp/initrd] - [Tue Mar 25, 11:45]<br>└─[$] &lt;&gt; ldd shell <br>        not a dynamic executable<br></code></pre></td></tr></table></figure>
+<p>但是，这个文件很大啊！780KB，蚊子的腿也是肉啊！<del><em>你的很大，我忍不了一下</em></del></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs shell">┌─[admin@dell] - [~/LinuxDistroExp/userspace] - [Tue Mar 25, 11:45]<br>└─[$] &lt;&gt; ls -alh shell<br>-rwxr-xr-x 1 enoch enoch 780K Mar 25 15:09 shell<br></code></pre></td></tr></table></figure>
+<p>所以，我们要把负责系统调用的函数去自己重新实现一遍。</p>
+<h2 id="重写系统调用的wrapper"><a href="#重写系统调用的wrapper" class="headerlink" title="重写系统调用的wrapper"></a>重写系统调用的<code>wrapper</code></h2><p>在重写<code>wrapper</code>之前，我们要注意一个问题，聚焦到这个函数上：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">int</span> <span class="hljs-title function_">waitid</span><span class="hljs-params">(<span class="hljs-type">idtype_t</span> idtype, <span class="hljs-type">id_t</span> id, <span class="hljs-type">siginfo_t</span> *infop, <span class="hljs-type">int</span> options)</span>;<br></code></pre></td></tr></table></figure>
+<p>通过<code>man 2 waitid</code>查看手册，会发现函数原型下面出现了这么么一段注释：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><code class="hljs c">SYNOPSIS<br>       <span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;sys/wait.h&gt;</span></span><br><br>       <span class="hljs-type">pid_t</span> <span class="hljs-title function_">wait</span><span class="hljs-params">(<span class="hljs-type">int</span> *_Nullable wstatus)</span>;<br>       <span class="hljs-type">pid_t</span> <span class="hljs-title function_">waitpid</span><span class="hljs-params">(<span class="hljs-type">pid_t</span> pid, <span class="hljs-type">int</span> *_Nullable wstatus, <span class="hljs-type">int</span> options)</span>;<br><br>       <span class="hljs-type">int</span> <span class="hljs-title function_">waitid</span><span class="hljs-params">(<span class="hljs-type">idtype_t</span> idtype, <span class="hljs-type">id_t</span> id, <span class="hljs-type">siginfo_t</span> *infop, <span class="hljs-type">int</span> options)</span>;<br>                       <span class="hljs-comment">/* This is the glibc and POSIX interface; see</span><br><span class="hljs-comment">                          VERSIONS for information on the raw system call. */</span><br><br>		<span class="hljs-comment">/* == 中间省略114514行 == */</span><br><br>VERSIONS<br>   C library/kernel differences<br>       <span class="hljs-title function_">wait</span><span class="hljs-params">()</span> is actually a library function <span class="hljs-title function_">that</span> <span class="hljs-params">(in glibc)</span> is implemented as a call to <span class="hljs-title function_">wait4</span><span class="hljs-params">(<span class="hljs-number">2</span>)</span>.<br><br>       On  some architectures, there is no <span class="hljs-title function_">waitpid</span><span class="hljs-params">()</span> system call; instead, this interface is implemented via a C library wrap‐<br>       per function that calls <span class="hljs-title function_">wait4</span><span class="hljs-params">(<span class="hljs-number">2</span>)</span>.<br><br>	<span class="hljs-comment">/* == 重点注意下面这段话！ == */</span><br>       The raw <span class="hljs-title function_">waitid</span><span class="hljs-params">()</span> system call takes a fifth argument, of type <span class="hljs-keyword">struct</span> rusage *.  If this argument is non-<span class="hljs-literal">NULL</span>, then it is<br>       used to <span class="hljs-keyword">return</span> resource usage information about the child, in the same manner as <span class="hljs-title function_">wait4</span><span class="hljs-params">(<span class="hljs-number">2</span>)</span>.  See  <span class="hljs-title function_">getrusage</span><span class="hljs-params">(<span class="hljs-number">2</span>)</span>  <span class="hljs-keyword">for</span>  de‐<br>       tails.<br></code></pre></td></tr></table></figure>
+<p>所以为了防止重复，我们得把这个函数重命名一下。不过好在这是个负责系统调用的中间函数<del><em>wrapper</em></del>，重命名一下也不要紧的。我这里就给他重命名为<code>cool_waitid</code>了。<br>因此，为了能过编译，我们得在c语言程序顶上添加这个五参数的函数原型，并在后续使用它。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">int</span> <span class="hljs-title function_">cool_waitid</span><span class="hljs-params">(<span class="hljs-type">idtype_t</span> idtype, <span class="hljs-type">id_t</span> id, <span class="hljs-type">siginfo_t</span> *infop, <span class="hljs-type">int</span> options, <span class="hljs-type">void</span> *)</span>&#123;&#125;;<br></code></pre></td></tr></table></figure>
+
+<p>这是完整的c语言程序：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-comment">// shell.c</span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;unistd.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;sys/types.h&gt;</span> <span class="hljs-comment">// pid_t</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;sys/wait.h&gt;</span>  <span class="hljs-comment">// siginfo_t P_ALL WEXITED</span></span><br><br><span class="hljs-comment">// 自定义 waitid 系统调用封装函数（实现在 sys.S 汇编文件中）</span><br><span class="hljs-comment">// 参数说明：</span><br><span class="hljs-comment">// idtype - 指定等待的进程类型（如 P_ALL 表示所有子进程）</span><br><span class="hljs-comment">// id     - 特定进程ID（当 idtype 为 P_PID 时有效）</span><br><span class="hljs-comment">// infop  - 用于返回子进程状态信息的结构体指针</span><br><span class="hljs-comment">// options - 控制等待行为的选项（如 WEXITED 表示等待已终止的进程）</span><br><span class="hljs-type">int</span> <span class="hljs-title function_">cool_waitid</span><span class="hljs-params">(<span class="hljs-type">idtype_t</span> idtype, <span class="hljs-type">id_t</span> id, <span class="hljs-type">siginfo_t</span> *infop, <span class="hljs-type">int</span> options, <span class="hljs-type">void</span> *)</span>&#123;&#125;;<br><br><span class="hljs-type">int</span> <span class="hljs-title function_">main</span><span class="hljs-params">()</span><br>&#123;<br>    <span class="hljs-type">char</span> command[<span class="hljs-number">255</span>];<br>    <span class="hljs-keyword">for</span> (;;)<br>    &#123;<br>        write(<span class="hljs-number">1</span>, <span class="hljs-string">&quot;# &quot;</span>, tipLen); <span class="hljs-comment">// 显示命令行提示符</span><br>        <span class="hljs-type">int</span> count = read(<span class="hljs-number">0</span>, command, <span class="hljs-number">255</span>); <span class="hljs-comment">// 读取用户输入（最多 255 字节）</span><br>        command[count - <span class="hljs-number">1</span>] = <span class="hljs-number">0</span>; <span class="hljs-comment">// 替换掉command结尾的\n变成\0</span><br>        <span class="hljs-type">pid_t</span> fork_result = fork(); <span class="hljs-comment">// 开一个子进程执行命令</span><br>        <span class="hljs-keyword">if</span> (fork_result == <span class="hljs-number">0</span>) <span class="hljs-comment">// 当前进程是子进程</span><br>        &#123;<br>            execve(command, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>); <span class="hljs-comment">// 使用系统调用来执行命令</span><br>            <span class="hljs-keyword">break</span>; <span class="hljs-comment">// 执行完成后子进程退出循环体然后退出执行</span><br>        &#125;<br>        <span class="hljs-keyword">else</span> <span class="hljs-comment">// 当前进程是父进程</span><br>        &#123;<br>            <span class="hljs-type">siginfo_t</span> info;<br>            cool_waitid(P_ALL, <span class="hljs-number">0</span>, &amp;info, WEXITED, <span class="hljs-number">0</span>); <span class="hljs-comment">// 等待所有进程都退出了再进行下一次shell</span><br>        &#125;<br>    &#125;<br>    _exit(<span class="hljs-number">0</span>); <span class="hljs-comment">// 给子进程退出主循环体后退出运行用</span><br>&#125;<br></code></pre></td></tr></table></figure>
+<blockquote>
+<p>注意：这里如果使用前面的静态编译命令，会导致最终二进制运行报<code>Segment fault</code>。<br>使用这个编译参数：<code>gcc -c shell.c -fno-stack-protector</code></p>
+</blockquote>
+<p>回到之前的问题，这些系统调用的具体实现怎么办？<br><del><em>很简单</em></del>，直接上手搓汇编就行。</p>
+<blockquote>
+<p>Tip: 如果你使用的是<code>GNU assembler</code>，那么注释的语法不是分号而是井号。<br>我这里使用<code>Intel</code>格式的汇编。</p>
+</blockquote>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br></pre></td><td class="code"><pre><code class="hljs asm"># sys.S<br>.intel_syntax noprefix<br><br>.global write<br>.global read<br>.global execve<br>.global fork<br>.global cool_waitid<br>.global _exit<br><br># rax寄存器中存放的是系统调用编号，打开你的内核源码，参考: <br># linux/arch/x86/include/generated/asm/syscalls_64.h<br><br># ssize_t write(int fd, const void *buf, size_t count);<br>write:<br>mov rax, 1   # 系统调用号 1 (SYS_write)<br>syscall<br>ret<br><br># 后面依葫芦画瓢<br><br># ssize_t read(int fd, void *buf, size_t count);<br>read:<br>mov rax, 0   # 系统调用号 0 (SYS_read)<br>syscall<br>ret<br><br># int execve(const char *filename, char *const argv[], char *const envp[]);<br>execve:<br>mov rax, 59  # 系统调用号 59 (SYS_execve)<br>syscall<br>ret<br><br># pid_t fork(void);<br>fork:<br>mov rax, 57  # 系统调用号 57 (SYS_fork)<br>syscall<br>ret<br><br># int cool_waitid(idtype_t idtype, id_t id, siginfo_t *infop, int options, void *);<br>cool_waitid:<br>mov rax, 247 # 系统调用号 247 (SYS_waitid)<br>mov r10, rcx # 英特尔把rcx寄存器给硬件级的系统调用的返回值了，这会导致冲突，所以Linux在<br>			# 内核中的是使用r10寄存器而非rcx,但调用时是传递进rcx,所以我们要把值送给r10<br>			# 具体使用的寄存器： rdi, rsi, rdx, r10, r8, r9<br>            # 参考https://en.wikipedia.org/wiki/X86_calling_conventions#cite_ref-AMD_28-9<br>syscall<br>ret<br><br># 这个系统调用是不需要返回的，可以通过上面那个头文件里看到: __SYSCALL_NORETURN(60, sys_exit)<br># void _exit(int status);<br>_exit:<br>mov rax, 60  # 系统调用号 60 (SYS_exit)<br>syscall<br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>你如果把上述代码丢给AI，它确实可能会发现一些不严谨的问题，比如越界错误等，但本实验只是为了好玩，就不考虑那些了。</p>
+</blockquote>
+<p>接下来编译这个汇编程序：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">as sys.S<br></code></pre></td></tr></table></figure>
+
+<p>最后，我们只需要将这两个程序链接起来就行了：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">ld -o shell shell.o a.out --entry main -z noexecstack<br></code></pre></td></tr></table></figure>
+<p>发现，它十分的小！</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs shell">┌─[admin@dell] - [~/LinuxDistroExp/userspace/initrd] - [Tue Mar 25, 11:45]<br>└─[$] &lt;&gt; ls -alh shell                                               <br>-rwxr-xr-x 1 enoch enoch 9.7K Mar 25 12:53 init<br></code></pre></td></tr></table></figure>
+<p>把它改名<code>init</code>然后备用。</p>
+<h2 id="创建cpio"><a href="#创建cpio" class="headerlink" title="创建cpio"></a>创建<code>cpio</code></h2><p>这一步很简单，直接使用命令就行了：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">echo init | cpio -H newc -o &gt; init.cpio<br></code></pre></td></tr></table></figure>
+<p>好的，现在万事俱备，只欠<code>qemu</code>！</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">qemu-system-x86_64 -kernel arch/x86/boot/bzImage -initrd ../userspace/initrd/init.cpio<br></code></pre></td></tr></table></figure>
+<p>然后在qemu的窗口里你可以看到成功进入了shell，你敲键盘它会有反应，但现在没有任何程序可供执行，<del><em>所以它只会换行</em></del>。</p>
+<h1 id="测试最终系统！And-…-tricks"><a href="#测试最终系统！And-…-tricks" class="headerlink" title="测试最终系统！And … tricks!"></a>测试最终系统！And … tricks!</h1><p>Linux内核编译的时候其实是支持编译成镜像的，进入<code>~/LinuxDistroExp/linux</code>并通过<code>make help</code>进行查看：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs config">Architecture-specific targets (x86):<br>* bzImage               - Compressed kernel image (arch/x86/boot/bzImage)<br>  install               - Install kernel using (your) ~/bin/installkernel or<br>                          (distribution) /sbin/installkernel or install to <br>                          $(INSTALL_PATH) and run lilo<br><br>  fdimage               - Create 1.4MB boot floppy image (arch/x86/boot/fdimage)<br>  fdimage144            - Create 1.4MB boot floppy image (arch/x86/boot/fdimage)<br>  fdimage288            - Create 2.8MB boot floppy image (arch/x86/boot/fdimage)<br>  hdimage               - Create a BIOS/EFI hard disk image (arch/x86/boot/hdimage)<br>  isoimage              - Create a boot CD-ROM image (arch/x86/boot/image.iso)<br>                          bzdisk/fdimage*/hdimage/isoimage also accept:<br>                          FDARGS=&quot;...&quot;  arguments for the booted kernel<br>                          FDINITRD=file initrd for the booted kernel<br></code></pre></td></tr></table></figure>
+<p>对就是最后一个。所以我们只要这么修改编译指令就行，它会自动使用以前的编译缓存。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">make isoimage FDARGS=&quot;initrd=/init.cpio&quot; FDINITRD=&quot;/path/to/your/init.cpio&quot;<br></code></pre></td></tr></table></figure>
+<p>然后生成的镜像就会保存在<code>arch/x86/boot/image.iso</code>，我们可以直接喂给<code>qemu</code>：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">qemu-system-x86_64 -cdrom arch/x86/boot/image.iso<br></code></pre></td></tr></table></figure>
+<p>在弹出的窗口里，我们可以看到和之前一样，<del><em>只会换行</em></del>。</p>
+<h1 id="为系统集成Lua运行时"><a href="#为系统集成Lua运行时" class="headerlink" title="为系统集成Lua运行时"></a>为系统集成Lua运行时</h1><p>我们去<code>Lua</code>官网下载并解压其源代码：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs shell">┌─[admin@dell] - [~/LinuxDistroExp/3rdsw/lua-5.4.7/src] - [Tue Mar 25, 11:45]<br>└─[$] &lt;&gt; ls<br>lapi.c      lcode.h     ldebug.c  lfunc.h   liolib.o    lmem.h      lopcodes.o  lstate.h   ltable.o   luaconf.h   lutf8lib.o<br>lapi.h      lcode.o     ldebug.h  lfunc.o   ljumptab.h  lmem.o      lopnames.h  lstate.o   ltablib.c  lua.h       lvm.c<br>lapi.o      lcorolib.c  ldebug.o  lgc.c     llex.c      loadlib.c   loslib.c    lstring.c  ltablib.o  lua.hpp     lvm.h<br>lauxlib.c   lcorolib.o  ldo.c     lgc.h     llex.h      loadlib.o   loslib.o    lstring.h  ltm.c      lualib.h    lvm.o<br>lauxlib.h   lctype.c    ldo.h     lgc.o     llex.o      lobject.c   lparser.c   lstring.o  ltm.h      lua.o       lzio.c<br>lauxlib.o   lctype.h    ldo.o     liblua.a  llimits.h   lobject.h   lparser.h   lstrlib.c  ltm.o      lundump.c   lzio.h<br>lbaselib.c  lctype.o    ldump.c   linit.c   lmathlib.c  lobject.o   lparser.o   lstrlib.o  lua.c      lundump.h   lzio.o<br>lbaselib.o  ldblib.c    ldump.o   linit.o   lmathlib.o  lopcodes.c  lprefix.h   ltable.c   luac.c     lundump.o   Makefile<br>lcode.c     ldblib.o    lfunc.c   liolib.c  lmem.c      lopcodes.h  lstate.c    ltable.h   luac.o     lutf8lib.c<br></code></pre></td></tr></table></figure>
+<p>在其<code>Makefile</code>里，添加静态编译的flag，为了方便，可以和我一样直接使用命令修改：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">sed -i &#x27;s/MYLDFLAGS=/MYLDFLAGS=-static/g&#x27; Makefile<br></code></pre></td></tr></table></figure>
+<p>然后就直接编译就行了：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">make<br></code></pre></td></tr></table></figure>
+<p>完成后我们可以看到，它是静态编译的：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs shell">┌─[admin@dell] - [~/LinuxDistroExp/3rdsw/lua-5.4.7/src] - [Tue Mar 25, 11:45]<br>└─[$] &lt;&gt; ldd lua     <br>        not a dynamic executable<br></code></pre></td></tr></table></figure>
+<p>接下来，我们只要把<code>lua</code>这个二进制文件一起放到<code>init.cpio</code>里就行了，先把它放到和<code>init</code>在同一个目录下，然后：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs shell">echo init &gt;&gt; files<br>echo lua &gt;&gt; files<br>cat files | cpio -H newc -o &gt; init.cpio<br></code></pre></td></tr></table></figure>
+<p>当然如果你和我一样专门建了一个文件夹存放initrd里的文件，可以直接使用下面的脚本：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell">rm init.cpio<br>find . | cpio -H newc -o &gt; init.cpio<br></code></pre></td></tr></table></figure>
+<p>然后和上面一样，直接编译进单文件镜像或者修改启动参数都行。</p>
+<p><em><strong>Well done!</strong></em></p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Linux/" class="category-chain-item">Linux</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>如何定制属于自己的Linux Distro</div>
+      <div>http://blog.coolenoch.ink/2025/03/25/Linux/21-如何定制属于自己的Linux Distro-250325/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>CoolestEnoch</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2025年3月25日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2025/05/23/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/22-%E5%A6%82%E4%BD%95%E5%9C%A8Windows%E5%92%8CLinux%E4%B8%8A%E4%B8%BAPyTorch%E9%85%8D%E7%BD%AECUDA%E5%8A%A0%E9%80%9F/" title="如何在Windows上为PyTorch配置CUDA加速">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">如何在Windows上为PyTorch配置CUDA加速</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2025/02/11/%E5%85%B6%E4%BB%96%E7%9A%84%E5%BC%80%E5%8F%91%E6%9D%82%E8%AE%B0/20-%E5%A1%AB%E5%9D%91%EF%BC%81%E7%BC%96%E8%AF%91%E5%B0%8F%E7%B1%B35%E7%9A%84LineageOS22.1-250211/" title="填坑！编译小米5的LineageOS22.1">
+                        <span class="hidden-mobile">填坑！编译小米5的LineageOS22.1</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  <script>
+  Fluid.utils.createScript('https://lib.baomitu.com/mermaid/8.14.0/mermaid.min.js', function() {
+    mermaid.initialize({"theme":"default"});
+
+    Fluid.utils.listenDOMLoaded(function() {
+      Fluid.events.registerRefreshCallback(function() {
+        if ('mermaid' in window) {
+          mermaid.init();
+        }
+      });
+    });
+  });
+</script>
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+  
+<script src="/js/effect/GoTop/jquery.min.js"></script>
+<script src="/js/effect/lib/jquery-1.9.1.min.js"></script>
+<script src="/js/effect/lib/jquery-3.6.0.min.js"></script>
+<script src="/js/effect/clickeffect.js"></script>
+<script src="/js/effect/clickWord.js"></script>
+<script src="/js/effect/emojiCursor.js"></script>
+<script src="/js/effect/sakura-less.js"></script>
+<script src="/js/effect/sakana@1.0.8.js"></script>
+<script src="/js/effect/cuteTitle.js"></script>
+<script src="/js/effect/GoTop/szgotop.js"></script>
+<script src="/js/effect/Netease.js"></script>
+<script src="/js/effect/cxkChrome.js"></script>
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

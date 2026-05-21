@@ -1,0 +1,729 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
+  <link rel="icon" href="/img/favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="CoolestEnoch">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="(封面图源EasyTier官网) TL;DR异地组网，我一直以来都有这个需求，便于在各种情况下访问我的所有内网设备。在曾经的折腾一番CloudFlare DDNS一文中我提到了使用开源的VPN协议进行异地组网，但这一直有几个弊端：  必须依赖中继服务器 只能单向访问，如需双向访问则还要另开一个ssh端口转发。 每多一个子网，就得多一条VPN连接。正好，在同学的安利下，碰到了这款叫EasyTier">
+<meta property="og:type" content="article">
+<meta property="og:title" content="使用EasyTier异地组网">
+<meta property="og:url" content="http://blog.coolenoch.ink/2025/10/07/Linux/25-%E4%BD%BF%E7%94%A8EasyTier%E5%BC%82%E5%9C%B0%E7%BB%84%E7%BD%91-251007/index.html">
+<meta property="og:site_name" content="Enoch的个人小站">
+<meta property="og:description" content="(封面图源EasyTier官网) TL;DR异地组网，我一直以来都有这个需求，便于在各种情况下访问我的所有内网设备。在曾经的折腾一番CloudFlare DDNS一文中我提到了使用开源的VPN协议进行异地组网，但这一直有几个弊端：  必须依赖中继服务器 只能单向访问，如需双向访问则还要另开一个ssh端口转发。 每多一个子网，就得多一条VPN连接。正好，在同学的安利下，碰到了这款叫EasyTier">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://easytier.cn/easytier.png">
+<meta property="article:published_time" content="2025-10-06T16:00:00.000Z">
+<meta property="article:modified_time" content="2025-10-06T16:00:00.000Z">
+<meta property="article:author" content="CoolestEnoch">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://easytier.cn/easytier.png">
+  
+  
+  
+  <title>使用EasyTier异地组网 - Enoch的个人小站</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+  
+<link rel="stylesheet" href="/css/effect/cursor.css">
+<link rel="stylesheet" href="/css/effect/blur.css">
+<link rel="stylesheet" href="/css/effect/head-rotate.css">
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"blog.coolenoch.ink","root":"/","version":"1.9.7","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":true,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":"❡"},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 7.2.0"><link rel="alternate" href="/feed.xml" title="Enoch的个人小站" type="application/rss+xml">
+</head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Enoch的个人小站</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/" target="_self">
+                <i class="iconfont icon-link-fill"></i>
+                <span>友链</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/background/1.jpg') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="使用EasyTier异地组网"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2025-10-07 00:00" pubdate>
+          2025年10月7日 凌晨
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          3.4k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          29 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">使用EasyTier异地组网</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <p> <img src="https://easytier.cn/easytier.png" srcset="/img/loading.gif" lazyload alt="封面"><br>(封面图源<a target="_blank" rel="noopener" href="https://easytier.cn/">EasyTier官网</a>)</p>
+<h1 id="TL-DR"><a href="#TL-DR" class="headerlink" title="TL;DR"></a>TL;DR</h1><p>异地组网，我一直以来都有这个需求，便于在各种情况下访问我的所有内网设备。在曾经的<code>折腾一番CloudFlare DDNS</code>一文中我提到了使用开源的VPN协议进行异地组网，但这一直有几个弊端：</p>
+<ol>
+<li>必须依赖中继服务器</li>
+<li>只能单向访问，如需双向访问则还要另开一个ssh端口转发。</li>
+<li>每多一个子网，就得多一条VPN连接。<br>正好，在同学的安利下，碰到了这款叫<code>EasyTier</code>的开源项目。<br><del><em>好耶，甚至是Rust开发的！</em></del></li>
+</ol>
+<p><img src="https://tse2.mm.bing.net/th/id/OIP.HQ5ZqfbrekQ_gZ6TdS4KdgHaH7?cb=12&rs=1&pid=ImgDetMain&o=7&rm=3" srcset="/img/loading.gif" lazyload alt="Rust Meme"></p>
+<h1 id="架构思路"><a href="#架构思路" class="headerlink" title="架构思路"></a>架构思路</h1><p>在EasyTier中，没有<code>客户端</code>、<code>服务器</code>的概念，只有<code>节点</code>的概念，因为它是一个去中心化的网络架构。每个设备都是一个<code>节点</code>，EasyTier把每个<code>节点</code>放在同一个网段下，节点以局域网地址来访问另一节点的指定端口。<br>在工作的时候，需要一个公网服务器，用作STUN打洞，亦或做流量中转。</p>
+<h1 id="搭建目标"><a href="#搭建目标" class="headerlink" title="搭建目标"></a>搭建目标</h1><p>我要把公网服务器、手机、笔记本电脑放在同一个局域网下，其中手机通过流量上网，笔记本通过校园网WiFi上网。<br>其中手机和笔记本电脑要保证能正常走流量代理的情况下又不影响EasyTier组网，还要保证手机在校外能访问校内的一台服务器（<code>10.1.2.3/16</code>）。<br>因为EasyTier是以本地应用程序运行的，如果在电脑上直接裸跑，就会让系统防火墙在局域网内直接被架空，所以我们要部署到docker容器里做到网络隔离，又要保证能正常组网。</p>
+<h1 id="开始搭建"><a href="#开始搭建" class="headerlink" title="开始搭建"></a>开始搭建</h1><h2 id="文件准备"><a href="#文件准备" class="headerlink" title="文件准备"></a>文件准备</h2><p>我们先去<a target="_blank" rel="noopener" href="https://github.com/EasyTier/EasyTier/releases">release页面</a>下载<code>app-universal-release.apk</code>和<code>easytier-linux-x86_64-v2.4.5.zip</code>两个包，一个是给安卓手机用的，一个是给我们的服务器和电脑用的。<br>解压后，我们只需要<code>easytier-cli</code>和<code>easytier-core</code>两个就行，core用来组网，cli用来管理状态。</p>
+<blockquote>
+<p>截止写稿，最新版本是<code>2.4.5</code>，请根据实际情况下载。</p>
+</blockquote>
+<p>除安卓端，启动命令都是<code>./easytier-core -c config.toml</code>，后续默认你已将<code>easytier-cli</code>和<code>easytier-core</code>放在工作目录，并已cd进去。后续是每个端上的配置文件。</p>
+<h2 id="公网服务器端"><a href="#公网服务器端" class="headerlink" title="公网服务器端"></a>公网服务器端</h2><figure class="highlight toml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs toml"><span class="hljs-attr">hostname</span> = <span class="hljs-string">&quot;my_serverr&quot;</span>  <span class="hljs-comment"># 节点设备名</span><br><span class="hljs-attr">instance_name</span> = <span class="hljs-string">&quot;mynetwork&quot;</span>  <br><span class="hljs-attr">instance_id</span> = <span class="hljs-string">&quot;11451419-1981-0114-5141-919810114514&quot;</span>  <span class="hljs-comment"># UUID必须唯一</span><br><span class="hljs-attr">ipv4</span> = <span class="hljs-string">&quot;172.16.32.247/24&quot;</span>  <span class="hljs-comment"># 该节点在网络中的CIDR格式ip地址</span><br><span class="hljs-attr">dhcp</span> = <span class="hljs-literal">false</span>  <span class="hljs-comment"># 如为true则上面那行可以直接删去</span><br><span class="hljs-attr">listeners</span> = [  <br>   <span class="hljs-string">&quot;tcp://0.0.0.0:11010&quot;</span>,  <span class="hljs-comment"># 将本节点用作宣告服务器监听的端口。注意，后面要用这个端口，把它记住。</span><br>   <span class="hljs-string">&quot;udp://0.0.0.0:11010&quot;</span>,  <span class="hljs-comment"># 同上</span><br>   <span class="hljs-string">&quot;wg://0.0.0.0:11011&quot;</span>,  <span class="hljs-comment"># WireGuard入站，用于单向组网</span><br>]  <br><span class="hljs-attr">rpc_portal</span> = <span class="hljs-string">&quot;0.0.0.0:0&quot;</span>  <span class="hljs-comment"># easytier-cli的通信地址，0端口表示随机</span><br>  <br><span class="hljs-section">[network_identity]</span>  <span class="hljs-comment"># 进入局域网的认证信息</span><br><span class="hljs-attr">network_name</span> = <span class="hljs-string">&quot;mynetwork&quot;</span>  <br><span class="hljs-attr">network_secret</span> = <span class="hljs-string">&quot;your_password&quot;</span>  <br>  <br><span class="hljs-section">[flags]</span>  <br><span class="hljs-attr">no_tun</span> = <span class="hljs-literal">true</span>  <span class="hljs-comment"># 这项若为false则可能与电脑上基于TUN的代理软件打架</span><br><span class="hljs-attr">private_mode</span> = <span class="hljs-literal">true</span> <span class="hljs-comment"># 只给我自己用做宣告服务器，不给别人用，必须要求认证信息正确才能连接，防止我这个机器加入别人的网络，或者被别人偷跑流量</span><br><span class="hljs-attr">relay_network_whitelist</span> = <span class="hljs-string">&quot;mynetwork&quot;</span> <span class="hljs-comment"># 只允许对这些网络进行relay, 空格分割的通配符列表，如 &quot;ab* abc&quot;，留空则不给任何网络relay</span><br><span class="hljs-attr">enable_kcp_proxy</span> = <span class="hljs-literal">true</span><br><span class="hljs-attr">enable_quic_proxy</span> = <span class="hljs-literal">true</span><br></code></pre></td></tr></table></figure>
+
+
+
+<h2 id="笔记本电脑端"><a href="#笔记本电脑端" class="headerlink" title="笔记本电脑端"></a>笔记本电脑端</h2><figure class="highlight toml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><code class="hljs toml"><span class="hljs-attr">hostname</span> = <span class="hljs-string">&quot;laptop&quot;</span><br><span class="hljs-attr">instance_name</span> = <span class="hljs-string">&quot;laptop&quot;</span><br><span class="hljs-attr">instance_id</span> = <span class="hljs-string">&quot;11451419-1981-0114-5141-919810114515&quot;</span><br><span class="hljs-attr">ipv4</span> = <span class="hljs-string">&quot;172.16.32.248/24&quot;</span><br><span class="hljs-attr">dhcp</span> = <span class="hljs-literal">false</span><br><span class="hljs-attr">listeners</span> = [ <span class="hljs-comment"># 笔记本电脑不想当宣告服务器</span><br>    <span class="hljs-comment"># &quot;tcp://0.0.0.0:11010&quot;,</span><br>    <span class="hljs-comment"># &quot;udp://0.0.0.0:11010&quot;,</span><br>    <span class="hljs-comment"># &quot;wg://0.0.0.0:11011&quot;,</span><br>]<br><span class="hljs-attr">rpc_portal</span> = <span class="hljs-string">&quot;0.0.0.0:0&quot;</span><br><span class="hljs-attr">socks5_proxy</span> = <span class="hljs-string">&quot;socks5://0.0.0.0:1145&quot;</span> <span class="hljs-comment"># 用于其他代理软件的代理规则，防止没法访问内网设备</span><br><br><span class="hljs-section">[network_identity]</span><br><span class="hljs-attr">network_name</span> = <span class="hljs-string">&quot;mynetwork&quot;</span><br><span class="hljs-attr">network_secret</span> = <span class="hljs-string">&quot;your_password&quot;</span><br><br><span class="hljs-section">[[peer]]</span><br><span class="hljs-attr">uri</span> = <span class="hljs-string">&quot;tcp://your_ip_or_domain:your_port&quot;</span> <span class="hljs-comment"># 你的公网服务器监听的地址，your_port就是上面要你记住的宣告服务器的那个端口</span><br><br><span class="hljs-section">[[proxy_network]]</span>  <br><span class="hljs-attr">cidr</span> = <span class="hljs-string">&quot;10.1.2.3/16&quot;</span>  <span class="hljs-comment"># 校内服务器。这样配置后会把校园网的10.1.0.0/16整个网段也映射到你的虚拟局域网里。</span><br><br><span class="hljs-section">[flags]</span><br><span class="hljs-attr">no_tun</span> = <span class="hljs-literal">true</span> <span class="hljs-comment"># 防止和其他TUN类的代理软件打架</span><br><span class="hljs-attr">private_mode</span> = <span class="hljs-literal">true</span><br><span class="hljs-attr">enable_kcp_proxy</span> = <span class="hljs-literal">true</span><br><span class="hljs-attr">enable_quic_proxy</span> = <span class="hljs-literal">true</span><br></code></pre></td></tr></table></figure>
+
+
+<h2 id="安卓端"><a href="#安卓端" class="headerlink" title="安卓端"></a>安卓端</h2><p>打开app，在basic settings里填入你这台设备的虚拟局域网ip地址，或者也可选择是否DHCP获取。<br><code>Network Name</code>和<code>Network Secrect</code>填入和上面配置文件里一样的。<br><code>Networking Method</code>选择<code>Public Server</code>，然后地址填写<code>tcp://your_ip_or_domain:your_port</code>，也和上面配置文件一样。<br><em><strong>重点来了</strong></em>，你如果要在组网的同时使用别的代理软件，就要打开<code>No TUN Mode</code>并添加<code>Socks5 Server</code>，然后去第三方代理软件里添加一条路由规则，这个会在文章最后讲到。</p>
+<p>然后直接<code>Run Network</code>即可。</p>
+<h2 id="OpenWRT端"><a href="#OpenWRT端" class="headerlink" title="OpenWRT端"></a>OpenWRT端</h2><p>前往EasyTier的<a href="github.com/EasyTier/luci-app-easytier/releases">OpenWRT发布页</a>和<a href="github.com/EasyTier/EasyTier/releases">核心下载页</a>下载你路由器对应架构的文件，然后安装<code>luci-app-easytier_2.4.5_all.ipk</code>和<code>luci-i18n-easytier-zh-cn_git-25.242.01662-2b382e4_all.ipk</code>这两个文件，并把核心<code>easytier-core</code>放到路由器里你的目录下，打开路由器的EasyTier设置页，选择<code>EasyTier配置 - 上传程序</code>，设置<code>easytier-core程序路径</code>为你放置的文件实际的绝对路径，然后回到<code>基本设置</code>，启动方式选择<code>配置文件</code>，按照安卓端对配置文件的处理一样修改好即可。</p>
+<blockquote>
+<p>⚠️注意：<br>OpenWRT端若需使用透明代理对局域网设备进行代理，则需要将<code>no_tun</code>改为<code>false</code>。<br>为了安全，记得修改：<code>rpc_portal = &quot;127.0.0.1:0&quot;</code>。<br>建议关闭<code>socks5_proxy</code>，不然来自WAN口的设备也能访问这个代理然后进你的虚拟局域网里玩。</p>
+</blockquote>
+<h1 id="笔记本端的安全策略-使用Docker隔离网络访问"><a href="#笔记本端的安全策略-使用Docker隔离网络访问" class="headerlink" title="笔记本端的安全策略: 使用Docker隔离网络访问"></a>笔记本端的安全策略: 使用Docker隔离网络访问</h1><p>因为EasyTier是以本地应用程序运行的，如果在电脑上直接裸跑，就会让系统防火墙在局域网内直接被架空，所以我们要部署到docker容器里做到网络隔离，又要保证能正常组网。</p>
+<blockquote>
+<p>现假设你的电脑上运行着<code>ssh</code>服务（监听<code>1919</code>端口）和<code>nginx</code>页面（监听<code>9180</code>端口），并且这两个端口已被防火墙放通。</p>
+</blockquote>
+<h2 id="Docker容器"><a href="#Docker容器" class="headerlink" title="Docker容器"></a>Docker容器</h2><p>创建一个Docker容器，把<code>1145</code>端口（就是上面笔记本配置文件里的<code>socks5_proxy</code>端口）映射出来。或者可以直接抄我的作业：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">sudo docker run -d --name alpine_easytier -p 1145:1145 -v /home/admin/easytier:/root -v /etc/localtime:/etc/localtime -dit alpine<br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>这样在容器里运行easytier的话，别的节点通过局域网ip访问你的时候是无法直接访问宿主机对应端口的服务的（实际访问的是容器里对应的端口），所以我们要用端口转发器把流量从容器里转发到宿主机上。即使宿主机对应端口被防火墙拦了，别的节点也无法访问该服务，对别的节点来说是无感的了。<br>我们使用<code>socat</code>进行端口转发，这样更通用，因为在我的环境下，alpine容器里装iptables无法修改转发规则。</p>
+</blockquote>
+<p>使用<code>socat</code>转发流量只须这一行命令即可（容器中宿主机ip是<code>172.17.0.1</code>）：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell">socat TCP-LISTEN:1919,bind=0.0.0.0,fork,reuseaddr TCP:172.17.0.1:1919<br>socat TCP-LISTEN:9810,bind=0.0.0.0,fork,reuseaddr TCP:172.17.0.1:9810<br></code></pre></td></tr></table></figure>
+
+<p>或者使用这个脚本启动，可以自动管理<code>socat</code>和<code>easytire-core</code>的生命周期：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><code class="hljs shell">TARGET_HOST=&quot;172.17.0.1&quot;<br>PORTS_TCP=&quot;1919 9810&quot;<br>PORTS_UDP=&quot;&quot;<br><br>cleanup() &#123;<br>    echo &quot;正在清理...&quot;<br>    killall socat<br>    echo &quot;所有 socat 进程已停止&quot;<br>    exit<br>&#125;<br><br>trap cleanup INT TERM<br>killall socat<br>echo &quot;启动端口映射到 $TARGET_HOST...&quot;<br><br>for PORT in $PORTS_TCP; do<br>    echo &quot;映射端口: 0.0.0.0:$PORT/tcp -&gt; $TARGET_HOST:$PORT/tcp&quot;<br>    socat TCP-LISTEN:$PORT,bind=0.0.0.0,fork,reuseaddr TCP:$TARGET_HOST:$PORT &amp;<br>done<br><br>for PORT in $PORTS_UDP; do<br>    echo &quot;映射端口: 0.0.0.0:$PORT/udp -&gt; $TARGET_HOST:$PORT/udp&quot;<br>    socat UDP-LISTEN:$PORT,bind=0.0.0.0,fork,reuseaddr UDP:$TARGET_HOST:$PORT &amp;<br>done<br><br>echo &quot;所有端口映射已启动&quot;<br>echo &quot;按 Ctrl+C 停止并退出&quot;<br><br>./easytier-core -c config.toml<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">等待所有后台进程</span><br>wait<br></code></pre></td></tr></table></figure>
+
+<p>当然如果你要更高级的转发，支持ipv4和v6双栈，并且入口端口和出口端口不一样，那么可以参考下面这个脚本：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br><span class="line">227</span><br><span class="line">228</span><br><span class="line">229</span><br><span class="line">230</span><br><span class="line">231</span><br><span class="line">232</span><br><span class="line">233</span><br><span class="line">234</span><br><span class="line">235</span><br><span class="line">236</span><br><span class="line">237</span><br><span class="line">238</span><br><span class="line">239</span><br><span class="line">240</span><br><span class="line">241</span><br><span class="line">242</span><br><span class="line">243</span><br><span class="line">244</span><br><span class="line">245</span><br><span class="line">246</span><br><span class="line">247</span><br><span class="line">248</span><br><span class="line">249</span><br><span class="line">250</span><br><span class="line">251</span><br><span class="line">252</span><br><span class="line">253</span><br><span class="line">254</span><br></pre></td><td class="code"><pre><code class="hljs shell">DOCKER_HOST=&quot;172.11.0.1&quot;<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">用空格分隔模拟数组</span><br>PORTS_TCP_SOURCE=&quot;1919 9810&quot;<br>PORTS_TCP_TARGET=&quot;$&#123;DOCKER_HOST&#125;:1145 $&#123;DOCKER_HOST&#125;:19198&quot;<br>PORTS_UDP_SOURCE=&quot;&quot;<br>PORTS_UDP_TARGET=&quot;&quot;<br><span class="hljs-meta prompt_"># </span><span class="language-bash">------------ 配置结束 ------------</span><br><br><br>set -eu<br><br>PIDS=&quot;&quot;<br>TMPDIR=$(mktemp -d 2&gt;/dev/null || echo &quot;/tmp/portmap.$$&quot;)<br>OUT_REDIRECT=&quot;&gt;/dev/null 2&gt;&amp;1&quot;  # 默认不打印 socat 输出；改成 &gt;&gt;&quot;$TMPDIR/socat-$src.log&quot; 2&gt;&amp;1 可写日志<br><br>cleanup() &#123;<br>    echo<br>    echo &quot;正在清理... (停止所有子进程)&quot;<br>    for pid in $PIDS; do<br>        if kill -0 &quot;$pid&quot; 2&gt;/dev/null; then<br>            kill &quot;$pid&quot; 2&gt;/dev/null || true<br>            wait &quot;$pid&quot; 2&gt;/dev/null || true<br>        fi<br>    done<br>    [ -d &quot;$TMPDIR&quot; ] &amp;&amp; rm -rf &quot;$TMPDIR&quot;<br>    echo &quot;清理完成。&quot;<br>    exit 0<br>&#125;<br>trap cleanup INT TERM<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">检查依赖</span><br>if ! command -v socat &gt;/dev/null 2&gt;&amp;1; then<br>    echo &quot;错误：找不到 socat，请先安装。&quot; &gt;&amp;2<br>    exit 1<br>fi<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">---------- helper ----------</span><br>expand_ports() &#123;<br>    list=&quot;$1&quot;<br>    for token in $list; do<br>        case &quot;$token&quot; in<br>            *-*)<br>                start=$(echo &quot;$token&quot; | cut -d- -f1)<br>                end=$(echo &quot;$token&quot; | cut -d- -f2)<br>                i=$start<br>                while [ &quot;$i&quot; -le &quot;$end&quot; ]; do<br>                    echo &quot;$i&quot;<br>                    i=$((i+1))<br>                done<br>                ;;<br>            &#x27;&#x27;)<br>                ;;<br>            *)<br>                echo &quot;$token&quot;<br>                ;;<br>        esac<br>    done<br>&#125;<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">parse host:port -&gt; host port family(4/6)</span><br>parse_host_port() &#123;<br>    spec=&quot;$1&quot;<br>    # if [ipv6]:port<br>    echo &quot;$spec&quot; | grep -q &#x27;^\[.*\]:&#x27; 2&gt;/dev/null &amp;&amp; &#123;<br>        host=$(echo &quot;$spec&quot; | sed -e &#x27;s/^\[\(.*\)\]:.*$/\1/&#x27;)<br>        port=$(echo &quot;$spec&quot; | sed -e &#x27;s/^.*:\([0-9][0-9]*\)$/\1/&#x27;)<br>        echo &quot;$host $port 6&quot;<br>        return<br>    &#125;<br>    # count colons<br>    colons=$(echo &quot;$spec&quot; | awk -F: &#x27;&#123;print NF-1&#125;&#x27;)<br>    if [ &quot;$colons&quot; -ge 2 ]; then<br>        # treat last field as port, rest as IPv6 address<br>        port=$(echo &quot;$spec&quot; | awk -F: &#x27;&#123;print $NF&#125;&#x27;)<br>        host=$(echo &quot;$spec&quot; | sed &quot;s/:$port$//&quot;)<br>        echo &quot;$host $port 6&quot;<br>        return<br>    fi<br>    # normal host:port<br>    host=$(echo &quot;$spec&quot; | cut -d: -f1)<br>    port=$(echo &quot;$spec&quot; | cut -d: -f2-)<br>    echo &quot;$host $port 4&quot;<br>&#125;<br><br>count_lines_in_file() &#123;<br>    f=&quot;$1&quot;<br>    if [ ! -f &quot;$f&quot; ]; then<br>        echo 0<br>    else<br>        wc -l &lt; &quot;$f&quot; | tr -d &#x27; &#x27;<br>    fi<br>&#125;<br><br>normalize_pairs_file() &#123;<br>    file_a=&quot;$1&quot;; file_b=&quot;$2&quot;<br>    na=$(count_lines_in_file &quot;$file_a&quot;)<br>    nb=$(count_lines_in_file &quot;$file_b&quot;)<br>    if [ &quot;$na&quot; -eq 0 ] &amp;&amp; [ &quot;$nb&quot; -eq 0 ]; then<br>        return 0<br>    fi<br>    if [ &quot;$na&quot; -eq &quot;$nb&quot; ]; then<br>        return 0<br>    fi<br>    if [ &quot;$na&quot; -eq 1 ] &amp;&amp; [ &quot;$nb&quot; -gt 1 ]; then<br>        val=$(sed -n &#x27;1p&#x27; &quot;$file_a&quot;)<br>        rm -f &quot;$file_a.tmp&quot;<br>        i=1<br>        while [ &quot;$i&quot; -le &quot;$nb&quot; ]; do<br>            echo &quot;$val&quot; &gt;&gt; &quot;$file_a.tmp&quot;<br>            i=$((i+1))<br>        done<br>        mv &quot;$file_a.tmp&quot; &quot;$file_a&quot;<br>        return 0<br>    fi<br>    if [ &quot;$nb&quot; -eq 1 ] &amp;&amp; [ &quot;$na&quot; -gt 1 ]; then<br>        val=$(sed -n &#x27;1p&#x27; &quot;$file_b&quot;)<br>        rm -f &quot;$file_b.tmp&quot;<br>        i=1<br>        while [ &quot;$i&quot; -le &quot;$na&quot; ]; do<br>            echo &quot;$val&quot; &gt;&gt; &quot;$file_b.tmp&quot;<br>            i=$((i+1))<br>        done<br>        mv &quot;$file_b.tmp&quot; &quot;$file_b&quot;<br>        return 0<br>    fi<br>    echo &quot;错误：端口数量不匹配 (src=$na tgt=$nb)&quot; &gt;&amp;2<br>    cleanup<br>    exit 1<br>&#125;<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">---------- 准备端口文件 ----------</span><br>src_tcp_file=&quot;$TMPDIR/src_tcp&quot;<br>tgt_tcp_file=&quot;$TMPDIR/tgt_tcp&quot;<br>src_udp_file=&quot;$TMPDIR/src_udp&quot;<br>tgt_udp_file=&quot;$TMPDIR/tgt_udp&quot;<br><br>expand_ports &quot;$PORTS_TCP_SOURCE&quot; &gt; &quot;$src_tcp_file&quot;<br>expand_ports &quot;$PORTS_TCP_TARGET&quot; &gt; &quot;$tgt_tcp_file&quot;<br>expand_ports &quot;$PORTS_UDP_SOURCE&quot; &gt; &quot;$src_udp_file&quot;<br>expand_ports &quot;$PORTS_UDP_TARGET&quot; &gt; &quot;$tgt_udp_file&quot;<br><br>normalize_pairs_file &quot;$src_tcp_file&quot; &quot;$tgt_tcp_file&quot;<br>normalize_pairs_file &quot;$src_udp_file&quot; &quot;$tgt_udp_file&quot;<br><br>echo &quot;准备就绪：启动端口映射...&quot;<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">---------- 启动转发函数 ----------</span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">start_tcp srcport target_spec</span><br>start_tcp() &#123;<br>    src=&quot;$1&quot;<br>    target_spec=&quot;$2&quot;<br><br>    set -- $(parse_host_port &quot;$target_spec&quot;)<br>    dst_host=&quot;$1&quot;; dst_port=&quot;$2&quot;; family=&quot;$3&quot;<br><br>    if [ &quot;$family&quot; -eq 6 ]; then<br>        dst=&quot;TCP6:[$dst_host]:$dst_port&quot;<br>    else<br>        dst=&quot;TCP:$dst_host:$dst_port&quot;<br>    fi<br><br>    # 尝试启动 IPv6 dual-stack listener (ipv6only=0)<br>    listen6=&quot;TCP6-LISTEN:$&#123;src&#125;,bind=[::],fork,reuseaddr,ipv6only=0&quot;<br>    eval socat $listen6 &quot;$dst&quot; $OUT_REDIRECT &amp;<br>    pid=$!<br>    sleep 0.05<br>    if kill -0 &quot;$pid&quot; 2&gt;/dev/null; then<br>        # 成功启动 dual-stack listener<br>        PIDS=&quot;$PIDS $pid&quot;<br>    else<br>        # 启动失败（可能内核不允许 ipv6only=0），回退为同时启动 IPv4 和 IPv6 两个 listener<br>        echo &quot;notice: ipv6 dual-stack listener failed on port $src, fallback to split-listen&quot;<br>        # IPv6 listener<br>        listen6b=&quot;TCP6-LISTEN:$&#123;src&#125;,bind=[::],fork,reuseaddr&quot;<br>        eval socat $listen6b &quot;$dst&quot; $OUT_REDIRECT &amp;<br>        PIDS=&quot;$PIDS $!&quot;<br>        # IPv4 listener<br>        listen4=&quot;TCP-LISTEN:$&#123;src&#125;,bind=0.0.0.0,fork,reuseaddr&quot;<br>        eval socat $listen4 &quot;$dst&quot; $OUT_REDIRECT &amp;<br>        PIDS=&quot;$PIDS $!&quot;<br>    fi<br>&#125;<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">start_udp srcport target_spec</span><br>start_udp() &#123;<br>    src=&quot;$1&quot;<br>    target_spec=&quot;$2&quot;<br><br>    set -- $(parse_host_port &quot;$target_spec&quot;)<br>    dst_host=&quot;$1&quot;; dst_port=&quot;$2&quot;; family=&quot;$3&quot;<br><br>    if [ &quot;$family&quot; -eq 6 ]; then<br>        dst=&quot;UDP6:[$dst_host]:$dst_port&quot;<br>    else<br>        dst=&quot;UDP:$dst_host:$dst_port&quot;<br>    fi<br><br>    listen6=&quot;UDP6-LISTEN:$&#123;src&#125;,bind=[::],fork,reuseaddr,ipv6only=0&quot;<br>    eval socat $listen6 &quot;$dst&quot; $OUT_REDIRECT &amp;<br>    pid=$!<br>    sleep 0.05<br>    if kill -0 &quot;$pid&quot; 2&gt;/dev/null; then<br>        PIDS=&quot;$PIDS $pid&quot;<br>    else<br>        # fallback<br>        echo &quot;notice: ipv6 dual-stack UDP listener failed on port $src, fallback to split-listen&quot;<br>        eval socat &quot;UDP6-LISTEN:$&#123;src&#125;,bind=[::],fork,reuseaddr&quot; &quot;$dst&quot; $OUT_REDIRECT &amp;<br>        PIDS=&quot;$PIDS $!&quot;<br>        eval socat &quot;UDP-LISTEN:$&#123;src&#125;,bind=0.0.0.0,fork,reuseaddr&quot; &quot;$dst&quot; $OUT_REDIRECT &amp;<br>        PIDS=&quot;$PIDS $!&quot;<br>    fi<br>&#125;<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">---------- 启动 TCP 映射 ----------</span><br>if [ &quot;$(count_lines_in_file &quot;$src_tcp_file&quot;)&quot; -gt 0 ]; then<br>    # iterate lines in sync without using pipes/subshell<br>    exec 3&lt;&quot;$src_tcp_file&quot;<br>    exec 4&lt;&quot;$tgt_tcp_file&quot;<br>    while :; do<br>        if ! IFS= read -r src_port &lt;&amp;3; then break; fi<br>        if ! IFS= read -r tgt_spec &lt;&amp;4; then break; fi<br>        [ -z &quot;$src_port&quot; ] &amp;&amp; continue<br>        echo &quot;启动 TCP 映射: 0.0.0.0:$&#123;src_port&#125; -&gt; $&#123;tgt_spec&#125;&quot;<br>        start_tcp &quot;$src_port&quot; &quot;$tgt_spec&quot;<br>    done<br>    exec 3&lt;&amp;-<br>    exec 4&lt;&amp;-<br>fi<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">---------- 启动 UDP 映射 ----------</span><br>if [ &quot;$(count_lines_in_file &quot;$src_udp_file&quot;)&quot; -gt 0 ]; then<br>    exec 5&lt;&quot;$src_udp_file&quot;<br>    exec 6&lt;&quot;$tgt_udp_file&quot;<br>    while :; do<br>        if ! IFS= read -r src_port &lt;&amp;5; then break; fi<br>        if ! IFS= read -r tgt_spec &lt;&amp;6; then break; fi<br>        [ -z &quot;$src_port&quot; ] &amp;&amp; continue<br>        echo &quot;启动 UDP 映射: 0.0.0.0:$&#123;src_port&#125; -&gt; $&#123;tgt_spec&#125;&quot;<br>        start_udp &quot;$src_port&quot; &quot;$tgt_spec&quot;<br>    done<br>    exec 5&lt;&amp;-<br>    exec 6&lt;&amp;-<br>fi<br><br><br>echo &quot;所有映射已启动 (PIDs:$PIDS)。按 Ctrl+C 停止并退出。&quot;<br><br>./easytier-core -c shanghai.toml<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">等待所有后台进程</span><br>wait<br><br><br></code></pre></td></tr></table></figure>
+
+
+<h1 id="和其他TUN代理的冲突问题"><a href="#和其他TUN代理的冲突问题" class="headerlink" title="和其他TUN代理的冲突问题"></a>和其他TUN代理的冲突问题</h1><p>如果你开了easytier的tun模式，会和其他基于tun实现的代理软件对冲（在安卓上系统会限制只允许有一个<code>VPN Service</code>导致互挤）；如果你部署到docker容器里的话，会导致无法连上宣告服务器。所以我们要进行如下处理：</p>
+<blockquote>
+<p>假设你的容器已将socks5端口1145转发出来。</p>
+</blockquote>
+<p>在代理软件里新增一个节点，地址是<code>127.0.0.1:1145</code>，设置代理软件的路由规则，发往<code>10.1.0.0/16</code>和<code>172.16.32.0/24</code>的流量通过该节点出站。<br>（安卓不用做这一步）然后设置排除网卡，把<code>docker0</code>排除掉即可。</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Linux/" class="category-chain-item">Linux</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>使用EasyTier异地组网</div>
+      <div>http://blog.coolenoch.ink/2025/10/07/Linux/25-使用EasyTier异地组网-251007/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>CoolestEnoch</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2025年10月7日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2025/10/13/Linux/26-Niri%E6%A1%8C%E9%9D%A2%E5%9C%A8ArchLinux%E4%B8%8A%E7%9A%84%E4%BD%BF%E7%94%A8-251013/" title="Niri桌面在ArchLinux上的使用">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Niri桌面在ArchLinux上的使用</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2025/09/05/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/24-%E6%AC%A3%E5%8D%9ASTKN%E5%BC%80%E5%8F%91%E5%B0%8F%E8%AE%B0/" title="欣博STKN开发小记">
+                        <span class="hidden-mobile">欣博STKN开发小记</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  <script>
+  Fluid.utils.createScript('https://lib.baomitu.com/mermaid/8.14.0/mermaid.min.js', function() {
+    mermaid.initialize({"theme":"default"});
+
+    Fluid.utils.listenDOMLoaded(function() {
+      Fluid.events.registerRefreshCallback(function() {
+        if ('mermaid' in window) {
+          mermaid.init();
+        }
+      });
+    });
+  });
+</script>
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+  
+<script src="/js/effect/GoTop/jquery.min.js"></script>
+<script src="/js/effect/lib/jquery-1.9.1.min.js"></script>
+<script src="/js/effect/lib/jquery-3.6.0.min.js"></script>
+<script src="/js/effect/clickeffect.js"></script>
+<script src="/js/effect/clickWord.js"></script>
+<script src="/js/effect/emojiCursor.js"></script>
+<script src="/js/effect/sakura-less.js"></script>
+<script src="/js/effect/sakana@1.0.8.js"></script>
+<script src="/js/effect/cuteTitle.js"></script>
+<script src="/js/effect/GoTop/szgotop.js"></script>
+<script src="/js/effect/Netease.js"></script>
+<script src="/js/effect/cxkChrome.js"></script>
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

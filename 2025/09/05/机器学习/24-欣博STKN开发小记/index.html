@@ -1,0 +1,722 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
+  <link rel="icon" href="/img/favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="CoolestEnoch">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="总体思路flowchart LR A[您的模型&lt;br&gt;my_model.pt] --&gt;|导出| B[ONNX 模型&lt;br&gt;my_model.onnx] B --&gt;|STKN模型编译器&lt;br&gt;make -C ...&#x2F;tools&#x2F;| C[STKN 模型&lt;br&gt;my_model.param&#x2F;.bin] C --&gt;|部署到板子| D[欣">
+<meta property="og:type" content="article">
+<meta property="og:title" content="欣博STKN开发小记">
+<meta property="og:url" content="http://blog.coolenoch.ink/2025/09/05/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/24-%E6%AC%A3%E5%8D%9ASTKN%E5%BC%80%E5%8F%91%E5%B0%8F%E8%AE%B0/index.html">
+<meta property="og:site_name" content="Enoch的个人小站">
+<meta property="og:description" content="总体思路flowchart LR A[您的模型&lt;br&gt;my_model.pt] --&gt;|导出| B[ONNX 模型&lt;br&gt;my_model.onnx] B --&gt;|STKN模型编译器&lt;br&gt;make -C ...&#x2F;tools&#x2F;| C[STKN 模型&lt;br&gt;my_model.param&#x2F;.bin] C --&gt;|部署到板子| D[欣">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://www.symboltek.com/img/logo.png">
+<meta property="article:published_time" content="2025-09-04T16:00:00.000Z">
+<meta property="article:modified_time" content="2025-09-04T16:00:00.000Z">
+<meta property="article:author" content="CoolestEnoch">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://www.symboltek.com/img/logo.png">
+  
+  
+  
+  <title>欣博STKN开发小记 - Enoch的个人小站</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+  
+<link rel="stylesheet" href="/css/effect/cursor.css">
+<link rel="stylesheet" href="/css/effect/blur.css">
+<link rel="stylesheet" href="/css/effect/head-rotate.css">
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"blog.coolenoch.ink","root":"/","version":"1.9.7","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":true,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":"❡"},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 7.2.0"><link rel="alternate" href="/feed.xml" title="Enoch的个人小站" type="application/rss+xml">
+</head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Enoch的个人小站</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/" target="_self">
+                <i class="iconfont icon-link-fill"></i>
+                <span>友链</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/background/1.jpg') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="欣博STKN开发小记"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2025-09-05 00:00" pubdate>
+          2025年9月5日 凌晨
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          1.9k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          17 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">欣博STKN开发小记</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <p> <img src="http://www.symboltek.com/img/logo.png" srcset="/img/loading.gif" lazyload alt="封面"></p>
+<h1 id="总体思路"><a href="#总体思路" class="headerlink" title="总体思路"></a>总体思路</h1><pre><code class=" mermaid">flowchart LR
+A[您的模型&lt;br&gt;my_model.pt] --&gt;|导出| B[ONNX 模型&lt;br&gt;my_model.onnx]
+B --&gt;|STKN模型编译器&lt;br&gt;make -C .../tools/| C[STKN 模型&lt;br&gt;my_model.param/.bin]
+C --&gt;|部署到板子| D[欣博板卡]
+B --&gt;|Netron 工具| E[可视化检查&lt;br&gt;模型结构]
+subgraph F[PC端仿真测试]
+    direction TB
+    C --&gt;|C-Model/Simulator| G[验证结果正确性]
+end
+F -- 验证成功 --&gt; D
+</code></pre>
+<p><del><em>好吧这图其实是找AI帮画的</em></del></p>
+<h1 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h1><h2 id="开发环境准备"><a href="#开发环境准备" class="headerlink" title="开发环境准备"></a>开发环境准备</h2><p>厂家给的套件是linux版的，建议开发机系统是<code>Ubuntu 20.04</code>。太老了！我直接用Arch！反正都能用！他的工具链都是静态编译的怕啥！！！<br><del><em><strong>I use Arch BTW!</strong></em></del><br><img src="https://strefalinux.pl/wp-content/uploads/2025/01/c52c1544-39d9-48ef-bb22-d62a9ea63f1d.png" srcset="/img/loading.gif" lazyload alt="I use Arch BTW!"></p>
+<p>解压他们厂家给的压缩包，里面有一个riscv64的编译器。把它再解压，然后要对它进行环境变量配置。<br>我是创建了<code>envsetup</code>脚本，<code>source</code>它一下就好了。文件如下：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs shell">export STKN=&quot;$(pwd)&quot; # 解压出来的大压缩包根目录，这个环境变量后面用得到。<br><br>export RISCV_TOOLCHAIN_PATH=&quot;$(pwd)/riscv64-unknown-linux-gnu&quot; # 我把gcc放在上述目录下面了<br>export PATH=&quot;$RISCV_TOOLCHAIN_PATH/bin:$PATH&quot;<br>export CC=riscv64-unknown-linux-gnu-gcc<br>export CXX=riscv64-unknown-linux-gnu-g++<br>export LD=riscv64-unknown-linux-gnu-ld<br>export AR=riscv64-unknown-linux-gnu-ar<br>export RANLIB=riscv64-unknown-linux-gnu-ranlib<br>export STRIP=riscv64-unknown-linux-gnu-strip<br></code></pre></td></tr></table></figure>
+
+
+<h2 id="模型准备"><a href="#模型准备" class="headerlink" title="模型准备"></a>模型准备</h2><h3 id="转换为onnx格式"><a href="#转换为onnx格式" class="headerlink" title="转换为onnx格式"></a>转换为<code>onnx</code>格式</h3><p><em><strong>二更！和甲方交流后得知这个东西其实是支持yolo v8的！所以后面会在v8相关的地方做注明。</strong></em></p>
+<p>首先，你得要有一个已经训练好了的yolo模型。它可以是v5的，也可以是v7的。但我手里的是v8的，用不了（悲），就只能用他们厂家提供的了。</p>
+<p>那么我们就要对模型进行格式转换。欣博他们有自己的一套框架，格式是<code>STKN</code>，由<code>xxx.bin</code>和<code>xxx.param</code>构成。为了兼容性，他们提供了一套工具用来把<code>onnx</code>模型转换成<code>STKN</code>格式的。<del><em>这一步怎么那么像LLVM的IR啊</em></del>。<br>所以第一步我们需要对模型进行格式转换。<br>这个是yolov8&#x2F;v5的转换脚本(因为它们都来自<code>ultralytics</code>库)，完成后会生成同名<code>.onnx</code>文件：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> ultralytics <span class="hljs-keyword">import</span> YOLO<br><br><span class="hljs-comment"># 加载您训练好的模型</span><br>model = YOLO(<span class="hljs-string">&#x27;my_model.pt&#x27;</span>)  <span class="hljs-comment"># 确保路径正确</span><br><br><span class="hljs-comment"># 导出模型为 ONNX 格式</span><br><span class="hljs-comment"># - `opset=12`: ONNX运算符集版本，12是一个常用稳定版本。</span><br><span class="hljs-comment"># - `simplify=True`: 启用简化，会优化ONNX图结构，去除冗余算子，非常重要！</span><br><span class="hljs-comment"># - `dynamic=False`: 设为固定批次大小和输入尺寸，能大幅减少板端推理时的预处理开销，强烈建议开启。</span><br>success = model.export(<span class="hljs-built_in">format</span>=<span class="hljs-string">&#x27;onnx&#x27;</span>, opset=<span class="hljs-number">12</span>, simplify=<span class="hljs-literal">True</span>, dynamic=<span class="hljs-literal">False</span>, imgsz=<span class="hljs-number">640</span>)<br></code></pre></td></tr></table></figure>
+
+
+<h3 id="转换为STKN格式"><a href="#转换为STKN格式" class="headerlink" title="转换为STKN格式"></a>转换为<code>STKN</code>格式</h3><p>以yolov7为例，我们用这个命令转就行：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs shell">make -C $&#123;STKN&#125;/tools \ # 指定 make 执行$&#123;STKN&#125;/tools/Makefile<br>	onnx=$&#123;STKN&#125;/models/yolov7-tiny/yolov7-tiny.onnx \ # 你的ONNX 模型文件<br>	image=$&#123;STKN&#125;/images/COCO_val2017_500 \ # 量化模型时，校准所需的图片目录<br>	mean=0.0,0.0,0.0 \ # 减均值的 BGR 减去的数值<br>	norm=0.00392157,0.00392157,0.00392157 \ # 归一化的 BGR 乘以的数值<br>	shape=640,-1 \ # 量化模型时，将图像的宽度缩放为 640，高度保持宽高比<br>	pixel=RGB \ # 量化模型时，输入图像的格式<br></code></pre></td></tr></table></figure>
+<p>或者用我的这个v8命令：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">make -C $&#123;STKN&#125;/tools onnx=$&#123;STKN&#125;/models/yolov8/yolov8.onnx image=$&#123;STKN&#125;/images/COCO_val2017_500 mean=0.0,0.0,0.0 norm=0.00392157,0.00392157,0.00392157 shape=640,-1 pixel=RGB<br></code></pre></td></tr></table></figure>
+
+
+<h1 id="对v8支持的测试"><a href="#对v8支持的测试" class="headerlink" title="对v8支持的测试"></a>对v8支持的测试</h1><p>既然厂家说是支持v8的，但是文档和案例里都没给出相关代码。我这里记录下我的移植尝试：</p>
+<h2 id="修改MakeFile和cpp文件"><a href="#修改MakeFile和cpp文件" class="headerlink" title="修改MakeFile和cpp文件"></a>修改MakeFile和cpp文件</h2><p>先在<code>models</code>文件夹下创建<code>yolov8</code>文件夹，然后放入转换成<code>onnx</code>格式的<code>yolov8.onnx</code>，并创建如下<code>Makefile</code>:</p>
+<figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs Makefile">dir ?= <span class="hljs-variable">$(<span class="hljs-built_in">abspath</span> $(<span class="hljs-built_in">dir</span> $(<span class="hljs-built_in">lastword</span> <span class="hljs-variable">$(MAKEFILE_LIST)</span>)</span>))<br>stkn ?= <span class="hljs-variable">$(<span class="hljs-built_in">abspath</span> $&#123;<span class="hljs-built_in">dir</span>&#125;/../..)</span><br><br>onnx ?= $&#123;dir&#125;/yolov8.onnx<br>table ?= $&#123;dir&#125;/yolov8.table<br>conf_threshold ?= 0.25<br><br><span class="hljs-section">$&#123;dir&#125;/yolov8.bin: $&#123;onnx&#125; $&#123;table&#125;</span><br>	make -C $&#123;stkn&#125;/tools onnx=$&#123;onnx&#125; table=$&#123;table&#125; conf_threshold=$&#123;conf_threshold&#125;<br><br></code></pre></td></tr></table></figure>
+<p>复制<code>demo/yolov7-tiny.cpp</code> -&gt; <code>demo/yolov8.cpp</code>，并将里面对<code>v7tiny</code>的引用改成<code>v8</code>的。</p>
+<p>这里附上我改的，<del><em>不一定能运行</em></del></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&quot;stkn.h&quot;</span></span><br><br><span class="hljs-keyword">namespace</span> &#123; <span class="hljs-keyword">struct</span> <span class="hljs-title class_">Object</span><br>&#123;<br>    cv::Rect_&lt;<span class="hljs-type">float</span>&gt; rect;<br>    <span class="hljs-type">int</span> label;<br>    <span class="hljs-type">float</span> prob;<br>&#125;; &#125;<br><br><span class="hljs-type">static</span> <span class="hljs-type">const</span> <span class="hljs-type">char</span>* names[] = &#123;<span class="hljs-string">&quot;eye&quot;</span>&#125;;<br><br><span class="hljs-function"><span class="hljs-type">static</span> <span class="hljs-type">void</span> <span class="hljs-title">draw_objects</span><span class="hljs-params">(cv::Mat&amp; img, <span class="hljs-type">const</span> std::vector&lt;Object&gt;&amp; objects)</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-keyword">for</span> (<span class="hljs-type">const</span> Object&amp; obj : objects)<br>    &#123;<br>        cv::<span class="hljs-built_in">rectangle</span>(img, obj.rect, cv::<span class="hljs-built_in">Scalar</span>(<span class="hljs-number">255</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>));<br><br>        <span class="hljs-type">char</span> text[<span class="hljs-number">256</span>];<br>        <span class="hljs-type">int</span> i = <span class="hljs-built_in">snprintf</span>(text, <span class="hljs-built_in">sizeof</span>(text), <span class="hljs-string">&quot;%s %.0f%%&quot;</span>, names[obj.label], obj.prob * <span class="hljs-number">100</span>);<br><br>        <span class="hljs-type">int</span> baseLine = <span class="hljs-number">0</span>;<br>        cv::Size label_size = cv::<span class="hljs-built_in">getTextSize</span>(text, cv::FONT_HERSHEY_SIMPLEX, <span class="hljs-number">0.5</span>, <span class="hljs-number">1</span>, &amp;baseLine);<br><br>        <span class="hljs-type">int</span> x = obj.rect.x;<br>        <span class="hljs-type">int</span> y = obj.rect.y - label_size.height - baseLine;<br>        <span class="hljs-keyword">if</span> (y &lt; <span class="hljs-number">0</span>)<br>            y = <span class="hljs-number">0</span>;<br>        <span class="hljs-keyword">if</span> (x + label_size.width &gt; img.cols)<br>            x = img.cols - label_size.width;<br><br>        cv::<span class="hljs-built_in">rectangle</span>(img, cv::<span class="hljs-built_in">Rect</span>(cv::<span class="hljs-built_in">Point</span>(x, y), cv::<span class="hljs-built_in">Size</span>(label_size.width, label_size.height + baseLine)),<br>                      cv::<span class="hljs-built_in">Scalar</span>(<span class="hljs-number">255</span>, <span class="hljs-number">255</span>, <span class="hljs-number">255</span>), <span class="hljs-number">-1</span>);<br><br>        cv::<span class="hljs-built_in">putText</span>(img, text, cv::<span class="hljs-built_in">Point</span>(x, y + label_size.height),<br>                    cv::FONT_HERSHEY_SIMPLEX, <span class="hljs-number">0.5</span>, cv::<span class="hljs-built_in">Scalar</span>(<span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>));<br>    &#125;<br>&#125;<br><br><span class="hljs-meta">#<span class="hljs-keyword">if</span> USE_GTEST</span><br><span class="hljs-keyword">extern</span> <span class="hljs-string">&quot;C&quot;</span> <span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">test_yolov8</span><span class="hljs-params">(<span class="hljs-type">int</span> argc, <span class="hljs-type">char</span>** argv)</span></span><br><span class="hljs-function"><span class="hljs-meta">#<span class="hljs-keyword">else</span></span></span><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">(<span class="hljs-type">int</span> argc, <span class="hljs-type">char</span>** argv)</span></span><br><span class="hljs-function"><span class="hljs-meta">#<span class="hljs-keyword">endif</span></span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-built_in">tpu_init</span>(<span class="hljs-number">0x20000000</span>, <span class="hljs-number">0x20000000</span>);<br><br>    <span class="hljs-function"><span class="hljs-type">const</span> std::unique_ptr&lt;stkn::Net&gt; <span class="hljs-title">net</span><span class="hljs-params">(stkn::net_create(</span></span><br><span class="hljs-params"><span class="hljs-function">        (std::string(argv[<span class="hljs-number">1</span>]) + <span class="hljs-string">&quot;/yolov8.param&quot;</span>).c_str(),</span></span><br><span class="hljs-params"><span class="hljs-function">        (std::string(argv[<span class="hljs-number">1</span>]) + <span class="hljs-string">&quot;/yolov8.bin&quot;</span>).c_str(),</span></span><br><span class="hljs-params"><span class="hljs-function">        std::vector&lt;<span class="hljs-type">const</span> <span class="hljs-type">char</span>*&gt;&#123;<span class="hljs-string">&quot;259&quot;</span>, <span class="hljs-string">&quot;293&quot;</span>, <span class="hljs-string">&quot;327&quot;</span>&#125;</span></span><br><span class="hljs-params"><span class="hljs-function">    ))</span></span>;<br><br>    stkn::Mat yuv = stkn::<span class="hljs-built_in">imread</span>(argv[<span class="hljs-number">2</span>]);<br><br>    <span class="hljs-type">int</span> t;<br>    <span class="hljs-built_in">tpu_us</span>(&amp;t);<br><br>    <span class="hljs-type">int</span> dst_w = <span class="hljs-number">640</span>;<br>    <span class="hljs-type">int</span> dst_h = <span class="hljs-number">640</span>;<br>    <span class="hljs-keyword">if</span> (yuv.w &lt; yuv.h)<br>        dst_w = dst_h * yuv.w / yuv.h + <span class="hljs-number">16</span> &amp; <span class="hljs-number">-32</span>;<br>    <span class="hljs-keyword">else</span><span class="hljs-comment">/*  */</span><br>        dst_h = dst_w * yuv.h / yuv.w + <span class="hljs-number">16</span> &amp; <span class="hljs-number">-32</span>;<br>    <span class="hljs-type">float</span> scale_w = (<span class="hljs-type">float</span>)yuv.w / dst_w;<br>    <span class="hljs-type">float</span> scale_h = (<span class="hljs-type">float</span>)yuv.h / dst_h;<br><br>    <span class="hljs-function">stkn::Extractor <span class="hljs-title">ex</span><span class="hljs-params">(net.get())</span></span>;<br><span class="hljs-meta">#<span class="hljs-keyword">if</span> YOLOV8_END2END</span><br>    ex.<span class="hljs-built_in">input_nv12</span>(yuv.data, yuv.h, yuv.w, yuv.w, dst_h, dst_w, <span class="hljs-number">1</span>, <span class="hljs-number">0</span>, yuv.w * yuv.h, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">640</span> - dst_h, <span class="hljs-number">640</span> - dst_w);<br><br>    stkn::Mat out;<br>    <span class="hljs-built_in">ex</span>(<span class="hljs-string">&quot;num_dets&quot;</span>, out);<br><br>    <span class="hljs-function">std::vector&lt;Object&gt; <span class="hljs-title">objects</span><span class="hljs-params">(out.h)</span></span>;<br>    Object* obj = objects.<span class="hljs-built_in">data</span>();<br>    <span class="hljs-type">const</span> <span class="hljs-type">float</span>* ptr = out;<br>    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; out.h; ++i) &#123;<br>        obj-&gt;label = *ptr++ + <span class="hljs-number">1</span>; <span class="hljs-comment">// +1 for prepend background class</span><br>        obj-&gt;prob = *ptr++;<br>        obj-&gt;rect.x = *ptr++ * scale_w;<br>        obj-&gt;rect.y = *ptr++ * scale_h;<br>        obj-&gt;rect.width = *ptr++ * scale_w - obj-&gt;rect.x;<br>        obj-&gt;rect.height = *ptr++ * scale_h - obj-&gt;rect.y;<br>        obj++;<br>    &#125;<br><span class="hljs-meta">#<span class="hljs-keyword">else</span></span><br>    ex.<span class="hljs-built_in">input_nv12</span>(yuv.data, yuv.h, yuv.w, yuv.w, dst_h, dst_w, <span class="hljs-number">1</span>, <span class="hljs-number">0</span>);<br><br>    std::vector&lt;stkn::Mat&gt; mats;<br>    <span class="hljs-built_in">ex</span>(mats);<br><br>    <span class="hljs-built_in">fprintf</span>(stderr, <span class="hljs-string">&quot;yolov8 %fms\n&quot;</span>, <span class="hljs-built_in">tpu_us</span>(&amp;t) / <span class="hljs-number">1000.f</span>);<br>    <span class="hljs-built_in">tpu_us</span>(&amp;t);<br><br>    <span class="hljs-type">const</span> <span class="hljs-type">static</span> std::vector&lt;<span class="hljs-type">float</span>&gt; anchors&#123;<span class="hljs-number">12.f</span>, <span class="hljs-number">16.f</span>, <span class="hljs-number">19.f</span>, <span class="hljs-number">36.f</span>, <span class="hljs-number">40.f</span>, <span class="hljs-number">28.f</span>,<br>                                            <span class="hljs-number">36.f</span>, <span class="hljs-number">75.f</span>, <span class="hljs-number">76.f</span>, <span class="hljs-number">55.f</span>, <span class="hljs-number">72.f</span>, <span class="hljs-number">146.f</span>,<br>                                            <span class="hljs-number">142.f</span>, <span class="hljs-number">110.f</span>, <span class="hljs-number">192.f</span>, <span class="hljs-number">243.f</span>, <span class="hljs-number">459.f</span>, <span class="hljs-number">401.f</span>&#125;;<br>    <span class="hljs-type">float</span> score_threshold = <span class="hljs-number">0.25</span>;<br>    <span class="hljs-type">float</span> iou_threshold = <span class="hljs-number">0.45</span>;<br><br>    std::vector&lt;std::unique_ptr&lt;stkn::Object&gt; &gt; picked =<br>        stkn::<span class="hljs-built_in">yolov5_detect</span>(net, mats, <span class="hljs-number">8</span>, anchors, score_threshold, iou_threshold);<br><br>    <span class="hljs-function">std::vector&lt;Object&gt; <span class="hljs-title">objects</span><span class="hljs-params">(picked.size())</span></span>;<br>    Object* obj = objects.<span class="hljs-built_in">data</span>();<br>    <span class="hljs-keyword">for</span> (<span class="hljs-type">const</span> std::unique_ptr&lt;stkn::Object&gt;&amp; src : picked) &#123;<br>        obj-&gt;label = src-&gt;label + <span class="hljs-number">1</span>; <span class="hljs-comment">// +1 for prepend background class</span><br>        obj-&gt;prob = src-&gt;prob;<br>        obj-&gt;rect.x = src-&gt;x0 * scale_w;<br>        obj-&gt;rect.y = src-&gt;y0 * scale_h;<br>        obj-&gt;rect.width = src-&gt;x1 * scale_w - obj-&gt;rect.x;<br>        obj-&gt;rect.height = src-&gt;y1 * scale_h - obj-&gt;rect.y;<br>        obj++;<br>    &#125;<br><span class="hljs-meta">#<span class="hljs-keyword">endif</span></span><br><br>    <span class="hljs-built_in">fprintf</span>(stderr, <span class="hljs-string">&quot;yolov8 %fms\n&quot;</span>, <span class="hljs-built_in">tpu_us</span>(&amp;t) / <span class="hljs-number">1000.f</span>);<br>    <span class="hljs-keyword">for</span> (<span class="hljs-type">const</span> Object&amp; obj : objects)<br>        <span class="hljs-built_in">fprintf</span>(stderr, <span class="hljs-string">&quot;%s %.0f%% %.0f,%.0f %.0fx%.0f\n&quot;</span>, names[obj.label], obj.prob * <span class="hljs-number">100</span>,<br>                obj.rect.x, obj.rect.y, obj.rect.width, obj.rect.height);<br><br>    stkn::Mat bgr = stkn::<span class="hljs-built_in">im2bgr</span>(yuv);<br>    <span class="hljs-function">cv::Mat <span class="hljs-title">img</span><span class="hljs-params">(bgr.h, bgr.w, CV_8UC3, bgr.data)</span></span>;<br>    <span class="hljs-built_in">draw_objects</span>(img, objects);<br>    cv::<span class="hljs-built_in">imwrite</span>(<span class="hljs-string">&quot;yolov8.jpg&quot;</span>, img);<br><br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br><br></code></pre></td></tr></table></figure>
+
+
+<h2 id="添加单元测试"><a href="#添加单元测试" class="headerlink" title="添加单元测试"></a>添加单元测试</h2><p>修改<code>demo/CMakeLists.txt</code>，在最后的<code>stkn_add_example</code>里依葫芦画瓢加上：</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs cmake">stkn_add_example(yolov8 <span class="hljs-variable">$&#123;models&#125;</span>/yolov8 <span class="hljs-variable">$&#123;images&#125;</span>/yolov8.jpg)<br></code></pre></td></tr></table></figure>
+<p>然后在<code>images</code>目录下创建<code>images/yolov8.jpg</code>，从别的地方找一张你的模型适用的图片就行。</p>
+<h1 id="编译主程序"><a href="#编译主程序" class="headerlink" title="编译主程序"></a>编译主程序</h1><p>我这里就编译了<code>C_MODEL</code>模式的，直接进入<code>demo</code>目录然后<code>make</code>就行。<br>完成后会在<code>demo/build-c_model</code>下生成<code>face_detect</code>, <code>plate_detect</code>, <code>yolov5s</code>, <code>yolov7-tiny</code>, <code>yolov7-tiny_float</code>五个可执行文件，我们接下来就可以用它们来进行识别了。<br>按照<code>yolov8</code>移植的做了之后，还会有个<code>yolov8</code>的二进制文件。</p>
+<h1 id="运行识别demo"><a href="#运行识别demo" class="headerlink" title="运行识别demo"></a>运行识别demo</h1><p>我们使用<code>yolov7-tiny</code>来进行识别。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">LD_LIBRARY_PATH=$&#123;STKN&#125;/c_model/lib $&#123;STKN&#125;/demo/build-c_model/yolov7-tiny $&#123;STKN&#125;/models/yolov7-tiny $&#123;STKN&#125;/images/bus.jpg<br></code></pre></td></tr></table></figure>
+<p>在添加<code>LD_LIBRARY_PATH</code>后，给<code>yolov7-tiny</code>这个二进制传递两个参数即可，第一个参数是模型所在文件夹，要包含<code>STKN</code>格式模型的两个文件，第二个参数是你要识别的图片。随后会将识别好带框的图片存在二进制程序所在目录下，和二进制程序同名的jpg。</p>
+<p><code>yolov8</code>的用法和上面的一样。</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" class="category-chain-item">机器学习</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>欣博STKN开发小记</div>
+      <div>http://blog.coolenoch.ink/2025/09/05/机器学习/24-欣博STKN开发小记/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>CoolestEnoch</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2025年9月5日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2025/10/07/Linux/25-%E4%BD%BF%E7%94%A8EasyTier%E5%BC%82%E5%9C%B0%E7%BB%84%E7%BD%91-251007/" title="使用EasyTier异地组网">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">使用EasyTier异地组网</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2025/07/02/Linux/23-%E4%B8%BA%E7%BA%A2%E7%B1%B3AC2100%E7%BC%96%E8%AF%91OpenWRT-250630/" title="为红米AC2100编译OpenWRT">
+                        <span class="hidden-mobile">为红米AC2100编译OpenWRT</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  <script>
+  Fluid.utils.createScript('https://lib.baomitu.com/mermaid/8.14.0/mermaid.min.js', function() {
+    mermaid.initialize({"theme":"default"});
+
+    Fluid.utils.listenDOMLoaded(function() {
+      Fluid.events.registerRefreshCallback(function() {
+        if ('mermaid' in window) {
+          mermaid.init();
+        }
+      });
+    });
+  });
+</script>
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+  
+<script src="/js/effect/GoTop/jquery.min.js"></script>
+<script src="/js/effect/lib/jquery-1.9.1.min.js"></script>
+<script src="/js/effect/lib/jquery-3.6.0.min.js"></script>
+<script src="/js/effect/clickeffect.js"></script>
+<script src="/js/effect/clickWord.js"></script>
+<script src="/js/effect/emojiCursor.js"></script>
+<script src="/js/effect/sakura-less.js"></script>
+<script src="/js/effect/sakana@1.0.8.js"></script>
+<script src="/js/effect/cuteTitle.js"></script>
+<script src="/js/effect/GoTop/szgotop.js"></script>
+<script src="/js/effect/Netease.js"></script>
+<script src="/js/effect/cxkChrome.js"></script>
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
