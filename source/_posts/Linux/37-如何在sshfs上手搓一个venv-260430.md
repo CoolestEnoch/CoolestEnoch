@@ -2,7 +2,6 @@
 title: 如何在sshfs上手搓一个venv
 category: Linux
 date: 2026-04-30 18:00:00
-index_img: https://
 ---
 
 
