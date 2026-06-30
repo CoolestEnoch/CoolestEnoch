@@ -19,13 +19,13 @@
     <meta name="description" content="TL;DR本文记录一次基于官方 discourse_docker + launcher 的 Discourse 内网知识库部署过程。目标不是搭建一个面向公网的论坛，而是把 Discourse 改造成一个适合实验室内部使用的知识库系统：  仅内网访问； 不使用宿主机 80&#x2F;443 端口； 不使用 Nginx 反代； 不配置邮件系统； 管理员预注册实验室账号； 本地 Markdown 文档批">
 <meta property="og:type" content="article">
 <meta property="og:title" content="用discourse搭一个知识库">
-<meta property="og:url" content="http://blog.coolenoch.ink/2026/06/19/Linux/39-%E7%94%A8discourse%E6%90%AD%E4%B8%80%E4%B8%AA%E7%9F%A5%E8%AF%86%E5%BA%93-260619/index.html">
+<meta property="og:url" content="http://blog.coolenoch.ink/2026/06/19/Linux/40-%E7%94%A8discourse%E6%90%AD%E4%B8%80%E4%B8%AA%E7%9F%A5%E8%AF%86%E5%BA%93-260619%201/index.html">
 <meta property="og:site_name" content="Enoch的个人小站">
 <meta property="og:description" content="TL;DR本文记录一次基于官方 discourse_docker + launcher 的 Discourse 内网知识库部署过程。目标不是搭建一个面向公网的论坛，而是把 Discourse 改造成一个适合实验室内部使用的知识库系统：  仅内网访问； 不使用宿主机 80&#x2F;443 端口； 不使用 Nginx 反代； 不配置邮件系统； 管理员预注册实验室账号； 本地 Markdown 文档批">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://www.discourse.org/a/img/logo.svg">
 <meta property="article:published_time" content="2026-06-19T10:00:00.000Z">
-<meta property="article:modified_time" content="2026-06-19T15:32:33.354Z">
+<meta property="article:modified_time" content="2026-06-30T03:22:14.940Z">
 <meta property="article:author" content="CoolestEnoch">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://www.discourse.org/a/img/logo.svg">
@@ -486,6 +486,12 @@
 <figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs yaml"><span class="hljs-attr">HTTP_PROXY:</span> <span class="hljs-string">&quot;http://ip:port&quot;</span><br><span class="hljs-attr">HTTPS_PROXY:</span> <span class="hljs-string">&quot;http://ip:port&quot;</span><br><span class="hljs-attr">http_proxy:</span> <span class="hljs-string">&quot;http://ip:port&quot;</span><br><span class="hljs-attr">https_proxy:</span> <span class="hljs-string">&quot;http://ip:port&quot;</span><br><span class="hljs-attr">NO_PROXY:</span> <span class="hljs-string">&quot;localhost,127.0.0.1,::1,postgres,redis&quot;</span><br><span class="hljs-attr">no_proxy:</span> <span class="hljs-string">&quot;localhost,127.0.0.1,::1,postgres,redis&quot;</span><br></code></pre></td></tr></table></figure>
 
 
+<h1 id="GC"><a href="#GC" class="headerlink" title="GC"></a>GC</h1><h2 id="开启允许永久删除功能"><a href="#开启允许永久删除功能" class="headerlink" title="开启允许永久删除功能"></a>开启允许永久删除功能</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">docker exec app bash -lc &#x27;cd /var/www/discourse &amp;&amp; rails runner &#x27;\&#x27;&#x27;SiteSetting.can_permanently_delete = true; puts &quot;can_permanently_delete=#&#123;SiteSetting.can_permanently_delete&#125;&quot;&#x27;\&#x27;&#x27;&#x27;<br></code></pre></td></tr></table></figure>
+
+
+<h2 id="已删除的图片和资源文件"><a href="#已删除的图片和资源文件" class="headerlink" title="已删除的图片和资源文件"></a>已删除的图片和资源文件</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">docker exec -it app bash -lc &#x27;cd /var/www/discourse &amp;&amp; rake uploads:clean_up&#x27;<br></code></pre></td></tr></table></figure>
+
+
 <h1 id="几个脚本"><a href="#几个脚本" class="headerlink" title="几个脚本"></a>几个脚本</h1><h2 id="批量导入文章"><a href="#批量导入文章" class="headerlink" title="批量导入文章"></a>批量导入文章</h2><blockquote>
 <p>依赖<code>requests</code></p>
 </blockquote>
@@ -539,7 +545,7 @@
   <div class="license-box my-3">
     <div class="license-title">
       <div>用discourse搭一个知识库</div>
-      <div>http://blog.coolenoch.ink/2026/06/19/Linux/39-用discourse搭一个知识库-260619/</div>
+      <div>http://blog.coolenoch.ink/2026/06/19/Linux/40-用discourse搭一个知识库-260619 1/</div>
     </div>
     <div class="license-meta">
       
@@ -582,6 +588,12 @@
                 <div class="post-prevnext my-3">
                   <article class="post-prev col-6">
                     
+                    
+                      <a href="/2026/06/30/Linux/41-Reframe%E8%BF%9C%E7%A8%8B%E6%A1%8C%E9%9D%A2-260630/" title="Reframe远程桌面">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Reframe远程桌面</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
                     
                   </article>
                   <article class="post-next col-6">
