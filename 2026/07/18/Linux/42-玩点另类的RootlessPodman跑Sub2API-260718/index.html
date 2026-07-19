@@ -24,7 +24,7 @@
 <meta property="og:description" content="TL;DR最近看到好几个AI厂提供白嫖活动，那怎么能不上呢！但这样一来，账号多了不好管理。CC Switch只能管本机的，没法管我远程服务器上的，这就很麻烦，看蓝点网用的是Sub2API，我也打算搭一个自用，但不走官方的docker教程，用podman来跑。  为什么不用docker跑？因为之前看到个AI笑话：主人没给coding agent root权限，但coding agent发现他所在账户">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2026-07-18T10:00:00.000Z">
-<meta property="article:modified_time" content="2026-07-19T09:43:16.094Z">
+<meta property="article:modified_time" content="2026-07-19T09:46:51.511Z">
 <meta property="article:author" content="CoolestEnoch">
 <meta name="twitter:card" content="summary_large_image">
   
@@ -359,6 +359,8 @@
 <p>找到实际邮箱，再执行：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs shell">UPDATE users<br>SET password_hash = crypt(<br>    &#x27;这里换成你的新密码&#x27;,<br>    gen_salt(&#x27;bf&#x27;, 10)<br>)<br>WHERE email = &#x27;实际邮箱&#x27;;<br></code></pre></td></tr></table></figure>
 
+
+<h1 id="迁移"><a href="#迁移" class="headerlink" title="迁移"></a>迁移</h1><p>只要把<code>/path/to/sub2api</code>带走，在另一台有podman的机器上直接<code>podman compose -f ./docker-compose.yml pull</code>然后<code>podman compose -f ./docker-compose.yml up -d</code>就行了。十分的简单！</p>
 
                 
               </div>
