@@ -16,23 +16,21 @@
   <meta name="author" content="CoolestEnoch">
   <meta name="keywords" content="">
   
-    <meta name="description" content="TL;DR前两天刚上地铁准备签个证书，说服务器在维护，要下地铁了，说维护好了，有点离谱。这下好，zerossl不给我免费签证书了，不得不换提供商到let&#39;s encrypt。没想到这东西这么简单，比zerossl好玩多了 前置条件把你的your.domain域名解析到你的ip上，放通80端口，安装Python3环境就行。  ⚠注意：截止写本文，不支持签发泛域名证书和ip证书。  开签！装">
+    <meta name="description" content="TL;DR最近看到好几个AI厂提供白嫖活动，那怎么能不上呢！但这样一来，账号多了不好管理。CC Switch只能管本机的，没法管我远程服务器上的，这就很麻烦，看蓝点网用的是Sub2API，我也打算搭一个自用，但不走官方的docker教程，用podman来跑。  为什么不用docker跑？因为之前看到个AI笑话：主人没给coding agent root权限，但coding agent发现他所在账户">
 <meta property="og:type" content="article">
-<meta property="og:title" content="换了个证书提供商">
-<meta property="og:url" content="http://blog.coolenoch.ink/2024/06/30/Linux/17-%E6%8D%A2%E4%BA%86%E4%B8%AA%E8%AF%81%E4%B9%A6%E6%8F%90%E4%BE%9B%E5%95%86-240629/index.html">
+<meta property="og:title" content="玩点另类的，Rootless Podman跑Sub2API">
+<meta property="og:url" content="http://blog.coolenoch.ink/2026/07/18/Linux/42-%E7%8E%A9%E7%82%B9%E5%8F%A6%E7%B1%BB%E7%9A%84RootlessPodman%E8%B7%91Sub2API-260718/index.html">
 <meta property="og:site_name" content="Enoch的个人小站">
-<meta property="og:description" content="TL;DR前两天刚上地铁准备签个证书，说服务器在维护，要下地铁了，说维护好了，有点离谱。这下好，zerossl不给我免费签证书了，不得不换提供商到let&#39;s encrypt。没想到这东西这么简单，比zerossl好玩多了 前置条件把你的your.domain域名解析到你的ip上，放通80端口，安装Python3环境就行。  ⚠注意：截止写本文，不支持签发泛域名证书和ip证书。  开签！装">
+<meta property="og:description" content="TL;DR最近看到好几个AI厂提供白嫖活动，那怎么能不上呢！但这样一来，账号多了不好管理。CC Switch只能管本机的，没法管我远程服务器上的，这就很麻烦，看蓝点网用的是Sub2API，我也打算搭一个自用，但不走官方的docker教程，用podman来跑。  为什么不用docker跑？因为之前看到个AI笑话：主人没给coding agent root权限，但coding agent发现他所在账户">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://letsencrypt.org/images/letsencrypt-logo-horizontal.svg">
-<meta property="article:published_time" content="2024-06-29T16:52:00.000Z">
-<meta property="article:modified_time" content="2026-07-19T09:42:06.464Z">
+<meta property="article:published_time" content="2026-07-18T10:00:00.000Z">
+<meta property="article:modified_time" content="2026-07-19T09:43:16.094Z">
 <meta property="article:author" content="CoolestEnoch">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://letsencrypt.org/images/letsencrypt-logo-horizontal.svg">
   
   
   
-  <title>换了个证书提供商 - Enoch的个人小站</title>
+  <title>玩点另类的，Rootless Podman跑Sub2API - Enoch的个人小站</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -205,7 +203,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="换了个证书提供商"></span>
+            <span id="subtitle" data-typed-text="玩点另类的，Rootless Podman跑Sub2API"></span>
           
         </div>
 
@@ -216,8 +214,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2024-06-30 00:52" pubdate>
-          2024年6月30日 凌晨
+        <time datetime="2026-07-18 18:00" pubdate>
+          2026年7月18日 晚上
         </time>
       </span>
     
@@ -228,7 +226,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          190 字
+          1.1k 字
         
       </span>
     
@@ -239,7 +237,7 @@
         
         
         
-          2 分钟
+          10 分钟
         
       </span>
     
@@ -276,26 +274,91 @@
       <div class="container nopadding-x-md" id="board-ctn">
         <div id="board">
           <article class="post-content mx-auto">
-            <h1 id="seo-header">换了个证书提供商</h1>
+            <h1 id="seo-header">玩点另类的，Rootless Podman跑Sub2API</h1>
             
             
               <div class="markdown-body">
                 
-                <p><img src="https://letsencrypt.org/images/letsencrypt-logo-horizontal.svg" srcset="/img/loading.gif" lazyload alt="封面"></p>
-<h1 id="TL-DR"><a href="#TL-DR" class="headerlink" title="TL;DR"></a>TL;DR</h1><p>前两天刚上地铁准备签个证书，说服务器在维护，要下地铁了，说维护好了，有点离谱。这下好，<code>zerossl</code>不给我免费签证书了，不得不换提供商到<code>let&#39;s encrypt</code>。<del><em>没想到这东西这么简单，比zerossl好玩多了</em></del></p>
-<h1 id="前置条件"><a href="#前置条件" class="headerlink" title="前置条件"></a>前置条件</h1><p>把你的<code>your.domain</code>域名解析到你的ip上，放通80端口，安装Python3环境就行。</p>
+                <h1 id="TL-DR"><a href="#TL-DR" class="headerlink" title="TL;DR"></a>TL;DR</h1><p>最近看到好几个AI厂提供白嫖活动，那怎么能不上呢！但这样一来，账号多了不好管理。CC Switch只能管本机的，没法管我远程服务器上的，这就很麻烦，看蓝点网用的是Sub2API，我也打算搭一个自用，但不走官方的docker教程，用podman来跑。</p>
 <blockquote>
-<p>⚠注意：截止写本文，不支持签发泛域名证书和ip证书。</p>
+<p>为什么不用docker跑？因为之前看到个AI笑话：<br>主人没给coding agent root权限，但coding agent发现他所在账户在<code>docker</code>组里，于是就建了一个容器，把<code>/</code>映射进去开始删东西（</p>
 </blockquote>
-<h1 id="开签！"><a href="#开签！" class="headerlink" title="开签！"></a>开签！</h1><p>装个依赖</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">pip3 install certbot -i https://pypi.tuna.tsinghua.edu.cn/simple<br></code></pre></td></tr></table></figure>
+<p>他的架构是，你电脑提供一个OpenAI或者Anthropic兼容的API入口，然后给不同用户签发一个api key，这样局域网服务器只要把base url写到你电脑上、API key用自己签发的，然后电脑这边在webui里统一管理第三方账号&#x2F;API就行了，这样切换也很方便，只要在webui里操作，完全不用去动服务器上的coding agent配置文件。</p>
+<h1 id="安装Podman"><a href="#安装Podman" class="headerlink" title="安装Podman"></a>安装Podman</h1><p>先安装：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">sudo pacman -S --needed podman podman-compose aardvark-dns crun<br></code></pre></td></tr></table></figure>
 
-<p>正式开签</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">certbot certonly --standalone -d your.domain<br></code></pre></td></tr></table></figure>
 
-<p><em><strong>当然也可以使用TXT记录签泛！域！名！</strong></em><br> <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">certbot certonly --preferred-challenges dns --manual -d *.your.domain<br></code></pre></td></tr></table></figure></p>
-<p> 接下来按照屏幕提示找到证书存放路径就可以拿去用了。
- </p>
+<p>确认安装成功：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell">podman --version<br>podman-compose --version<br></code></pre></td></tr></table></figure>
+
+<p>Rootless Podman 会为当前用户创建独立的用户命名空间。容器里的多个 UID 和 GID，需要通过下面两个文件映射到宿主机上的 subordinate UID&#x2F;GID：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell">/etc/subuid<br>/etc/subgid<br></code></pre></td></tr></table></figure>
+
+
+<h2 id="检查当前用户是否已有映射"><a href="#检查当前用户是否已有映射" class="headerlink" title="检查当前用户是否已有映射"></a>检查当前用户是否已有映射</h2><p>执行：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell">grep &quot;^$&#123;USER&#125;:&quot; /etc/subuid || true<br>grep &quot;^$&#123;USER&#125;:&quot; /etc/subgid || true<br></code></pre></td></tr></table></figure>
+<p>正常情况下会看到类似：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell">yourname:100000:65536<br>yourname:100000:65536<br></code></pre></td></tr></table></figure>
+<p>三段内容分别表示：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">用户名:起始ID:可使用的ID数量<br></code></pre></td></tr></table></figure>
+<p>这样就说明你有映射了，可以跳过这一步</p>
+<h2 id="添加SubUIDs映射"><a href="#添加SubUIDs映射" class="headerlink" title="添加SubUIDs映射"></a>添加SubUIDs映射</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">sudo usermod --add-subuids 100000-165535 --add-subgids 100000-165535 &quot;$USER&quot;<br></code></pre></td></tr></table></figure>
+<p>再次检查：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell">grep &quot;^$&#123;USER&#125;:&quot; /etc/subuid<br>grep &quot;^$&#123;USER&#125;:&quot; /etc/subgid<br></code></pre></td></tr></table></figure>
+<p>然后<strong>注销当前桌面会话并重新登录</strong>。</p>
+<h2 id="验证-Podman-正在-Rootless-模式运行"><a href="#验证-Podman-正在-Rootless-模式运行" class="headerlink" title="验证 Podman 正在 Rootless 模式运行"></a>验证 Podman 正在 Rootless 模式运行</h2><p>重新登录系统后执行：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">podman info --format &#x27;rootless=&#123;&#123;.Host.Security.Rootless&#125;&#125;&#x27;<br></code></pre></td></tr></table></figure>
+<p>正常输出：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">rootless=true<br></code></pre></td></tr></table></figure>
+<p>再运行一个测试容器：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">podman run --rm docker.io/library/alpine:latest id<br></code></pre></td></tr></table></figure>
+<p>正常会输出类似：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">uid=0(root) gid=0(root) groups=0(root)<br></code></pre></td></tr></table></figure>
+<p>这里的 <code>root</code> 只是容器用户命名空间中的 root，并不等于宿主机真正的 UID 0。</p>
+<h1 id="部署Sub2API"><a href="#部署Sub2API" class="headerlink" title="部署Sub2API"></a>部署Sub2API</h1><blockquote>
+<p>本文把Sub2API放在<code>/path/to/sub2api</code>。<br>继续操作即代表你已经<code>mkdir</code>并<code>cd</code>进入此文件夹。</p>
+</blockquote>
+<p>运行Sub2API官方部署脚本，初始化<code>compose</code>配置文件：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">curl -sSL https://raw.githubusercontent.com/Wei-Shaw/sub2api/main/deploy/docker-deploy.sh | bash<br></code></pre></td></tr></table></figure>
+
+<h2 id="修复-Podman-无法解析短镜像名的问题"><a href="#修复-Podman-无法解析短镜像名的问题" class="headerlink" title="修复 Podman 无法解析短镜像名的问题"></a>修复 Podman 无法解析短镜像名的问题</h2><p>Sub2API 的 Compose 文件可能使用下面这些 Docker 风格短镜像名：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs shell">image: redis:8-alpine<br>image: postgres:18-alpine<br>image: weishaw/sub2api:latest<br></code></pre></td></tr></table></figure>
+<p>在没有配置默认镜像仓库的 Podman 环境中，启动时可能出现：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs shell">Error: short-name &quot;redis:8-alpine&quot; did not resolve to an alias<br>Error: short-name &quot;postgres:18-alpine&quot; did not resolve to an alias<br>Error: short-name &quot;weishaw/sub2api:latest&quot; did not resolve to an alias<br></code></pre></td></tr></table></figure>
+<p>这是因为 Podman 无法确定这些镜像应该从哪个注册表拉取。Podman 官方建议尽量使用带注册表域名的完整镜像名，因为短名称可能产生歧义或命名空间冒用风险。</p>
+<p>将镜像名改为完整地址。执行：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">sed -Ei -e &#x27;s#(^[[:space:]]*image:[[:space:]]*)weishaw/sub2api:latest#\1docker.io/weishaw/sub2api:latest#g&#x27; -e &#x27;s#(^[[:space:]]*image:[[:space:]]*)postgres:18-alpine#\1docker.io/library/postgres:18-alpine#g&#x27; -e &#x27;s#(^[[:space:]]*image:[[:space:]]*)redis:8-alpine#\1docker.io/library/redis:8-alpine#g&#x27; docker-compose.yml<br></code></pre></td></tr></table></figure>
+
+
+<h2 id="开始部署和启动"><a href="#开始部署和启动" class="headerlink" title="开始部署和启动"></a>开始部署和启动</h2><p>先拉取镜像：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">podman compose -f ./docker-compose.yml pull<br></code></pre></td></tr></table></figure>
+
+<p>首次启动：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">podman compose -f ./docker-compose.yml up -d<br></code></pre></td></tr></table></figure>
+
+<p>停止容器：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">podman compose -f ./docker-compose.yml down<br></code></pre></td></tr></table></figure>
+
+<p>首次登录需要你的管理员账号和密码。管理员账号是固定的<code>admin@sub2api.local</code>，管理员初始密码可通过这个命令获取：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">podman compose -f ./docker-compose.yml logs sub2api | grep -i &quot;admin password&quot;<br></code></pre></td></tr></table></figure>
+
+
+<h1 id="管理员密码忘了怎么办"><a href="#管理员密码忘了怎么办" class="headerlink" title="管理员密码忘了怎么办"></a>管理员密码忘了怎么办</h1><p>在 <code>docker-compose.yml</code> 所在目录执行：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell">podman exec -it sub2api-postgres \<br>  psql -U sub2api -d sub2api<br></code></pre></td></tr></table></figure>
+<p>进入 PostgreSQL 后，依次执行：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs shell">CREATE EXTENSION IF NOT EXISTS pgcrypto;<br><br>UPDATE users<br>SET password_hash = crypt(<br>    &#x27;这里换成你的新密码&#x27;,<br>    gen_salt(&#x27;bf&#x27;, 10)<br>)<br>WHERE email = &#x27;admin@sub2api.local&#x27;;<br></code></pre></td></tr></table></figure>
+<p>正常应显示：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell">CREATE EXTENSION<br>UPDATE 1<br></code></pre></td></tr></table></figure>
+<p>然后退出：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">\q<br></code></pre></td></tr></table></figure>
+<p>现在直接使用这个登录：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs text">账号：admin@sub2api.local<br>密码：你刚设置的新密码<br></code></pre></td></tr></table></figure>
+<p>不需要重启 Sub2API。</p>
+<p>**如果显示 <code>UPDATE 0</code>**：<br>说明管理员邮箱不是 <code>admin@sub2api.local</code>。重新进入数据库后查询：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">SELECT id, email, role FROM users ORDER BY id;<br></code></pre></td></tr></table></figure>
+<p>找到实际邮箱，再执行：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs shell">UPDATE users<br>SET password_hash = crypt(<br>    &#x27;这里换成你的新密码&#x27;,<br>    gen_salt(&#x27;bf&#x27;, 10)<br>)<br>WHERE email = &#x27;实际邮箱&#x27;;<br></code></pre></td></tr></table></figure>
+
 
                 
               </div>
@@ -334,8 +397,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>换了个证书提供商</div>
-      <div>http://blog.coolenoch.ink/2024/06/30/Linux/17-换了个证书提供商-240629/</div>
+      <div>玩点另类的，Rootless Podman跑Sub2API</div>
+      <div>http://blog.coolenoch.ink/2026/07/18/Linux/42-玩点另类的RootlessPodman跑Sub2API-260718/</div>
     </div>
     <div class="license-meta">
       
@@ -347,7 +410,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2024年6月30日</div>
+          <div>2026年7月18日</div>
         </div>
       
       
@@ -379,18 +442,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2024/09/08/Linux/18-%E6%94%AF%E6%8C%81RSS%E8%AE%A2%E9%98%85%E5%95%A6-240908/" title="支持RSS订阅啦">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">支持RSS订阅啦</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2024/06/20/%E9%BB%98%E8%AE%A4%E5%88%86%E7%B1%BB/16-%E5%8D%9A%E5%AE%A2%E6%90%AC%E5%AE%B6%E5%95%A6-240620/" title="博客搬家啦">
-                        <span class="hidden-mobile">博客搬家啦</span>
+                      <a href="/2026/06/30/Linux/41-Reframe%E8%BF%9C%E7%A8%8B%E6%A1%8C%E9%9D%A2-260630/" title="Reframe远程桌面">
+                        <span class="hidden-mobile">Reframe远程桌面</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>

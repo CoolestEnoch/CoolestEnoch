@@ -25,7 +25,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://picx.zhimg.com/70/v2-5b90d510defed2ed03f044f2d38e6ccd_1440w.avis?source=172ae18b&biz_tag=Post">
 <meta property="article:published_time" content="2024-03-15T10:00:00.000Z">
-<meta property="article:modified_time" content="2026-06-30T03:22:14.937Z">
+<meta property="article:modified_time" content="2026-07-19T09:42:06.465Z">
 <meta property="article:author" content="CoolestEnoch">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://picx.zhimg.com/70/v2-5b90d510defed2ed03f044f2d38e6ccd_1440w.avis?source=172ae18b&biz_tag=Post">
@@ -228,7 +228,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          2.1k 字
+          2.3k 字
         
       </span>
     
@@ -239,7 +239,7 @@
         
         
         
-          18 分钟
+          20 分钟
         
       </span>
     
@@ -389,7 +389,16 @@
 
 
 
-<h1 id="其他的小问题"><a href="#其他的小问题" class="headerlink" title="其他的小问题"></a>其他的小问题</h1><p>办公类软件字体缺失，补全后系统字体变得很奇怪：<br>从Windows分区里把<code>C:\Windows\Fonts</code>文件夹复制到<code>~/.local/share/fonts</code>里，然后创建<code>.config/fontconfig/fonts.conf</code>并写入：</p>
+<h1 id="其他的小问题"><a href="#其他的小问题" class="headerlink" title="其他的小问题"></a>其他的小问题</h1><h2 id="不小心把-etc整个包括子目录全chmod-755了怎么办"><a href="#不小心把-etc整个包括子目录全chmod-755了怎么办" class="headerlink" title="不小心把/etc整个包括子目录全chmod 755了怎么办"></a>不小心把<code>/etc</code>整个包括子目录全chmod 755了怎么办</h2><p>检查权限有问题的文件：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">sudo pacman -Qkk | grep -E &quot;warning:|permissions&quot;<br></code></pre></td></tr></table></figure>
+<p>修复来自官方源的软件：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">pacman -Qqn | sudo pacman -S --overwrite=&#x27;*&#x27; -<br></code></pre></td></tr></table></figure>
+<p>修复来自forign的软件：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">paru -S --rebuild --overwrite=&#x27;*&#x27; $(pacman -Qmq)<br></code></pre></td></tr></table></figure>
+
+
+
+<h2 id="办公类软件字体缺失，补全后系统字体变得很奇怪"><a href="#办公类软件字体缺失，补全后系统字体变得很奇怪" class="headerlink" title="办公类软件字体缺失，补全后系统字体变得很奇怪"></a>办公类软件字体缺失，补全后系统字体变得很奇怪</h2><p>从Windows分区里把<code>C:\Windows\Fonts</code>文件夹复制到<code>~/.local/share/fonts</code>里，然后创建<code>.config/fontconfig/fonts.conf</code>并写入：</p>
 <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-meta">&lt;?xml version=<span class="hljs-string">&quot;1.0&quot;</span>?&gt;</span><br><span class="hljs-meta">&lt;!DOCTYPE <span class="hljs-keyword">fontconfig</span> <span class="hljs-keyword">SYSTEM</span> <span class="hljs-string">&quot;urn:fontconfig:fonts.dtd&quot;</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">fontconfig</span>&gt;</span><br><br>  <span class="hljs-comment">&lt;!-- 强制 monospace 指向你想要的等宽（优先 Sarasa，再 Noto Mono 等） --&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">alias</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">family</span>&gt;</span>monospace<span class="hljs-tag">&lt;/<span class="hljs-name">family</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">prefer</span>&gt;</span><br>      <span class="hljs-tag">&lt;<span class="hljs-name">family</span>&gt;</span>Sarasa Mono SC<span class="hljs-tag">&lt;/<span class="hljs-name">family</span>&gt;</span><br>      <span class="hljs-tag">&lt;<span class="hljs-name">family</span>&gt;</span>Noto Sans<span class="hljs-tag">&lt;/<span class="hljs-name">family</span>&gt;</span><br>      <span class="hljs-tag">&lt;<span class="hljs-name">family</span>&gt;</span>Consolas<span class="hljs-tag">&lt;/<span class="hljs-name">family</span>&gt;</span><br>      <span class="hljs-tag">&lt;<span class="hljs-name">family</span>&gt;</span>Courier New<span class="hljs-tag">&lt;/<span class="hljs-name">family</span>&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">prefer</span>&gt;</span><br>  <span class="hljs-tag">&lt;/<span class="hljs-name">alias</span>&gt;</span><br><br>  <span class="hljs-comment">&lt;!-- 强制 sans-serif 指向系统首选（界面/网页用） --&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">alias</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">family</span>&gt;</span>sans-serif<span class="hljs-tag">&lt;/<span class="hljs-name">family</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">prefer</span>&gt;</span><br>      <span class="hljs-tag">&lt;<span class="hljs-name">family</span>&gt;</span>Noto Sans<span class="hljs-tag">&lt;/<span class="hljs-name">family</span>&gt;</span><br>      <span class="hljs-tag">&lt;<span class="hljs-name">family</span>&gt;</span>Sarasa Mono SC<span class="hljs-tag">&lt;/<span class="hljs-name">family</span>&gt;</span><br>      <span class="hljs-tag">&lt;<span class="hljs-name">family</span>&gt;</span>Noto Sans CJK SC<span class="hljs-tag">&lt;/<span class="hljs-name">family</span>&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">prefer</span>&gt;</span><br>  <span class="hljs-tag">&lt;/<span class="hljs-name">alias</span>&gt;</span><br><br>  <span class="hljs-comment">&lt;!-- 明确告诉 fontconfig：当查找 CJK 字形时，先用 Noto Sans CJK，避免直接回退到 YaHei --&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">match</span> <span class="hljs-attr">target</span>=<span class="hljs-string">&quot;pattern&quot;</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">test</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;lang&quot;</span> <span class="hljs-attr">compare</span>=<span class="hljs-string">&quot;contains&quot;</span>&gt;</span><br>      <span class="hljs-tag">&lt;<span class="hljs-name">string</span>&gt;</span>zh-cn<span class="hljs-tag">&lt;/<span class="hljs-name">string</span>&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">test</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">edit</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;family&quot;</span> <span class="hljs-attr">mode</span>=<span class="hljs-string">&quot;prepend_first&quot;</span>&gt;</span><br>      <span class="hljs-tag">&lt;<span class="hljs-name">string</span>&gt;</span>Sarasa Mono CJK SC<span class="hljs-tag">&lt;/<span class="hljs-name">string</span>&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">edit</span>&gt;</span><br>  <span class="hljs-tag">&lt;/<span class="hljs-name">match</span>&gt;</span><br><br><span class="hljs-tag">&lt;/<span class="hljs-name">fontconfig</span>&gt;</span><br></code></pre></td></tr></table></figure>
 <p>然后创建<code>vim ~/.config/fontconfig/conf.d/10-monospace-western-first.conf</code>并写入：</p>
 <blockquote>
@@ -401,6 +410,9 @@
 <h1 id="好玩的小东西"><a href="#好玩的小东西" class="headerlink" title="好玩的小东西"></a>好玩的小东西</h1><h2 id="NeoVim"><a href="#NeoVim" class="headerlink" title="NeoVim"></a>NeoVim</h2><p>用的是懒人配置文件</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">git clone --depth=1 https://github.com/LazyVim/starter ~/.config/nvim<br></code></pre></td></tr></table></figure>
 
+
+<h2 id="随机化mac地址"><a href="#随机化mac地址" class="headerlink" title="随机化mac地址"></a>随机化mac地址</h2><p>创建并编辑<code>/etc/NetworkManager/conf.d/00-mymodify.conf</code>：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs conf">[device]<br>wifi.scan-rand-mac-address=yes<br><br>[connection]<br># 随机mac地址<br>#wifi.cloned-mac-address=aa:12:34:aa:12:34 # 固定一个mac地址<br>wifi.cloned-mac-address=random # 管你什么网络，每次都随机<br>#wifi.cloned-mac-address=stable # 默认不同网络不同mac，但保持相同网络mac不变<br># 自定义设备名<br>ipv4.dhcp-hostname=CXK<br>ipv6.dhcp-hostname=CXK<br><br>[main]<br>hostname-mode=none<br></code></pre></td></tr></table></figure>
 
                 
               </div>
