@@ -1021,8 +1021,8 @@ links:
     - {
       title: "IcebearのTinyWebsite",
       intro: "Icebear的博客",
-      link: "https://blog.doralab.tech/",
-      avatar: "http://a.doralab.tech/p/BLOG/photo/website_themes_sources/logo.jpg"
+      link: "http://blog.doralab.tech:4000",
+      avatar: "http://blog.doralab.tech:4000/images/xiaogou.png"
     }
     - {
       title: "Quantaunit",

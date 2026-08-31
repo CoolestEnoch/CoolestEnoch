@@ -189,3 +189,7 @@ WHERE email = '实际邮箱';
 
 # 迁移
 只要把`/path/to/sub2api`带走，在另一台有podman的机器上直接`podman compose -f ./docker-compose.yml pull`然后`podman compose -f ./docker-compose.yml up -d`就行了。十分的简单！
+
+
+# 注
+在容器里，要想访问宿主机localhost上的服务的话，地址不是`127.0.0.1`，要用这个域名：`host.containers.internal`
