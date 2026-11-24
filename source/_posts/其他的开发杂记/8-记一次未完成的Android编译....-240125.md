@@ -8,10 +8,11 @@ index_img: https://tse1-mm.cn.bing.net/th/id/OIP-C.PXi-K-Ym4EAqkcjluImyBAHaD-?w=
 
 ![封面](https://tse1-mm.cn.bing.net/th/id/OIP-C.PXi-K-Ym4EAqkcjluImyBAHaD-?w=276&h=180&c=7&r=0&o=5&dpr=1.3&pid=1.7)
 
+# ***⚠️万字长文预警***
+
 
 # 前情提要
 这是一台“过时”的华为平板，搭载高通616处理器，3+16GB存储组合，10.1英尺1920x1200屏幕。
-***⚠️万字长文预警***
 
 
 # 硬件和软件环境

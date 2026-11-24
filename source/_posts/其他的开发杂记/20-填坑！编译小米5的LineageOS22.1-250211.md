@@ -9,9 +9,13 @@ index_img: https://c1.mifile.cn/f/i/16/mi5/index/h-12.jpg
 ![封面](https://c1.mifile.cn/f/i/16/mi5/index/h-12.jpg)
 (封面图源 [小米商城](https://www.mi.com/mi5))
 
+
+# ***⚠️万字长文预警***
+
+
 # 前情提要
 在去年1月25号的时候，我尝试给非官方支持的设备编译LineageOS 20,但却以失败告终。这次，重新尝试一台官方支持的设备，且系统为Lineage 22.1。
-***⚠️万字长文预警***
+
 > 环境配置部分，同上期文章。
 
 

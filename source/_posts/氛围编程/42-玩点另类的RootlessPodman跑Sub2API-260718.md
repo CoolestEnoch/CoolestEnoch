@@ -1,6 +1,6 @@
 ---
 title: 玩点另类的，Rootless Podman跑Sub2API
-category: Linux
+category: 氛围编程
 date: 2026-07-18 18:00:00
 ---
 
