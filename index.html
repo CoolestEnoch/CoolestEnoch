@@ -1,0 +1,927 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
+  <link rel="icon" href="/img/favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="CoolestEnoch">
+  <meta name="keywords" content="">
+  
+    <meta property="og:type" content="website">
+<meta property="og:title" content="Enoch的个人小站">
+<meta property="og:url" content="http://blog.coolenoch.ink/index.html">
+<meta property="og:site_name" content="Enoch的个人小站">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:author" content="CoolestEnoch">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>Enoch的个人小站</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+  
+<link rel="stylesheet" href="/css/effect/cursor.css">
+<link rel="stylesheet" href="/css/effect/blur.css">
+<link rel="stylesheet" href="/css/effect/head-rotate.css">
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"blog.coolenoch.ink","root":"/","version":"1.9.7","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":true,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":"❡"},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 7.2.0"><link rel="alternate" href="/feed.xml" title="Enoch的个人小站" type="application/rss+xml">
+</head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 100vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Enoch的个人小站</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/" target="_self">
+                <i class="iconfont icon-link-fill"></i>
+                <span>友链</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/background/airplane.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="Keep Exploring."></span>
+          
+        </div>
+
+        
+      </div>
+
+      
+        <div class="scroll-down-bar">
+          <i class="iconfont icon-arrowdown"></i>
+        </div>
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      <div class="container nopadding-x-md">
+        <div id="board"
+          style="margin-top: 0">
+          
+          <div class="container">
+            <div class="row">
+              <div class="col-12 col-md-10 m-auto">
+                
+
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h2 class="index-header">
+        
+        <a href="/2026/11/22/Linux/45-PVE%E9%85%8D%E7%BD%AEWiFi%E4%B8%8E%E6%9C%89%E7%BA%BF%E5%8F%8C%E5%87%BA%E5%8F%A3%EF%BC%8C%E5%AE%9E%E7%8E%B0%E8%99%9A%E6%8B%9F%E6%9C%BADHCP%E6%88%96NAT%E4%B8%8A%E7%BD%91-261122/" target="_self">
+          PVE配置WiFi与有线双出口，实现虚拟机DHCP或NAT上网
+        </a>
+      </h2>
+
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/2026/11/22/Linux/45-PVE%E9%85%8D%E7%BD%AEWiFi%E4%B8%8E%E6%9C%89%E7%BA%BF%E5%8F%8C%E5%87%BA%E5%8F%A3%EF%BC%8C%E5%AE%9E%E7%8E%B0%E8%99%9A%E6%8B%9F%E6%9C%BADHCP%E6%88%96NAT%E4%B8%8A%E7%BD%91-261122/" target="_self">
+        <div>
+          ⚠️万字长文预警TL;DR项目需求，需要一个PVE来配测试环境，正好来补全之前没玩过PVE的这块拼图。 需求背景最初安装 PVE 时，电脑通过网线连接到家里的路由器，网络参数如下：    配置项 初始配置    物理网卡 nic0   PVE 管理 IP 192.168.1.14   子网掩码 255.255.255.0   默认网关 192.168.1.1   网络地址 192.168.1.0&
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2026-11-22 18:00" pubdate>
+              2026-11-22
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3 d-flex align-items-center">
+            <i class="iconfont icon-category"></i>
+            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Linux/" class="category-chain-item">Linux</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+          </div>
+        
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h2 class="index-header">
+        
+        <a href="/2026/11/20/Linux/44-Debian%E8%A3%85ReFrame-261120/" target="_self">
+          Debian装reframe
+        </a>
+      </h2>
+
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/2026/11/20/Linux/44-Debian%E8%A3%85ReFrame-261120/" target="_self">
+        <div>
+          TL;DR书接上回，继续在debian上折腾这个直接抓取DRM的远程桌面。 安装依赖并编译Debian 13 上安装编译依赖时，也装上 systemd-dev，这样 Meson 能检测到 systemd 支持。项目默认使用 libvncserver；源码构建方法如下。 12345678sudo apt updatesudo apt install -y git build-essential me
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2026-11-20 18:00" pubdate>
+              2026-11-20
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3 d-flex align-items-center">
+            <i class="iconfont icon-category"></i>
+            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Linux/" class="category-chain-item">Linux</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+          </div>
+        
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h2 class="index-header">
+        
+        <a href="/2026/10/17/%E6%B0%9B%E5%9B%B4%E7%BC%96%E7%A8%8B/43-%E6%8A%8Akiro%E5%8F%8D%E4%BB%A3%E5%87%BA%E6%9D%A5%E7%BB%99CPA%E7%94%A8-261017/" target="_self">
+          把kiro反代出来给CPA用
+        </a>
+      </h2>
+
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/2026/10/17/%E6%B0%9B%E5%9B%B4%E7%BC%96%E7%A8%8B/43-%E6%8A%8Akiro%E5%8F%8D%E4%BB%A3%E5%87%BA%E6%9D%A5%E7%BB%99CPA%E7%94%A8-261017/" target="_self">
+        <div>
+          TL;DR本文做的事情顾名思义，把kiro反代给CPA用。具体架构是，kiro-rs负责和kiro服务器通信并暴露anthropic端口，然后把CPA插到上面。 环境准备kiro废话，搞kiro反代不装kiro那你搞个啥。。 我用的CLI版本，这样提token方便一点。  【Windows设备可以不看】如果你的电脑glibc比较老，可以下载musl静态链接版的kiro。  接下来你可以登录你的账号
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2026-10-17 18:00" pubdate>
+              2026-10-17
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3 d-flex align-items-center">
+            <i class="iconfont icon-category"></i>
+            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E6%B0%9B%E5%9B%B4%E7%BC%96%E7%A8%8B/" class="category-chain-item">氛围编程</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+          </div>
+        
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h2 class="index-header">
+        
+        <a href="/2026/07/18/%E6%B0%9B%E5%9B%B4%E7%BC%96%E7%A8%8B/42-%E7%8E%A9%E7%82%B9%E5%8F%A6%E7%B1%BB%E7%9A%84RootlessPodman%E8%B7%91Sub2API-260718/" target="_self">
+          玩点另类的，Rootless Podman跑Sub2API
+        </a>
+      </h2>
+
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/2026/07/18/%E6%B0%9B%E5%9B%B4%E7%BC%96%E7%A8%8B/42-%E7%8E%A9%E7%82%B9%E5%8F%A6%E7%B1%BB%E7%9A%84RootlessPodman%E8%B7%91Sub2API-260718/" target="_self">
+        <div>
+          TL;DR最近看到好几个AI厂提供白嫖活动，那怎么能不上呢！但这样一来，账号多了不好管理。CC Switch只能管本机的，没法管我远程服务器上的，这就很麻烦，看蓝点网用的是Sub2API，我也打算搭一个自用，但不走官方的docker教程，用podman来跑。  为什么不用docker跑？因为之前看到个AI笑话：主人没给coding agent root权限，但coding agent发现他所在账户
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2026-07-18 18:00" pubdate>
+              2026-07-18
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3 d-flex align-items-center">
+            <i class="iconfont icon-category"></i>
+            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E6%B0%9B%E5%9B%B4%E7%BC%96%E7%A8%8B/" class="category-chain-item">氛围编程</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+          </div>
+        
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h2 class="index-header">
+        
+        <a href="/2026/06/30/Linux/41-ReFrame%E8%BF%9C%E7%A8%8B%E6%A1%8C%E9%9D%A2-260630/" target="_self">
+          Reframe远程桌面
+        </a>
+      </h2>
+
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/2026/06/30/Linux/41-ReFrame%E8%BF%9C%E7%A8%8B%E6%A1%8C%E9%9D%A2-260630/" target="_self">
+        <div>
+          TL;DRKDE Plasma更新到6.7之后，先不说SAM坏了认证不上必须手动加用户，然后krdp对集显要求突然飙升。Rust确实是个很好的方案，但每次都要弹xdg-desktop-portal-kde的授权弹窗，你这叫我怎么远程桌面，甚至连krfb的无人值守模式也要弹这授权，差点再次转投GNOME的时候，遇到了Reframe，这个直接抓取DRM的远程桌面方案！！！  这是开源地址。  开始部署
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2026-06-30 18:00" pubdate>
+              2026-06-30
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3 d-flex align-items-center">
+            <i class="iconfont icon-category"></i>
+            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Linux/" class="category-chain-item">Linux</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+          </div>
+        
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+      <div class="col-12 col-md-4 m-auto index-img">
+        <a href="/2026/06/19/Linux/40-%E7%94%A8discourse%E6%90%AD%E4%B8%80%E4%B8%AA%E7%9F%A5%E8%AF%86%E5%BA%93-260619%201/" target="_self">
+          <img src="https://www.discourse.org/a/img/logo.svg" srcset="/img/loading.gif" lazyload alt="用discourse搭一个知识库">
+        </a>
+      </div>
+    
+    <article class="col-12 col-md-8 mx-auto index-info">
+      <h2 class="index-header">
+        
+        <a href="/2026/06/19/Linux/40-%E7%94%A8discourse%E6%90%AD%E4%B8%80%E4%B8%AA%E7%9F%A5%E8%AF%86%E5%BA%93-260619%201/" target="_self">
+          用discourse搭一个知识库
+        </a>
+      </h2>
+
+      
+      <a class="index-excerpt " href="/2026/06/19/Linux/40-%E7%94%A8discourse%E6%90%AD%E4%B8%80%E4%B8%AA%E7%9F%A5%E8%AF%86%E5%BA%93-260619%201/" target="_self">
+        <div>
+          TL;DR本文记录一次基于官方 discourse_docker + launcher 的 Discourse 内网知识库部署过程。目标不是搭建一个面向公网的论坛，而是把 Discourse 改造成一个适合实验室内部使用的知识库系统：  仅内网访问； 不使用宿主机 80&#x2F;443 端口； 不使用 Nginx 反代； 不配置邮件系统； 管理员预注册实验室账号； 本地 Markdown 文档批
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2026-06-19 18:00" pubdate>
+              2026-06-19
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3 d-flex align-items-center">
+            <i class="iconfont icon-category"></i>
+            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Linux/" class="category-chain-item">Linux</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+          </div>
+        
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h2 class="index-header">
+        
+        <a href="/2026/05/15/%E6%B0%9B%E5%9B%B4%E7%BC%96%E7%A8%8B/39-%E8%AE%A9codex%E5%92%8Cclaude%E4%B8%80%E8%B5%B7%E5%B7%A5%E4%BD%9C-260515/" target="_self">
+          让codex和claude一起工作
+        </a>
+      </h2>
+
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/2026/05/15/%E6%B0%9B%E5%9B%B4%E7%BC%96%E7%A8%8B/39-%E8%AE%A9codex%E5%92%8Cclaude%E4%B8%80%E8%B5%B7%E5%B7%A5%E4%BD%9C-260515/" target="_self">
+        <div>
+          TL;DR ⚠️警告此文章发布已久，内容可能早已变化。在操作前记得多次审查。  安装安装Claude-cli： 1npm install -g @anthropic-ai/claude-code  安装Codex-cli： 1npm install -g @openai/codex@latest   接入DeepSeek 如果你用的是官方API或其他中转站，请参考他们提供的教程。  Claude增
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2026-05-15 18:00" pubdate>
+              2026-05-15
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3 d-flex align-items-center">
+            <i class="iconfont icon-category"></i>
+            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E6%B0%9B%E5%9B%B4%E7%BC%96%E7%A8%8B/" class="category-chain-item">氛围编程</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+          </div>
+        
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h2 class="index-header">
+        
+        <a href="/2026/04/30/Linux/37-%E5%A6%82%E4%BD%95%E5%9C%A8sshfs%E4%B8%8A%E6%89%8B%E6%90%93%E4%B8%80%E4%B8%AAvenv-260430/" target="_self">
+          如何在sshfs上手搓一个venv
+        </a>
+      </h2>
+
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/2026/04/30/Linux/37-%E5%A6%82%E4%BD%95%E5%9C%A8sshfs%E4%B8%8A%E6%89%8B%E6%90%93%E4%B8%80%E4%B8%AAvenv-260430/" target="_self">
+        <div>
+          TL;DR想跑一个基于python 3.8的代码，但算力空闲的服务器没空间了、硬盘大的服务器被大家占满算力，怎么办呢？把硬盘大的那个机器用sshfs挂载到这台服务器上。 开始挂载好吧其实就一句话的事儿： 12# 其中 name@ip 可以换成你的服务器别名sshfs -o follow_symlinks,reconnect,idmap=user name@ip:/path/to/folder ./
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2026-04-30 18:00" pubdate>
+              2026-04-30
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3 d-flex align-items-center">
+            <i class="iconfont icon-category"></i>
+            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Linux/" class="category-chain-item">Linux</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+          </div>
+        
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+      <div class="col-12 col-md-4 m-auto index-img">
+        <a href="/2026/03/02/Linux/36-%E5%BF%AB%E9%80%9F%E5%90%83%E4%B8%8A%E5%A4%A7%E9%BE%99%E8%99%BEOpenClaw-260302/" target="_self">
+          <img src="https://openclaw.ai/favicon.svg" srcset="/img/loading.gif" lazyload alt="快速吃上大龙虾OpenClaw">
+        </a>
+      </div>
+    
+    <article class="col-12 col-md-8 mx-auto index-info">
+      <h2 class="index-header">
+        
+        <a href="/2026/03/02/Linux/36-%E5%BF%AB%E9%80%9F%E5%90%83%E4%B8%8A%E5%A4%A7%E9%BE%99%E8%99%BEOpenClaw-260302/" target="_self">
+          快速吃上大龙虾OpenClaw
+        </a>
+      </h2>
+
+      
+      <a class="index-excerpt " href="/2026/03/02/Linux/36-%E5%BF%AB%E9%80%9F%E5%90%83%E4%B8%8A%E5%A4%A7%E9%BE%99%E8%99%BEOpenClaw-260302/" target="_self">
+        <div>
+          创建容器1docker run -dit --name debian13_openclaw_tun -v $(pwd):/root -v /etc/localtime:/etc/localtime --cap-add=NET_ADMIN --cap-add=NET_RAW --device=/dev/net/tun debian:trixie /bin/bash -c &quot;/root/ru
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2026-03-02 18:00" pubdate>
+              2026-03-02
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3 d-flex align-items-center">
+            <i class="iconfont icon-category"></i>
+            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Android/" class="category-chain-item">Android</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+          </div>
+        
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+      <div class="col-12 col-md-4 m-auto index-img">
+        <a href="/2026/03/01/Android/35-%E7%B1%BB%E5%8E%9F%E7%94%9F%E4%BD%BF%E7%94%A8%E6%8C%87%E5%8C%97-260301/" target="_self">
+          <img src="https://www.gstatic.cn/devrel-devsite/prod/v24b9c6b2afabba7cabce38ea39eb836b143c6716ce4ed7ad9b9ce1142f49221f/androidsource/images/lockup.png" srcset="/img/loading.gif" lazyload alt="类原生使用指北">
+        </a>
+      </div>
+    
+    <article class="col-12 col-md-8 mx-auto index-info">
+      <h2 class="index-header">
+        
+        <a href="/2026/03/01/Android/35-%E7%B1%BB%E5%8E%9F%E7%94%9F%E4%BD%BF%E7%94%A8%E6%8C%87%E5%8C%97-260301/" target="_self">
+          类原生使用指北
+        </a>
+      </h2>
+
+      
+      <a class="index-excerpt " href="/2026/03/01/Android/35-%E7%B1%BB%E5%8E%9F%E7%94%9F%E4%BD%BF%E7%94%A8%E6%8C%87%E5%8C%97-260301/" target="_self">
+        <div>
+          tl;dr以前都是刷机用类原生，现在用买来就是类原生的手机快一年了，总结一下一些可能遇到的坑。但因为现在类原生已经十分完善了，所以又会是一篇大水文 去除通知栏的x和！删除原有的captive portal地址 12adb shell settings delete global captive_portal_https_url  adb shell settings delete global c
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2026-03-01 18:00" pubdate>
+              2026-03-01
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3 d-flex align-items-center">
+            <i class="iconfont icon-category"></i>
+            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Android/" class="category-chain-item">Android</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+          </div>
+        
+        
+      </div>
+    </article>
+  </div>
+
+
+
+  <nav aria-label="navigation">
+    <span class="pagination" id="pagination">
+      <span class="page-number current">1</span><a class="page-number" href="/page/2/#board">2</a><a class="page-number" href="/page/3/#board">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/#board">5</a><a class="extend next" rel="next" href="/page/2/#board"><i class="iconfont icon-arrowright"></i></a>
+    </span>
+  </nav>
+
+
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+  
+<script src="/js/effect/GoTop/jquery.min.js"></script>
+<script src="/js/effect/lib/jquery-1.9.1.min.js"></script>
+<script src="/js/effect/lib/jquery-3.6.0.min.js"></script>
+<script src="/js/effect/clickeffect.js"></script>
+<script src="/js/effect/clickWord.js"></script>
+<script src="/js/effect/emojiCursor.js"></script>
+<script src="/js/effect/sakura-less.js"></script>
+<script src="/js/effect/sakana@1.0.8.js"></script>
+<script src="/js/effect/cuteTitle.js"></script>
+<script src="/js/effect/GoTop/szgotop.js"></script>
+<script src="/js/effect/Netease.js"></script>
+<script src="/js/effect/cxkChrome.js"></script>
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

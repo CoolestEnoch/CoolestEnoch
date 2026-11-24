@@ -1,0 +1,1340 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
+  <link rel="icon" href="/img/favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="CoolestEnoch">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="⚠️万字长文预警TL;DR项目需求，需要一个PVE来配测试环境，正好来补全之前没玩过PVE的这块拼图。 需求背景最初安装 PVE 时，电脑通过网线连接到家里的路由器，网络参数如下：    配置项 初始配置    物理网卡 nic0   PVE 管理 IP 192.168.1.14   子网掩码 255.255.255.0   默认网关 192.168.1.1   网络地址 192.168.1.0&amp;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="PVE配置WiFi与有线双出口，实现虚拟机DHCP或NAT上网">
+<meta property="og:url" content="http://blog.coolenoch.ink/2026/11/22/Linux/45-PVE%E9%85%8D%E7%BD%AEWiFi%E4%B8%8E%E6%9C%89%E7%BA%BF%E5%8F%8C%E5%87%BA%E5%8F%A3%EF%BC%8C%E5%AE%9E%E7%8E%B0%E8%99%9A%E6%8B%9F%E6%9C%BADHCP%E6%88%96NAT%E4%B8%8A%E7%BD%91-261122/index.html">
+<meta property="og:site_name" content="Enoch的个人小站">
+<meta property="og:description" content="⚠️万字长文预警TL;DR项目需求，需要一个PVE来配测试环境，正好来补全之前没玩过PVE的这块拼图。 需求背景最初安装 PVE 时，电脑通过网线连接到家里的路由器，网络参数如下：    配置项 初始配置    物理网卡 nic0   PVE 管理 IP 192.168.1.14   子网掩码 255.255.255.0   默认网关 192.168.1.1   网络地址 192.168.1.0&amp;">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2026-11-22T10:00:00.000Z">
+<meta property="article:modified_time" content="2026-11-24T14:55:53.792Z">
+<meta property="article:author" content="CoolestEnoch">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>PVE配置WiFi与有线双出口，实现虚拟机DHCP或NAT上网 - Enoch的个人小站</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+  
+<link rel="stylesheet" href="/css/effect/cursor.css">
+<link rel="stylesheet" href="/css/effect/blur.css">
+<link rel="stylesheet" href="/css/effect/head-rotate.css">
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"blog.coolenoch.ink","root":"/","version":"1.9.7","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":true,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":"❡"},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 7.2.0"><link rel="alternate" href="/feed.xml" title="Enoch的个人小站" type="application/rss+xml">
+</head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Enoch的个人小站</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/" target="_self">
+                <i class="iconfont icon-link-fill"></i>
+                <span>友链</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/background/1.jpg') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="PVE配置WiFi与有线双出口，实现虚拟机DHCP或NAT上网"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2026-11-22 18:00" pubdate>
+          2026年11月22日 晚上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          4.4k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          37 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">PVE配置WiFi与有线双出口，实现虚拟机DHCP或NAT上网</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="⚠️万字长文预警"><a href="#⚠️万字长文预警" class="headerlink" title="⚠️万字长文预警"></a><em><strong>⚠️万字长文预警</strong></em></h1><h1 id="TL-DR"><a href="#TL-DR" class="headerlink" title="TL;DR"></a>TL;DR</h1><p>项目需求，需要一个PVE来配测试环境，正好来补全之前没玩过PVE的这块拼图。</p>
+<h1 id="需求背景"><a href="#需求背景" class="headerlink" title="需求背景"></a>需求背景</h1><p>最初安装 PVE 时，电脑通过<em><strong>网线</strong></em>连接到家里的路由器，网络参数如下：</p>
+<table>
+<thead>
+<tr>
+<th>配置项</th>
+<th>初始配置</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>物理网卡</td>
+<td>nic0</td>
+</tr>
+<tr>
+<td>PVE 管理 IP</td>
+<td>192.168.1.14</td>
+</tr>
+<tr>
+<td>子网掩码</td>
+<td>255.255.255.0</td>
+</tr>
+<tr>
+<td>默认网关</td>
+<td>192.168.1.1</td>
+</tr>
+<tr>
+<td>网络地址</td>
+<td>192.168.1.0&#x2F;24</td>
+</tr>
+</tbody></table>
+<p>安装完成后，我在 PVE 上安装了 KDE 桌面环境，并创建了几台虚拟机。</p>
+<p>最初，所有虚拟机都通过 PVE 的 <code>vmbr0</code> 网桥连接到物理局域网，可以正常上网。</p>
+<p>后来，我希望实现以下功能：</p>
+<ol>
+<li>PVE 主机可以通过无线网卡连接手机热点上网。</li>
+<li>虚拟机不直接桥接到 Wi-Fi，而是通过 PVE 主机 NAT 上网。</li>
+<li>虚拟机可以自动获取 IP、网关和 DNS，不需要手动配置静态 IP。</li>
+<li>手机热点关闭后，虚拟机可以自动切换到有线网络上网。</li>
+<li>将来更换有线路由器，即使网段从 <code>192.168.1.0/24</code> 变成 <code>10.20.0.0/16</code>，也不需要重新配置虚拟机。</li>
+<li>所有网络配置在 PVE 重启后能够自动恢复。</li>
+</ol>
+<p>最终采用的方案是：</p>
+<p><strong>NetworkManager 管理 Wi-Fi，PVE ifupdown2 管理网桥，dnsmasq 提供 DHCP，iptables 提供 NAT，Linux 路由表负责选择互联网出口。</strong></p>
+<hr>
+<h1 id="为什么不直接把-Wi-Fi-网卡桥接到-vmbr0？"><a href="#为什么不直接把-Wi-Fi-网卡桥接到-vmbr0？" class="headerlink" title="为什么不直接把 Wi-Fi 网卡桥接到 vmbr0？"></a>为什么不直接把 Wi-Fi 网卡桥接到 vmbr0？</h1><p>一开始考虑过将 <code>vmbr0</code> 的物理上级从有线网卡 <code>nic0</code> 改成无线网卡 <code>wlan0</code>。</p>
+<p>但是普通 Wi-Fi 客户端模式并不适合直接作为传统 Linux Bridge 的透明二层上级。</p>
+<p>传统网桥需要透明转发其他设备的 MAC 地址，而常规 Wi-Fi 客户端连接热点时通常采用三地址模式，AP 和客户端不一定支持这种桥接所需的四地址模式。</p>
+<p>因此，更合适的方式是：</p>
+<ul>
+<li>PVE 使用 Wi-Fi 连接手机热点。</li>
+<li>创建独立的虚拟机内部网桥。</li>
+<li>PVE 负责 IP 转发和 NAT。</li>
+<li>虚拟机通过 PVE 访问互联网。</li>
+</ul>
+<p>这样不需要手机热点支持特殊的 Wi-Fi 桥接模式。</p>
+<h1 id="最终网络架构"><a href="#最终网络架构" class="headerlink" title="最终网络架构"></a>最终网络架构</h1><p>规划两个 Linux Bridge：</p>
+<ul>
+<li><code>vmbr0</code>：连接物理有线网卡，负责 PVE 管理网络和有线互联网出口。</li>
+<li><code>vmbr1</code>：不连接物理网卡，专门给虚拟机使用。</li>
+</ul>
+<p>PVE 同时拥有一张无线网卡 <code>wlan0</code>。</p>
+<p>网络拓扑如下：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs text">         手机热点<br>             |<br>             | Wi-Fi<br>             |<br>          wlan0<br>             |<br>    +----------------+<br>    |    PVE 主机     |<br>    |                |<br>    | IP Forwarding  |<br>    | iptables NAT   |<br>    |                |<br>    +----------------+<br>             |<br>           vmbr1<br>        10.77.77.1/24<br>             |<br>    +--------+--------+<br>    |                 |<br>Windows VM         Linux VM<br>DHCP 获取 IP       DHCP 获取 IP<br>10.77.77.x         10.77.77.x<br></code></pre></td></tr></table></figure>
+
+<pre><code class=" mermaid">flowchart TB
+    hotspot[&quot;手机热点&quot;] --&gt;|Wi-Fi| wlan0[&quot;wlan0&quot;]
+    wlan0 --&gt; pve[&quot;PVE 主机&lt;br/&gt;IP Forwarding&lt;br/&gt;iptables NAT&quot;]
+    pve --&gt; vmbr1[&quot;vmbr1&lt;br/&gt;10.77.77.1/24&quot;]
+
+    vmbr1 --&gt; win[&quot;Windows VM&lt;br/&gt;DHCP 获取 IP&lt;br/&gt;10.77.77.x&quot;]
+    vmbr1 --&gt; linux[&quot;Linux VM&lt;br/&gt;DHCP 获取 IP&lt;br/&gt;10.77.77.x&quot;]
+</code></pre>
+
+<p>同时保留原有有线网络：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs text">物理路由器<br>192.168.1.1<br>      |<br>    nic0<br>      |<br>    vmbr0<br>      |<br>   PVE 主机<br>192.168.1.14<br></code></pre></td></tr></table></figure>
+
+<pre><code class=" mermaid">flowchart TB
+    router[&quot;物理路由器&lt;br/&gt;192.168.1.1&quot;] --&gt; nic0[&quot;nic0&quot;]
+    nic0 --&gt; vmbr0[&quot;vmbr0&quot;]
+    vmbr0 --&gt; pve[&quot;PVE 主机&lt;br/&gt;192.168.1.14&quot;]
+</code></pre>
+
+<p>这里需要区分：</p>
+<ul>
+<li><code>vmbr0</code> 和 <code>vmbr1</code> 本身都是 Linux Bridge。</li>
+<li><code>vmbr0</code> 是连接物理局域网的桥接网络。</li>
+<li><code>vmbr1</code> 是虚拟机内部交换网络。</li>
+<li><code>vmbr1</code> 上的虚拟机通过 PVE 的 IP 转发和 NAT 访问外网。</li>
+</ul>
+<hr>
+<h1 id="PVE-网络接口规划"><a href="#PVE-网络接口规划" class="headerlink" title="PVE 网络接口规划"></a>PVE 网络接口规划</h1><p>当前物理网卡设备：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">ip <span class="hljs-built_in">link</span><br></code></pre></td></tr></table></figure>
+
+<p>主要设备：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs text">lo<br>nic0<br>wlan0<br>vmbr0<br></code></pre></td></tr></table></figure>
+
+<p>其中：</p>
+<table>
+<thead>
+<tr>
+<th>设备</th>
+<th>用途</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>nic0</td>
+<td>有线物理网卡</td>
+</tr>
+<tr>
+<td>wlan0</td>
+<td>无线物理网卡</td>
+</tr>
+<tr>
+<td>vmbr0</td>
+<td>有线网络桥接</td>
+</tr>
+<tr>
+<td>vmbr1</td>
+<td>虚拟机内部网络</td>
+</tr>
+<tr>
+<td>lo</td>
+<td>本地回环接口</td>
+</tr>
+</tbody></table>
+<h2 id="NetworkManager配置：防止接管有线网卡"><a href="#NetworkManager配置：防止接管有线网卡" class="headerlink" title="NetworkManager配置：防止接管有线网卡"></a>NetworkManager配置：防止接管有线网卡</h2><p>由于 PVE 使用 ifupdown2 管理网络桥接，而 KDE 使用 NetworkManager 管理无线网络，因此需要防止 NetworkManager 接管 PVE 创建的网桥和虚拟网卡。</p>
+<p>创建配置：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">sudo vim /etc/NetworkManager/conf.d/10-pve-wifi-only.conf<br></code></pre></td></tr></table></figure>
+
+<p>内容：</p>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs ini"><span class="hljs-section">[main]</span><br><span class="hljs-attr">plugins</span>=ifupdown,keyfile<br><br><span class="hljs-section">[ifupdown]</span><br><span class="hljs-attr">managed</span>=<span class="hljs-literal">false</span><br><br><span class="hljs-section">[keyfile]</span><br><span class="hljs-attr">unmanaged-devices</span>=interface-name:nic*<span class="hljs-comment">;interface-name:vmbr*;interface-name:tap*;interface-name:fwbr*;interface-name:fwpr*;interface-name:fwln*;interface-name:veth*</span><br></code></pre></td></tr></table></figure>
+
+<p>这样：</p>
+<ul>
+<li><code>wlan0</code> 由 NetworkManager 管理。</li>
+<li><code>nic0</code>、<code>vmbr0</code>、<code>vmbr1</code> 等由 PVE 网络配置管理。</li>
+</ul>
+<p>通过 KDE 右下角的网络管理器即可连接手机热点。</p>
+<p>检查：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">nmcli device status<br></code></pre></td></tr></table></figure>
+
+<p>预期：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs text">DEVICE  TYPE      STATE       CONNECTION<br>wlan0  wifi      connected   手机热点<br>lo      loopback  connected   lo<br>vmbr0   bridge    unmanaged   --<br>nic0    ethernet  unmanaged   --<br></code></pre></td></tr></table></figure>
+
+<hr>
+<h1 id="配置-vmbr0-和-vmbr1"><a href="#配置-vmbr0-和-vmbr1" class="headerlink" title="配置 vmbr0 和 vmbr1"></a>配置 vmbr0 和 vmbr1</h1><p>PVE 的网络配置文件：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">/etc/network/interfaces<br></code></pre></td></tr></table></figure>
+
+<h2 id="vmbr0：有线网络桥接"><a href="#vmbr0：有线网络桥接" class="headerlink" title="vmbr0：有线网络桥接"></a>vmbr0：有线网络桥接</h2><p>最初安装 PVE 时，vmbr0 使用静态 IP：</p>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs ini">auto vmbr0<br>iface vmbr0 inet static<br>        address 192.168.1.14/24<br>        gateway 192.168.1.1<br>        bridge-ports nic0<br>        bridge-stp off<br>        bridge-fd 0<br></code></pre></td></tr></table></figure>
+
+<p>这也是目前已经验证可正常工作的基础配置。</p>
+<p>如果经常更换上游路由器，可以进一步改为 DHCP：</p>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs ini">auto vmbr0<br>iface vmbr0 inet dhcp<br>        metric 700<br>        bridge-ports nic0<br>        bridge-stp off<br>        bridge-fd 0<br></code></pre></td></tr></table></figure>
+
+<p>这样 PVE 插到不同路由器后，就能自动获得对应的 IP、子网掩码和网关。</p>
+<p>例如：</p>
+<p>原来的路由器：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs text">网络：192.168.1.0/24<br>网关：192.168.1.1<br>PVE：DHCP 自动获取 192.168.1.x<br></code></pre></td></tr></table></figure>
+
+<p>另一台路由器：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs text">网络：10.20.0.0/16<br>网关：由 DHCP 下发<br>PVE：DHCP 自动获取 10.20.x.x<br></code></pre></td></tr></table></figure>
+
+<p>这里的 <code>metric 700</code> 用来设置有线默认路由的优先级，让机器优先走WiFi上网。</p>
+<p>注意：DHCP 路由 metric 的具体应用取决于 DHCP 客户端，需要通过 <code>ip route</code> 验证。修改前应备份配置，并在本机控制台操作。</p>
+<h2 id="vmbr1：创建虚拟机专用内部网桥"><a href="#vmbr1：创建虚拟机专用内部网桥" class="headerlink" title="vmbr1：创建虚拟机专用内部网桥"></a>vmbr1：创建虚拟机专用内部网桥</h2><p>在 <code>/etc/network/interfaces</code> 中增加：</p>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs ini">auto vmbr1<br>iface vmbr1 inet static<br>        address 10.77.77.1/24<br>        bridge-ports none<br>        bridge-stp off<br>        bridge-fd 0<br></code></pre></td></tr></table></figure>
+
+<p>重点：</p>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs ini">bridge-ports none<br></code></pre></td></tr></table></figure>
+
+<p>表示这个网桥不连接任何物理网卡。</p>
+<p><code>10.77.77.1</code> 是 PVE 在虚拟机内部网络中的网关地址。</p>
+<p>以后所有通过 vmbr1 上网的虚拟机，都使用：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs text">默认网关：10.77.77.1<br></code></pre></td></tr></table></figure>
+
+<h2 id="应用配置"><a href="#应用配置" class="headerlink" title="应用配置"></a>应用配置</h2><p>修改之前先备份：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">sudo <span class="hljs-built_in">cp</span> -a /etc/network/interfaces /etc/network/interfaces.bak<br></code></pre></td></tr></table></figure>
+
+<p>应用配置：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">sudo ifreload -a<br></code></pre></td></tr></table></figure>
+
+<p>检查：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">ip -4 addr show vmbr1<br>ip route<br></code></pre></td></tr></table></figure>
+
+<p>预期：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs text">inet 10.77.77.1/24<br></code></pre></td></tr></table></figure>
+
+<p>以及：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs text">10.77.77.0/24 dev vmbr1<br></code></pre></td></tr></table></figure>
+
+<hr>
+<h1 id="配置双出口路由优先级"><a href="#配置双出口路由优先级" class="headerlink" title="配置双出口路由优先级"></a>配置双出口路由优先级</h1><p>目前有两个互联网出口：</p>
+<table>
+<thead>
+<tr>
+<th>网卡</th>
+<th>作用</th>
+<th align="right">路由优先级</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>wlan0</td>
+<td>手机热点</td>
+<td align="right">600</td>
+</tr>
+<tr>
+<td>vmbr0</td>
+<td>有线路由器</td>
+<td align="right">700</td>
+</tr>
+</tbody></table>
+<p>Linux 路由规则中，metric 数值越小，优先级越高。</p>
+<p>因此：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs text">Wi-Fi：600<br>有线：700<br></code></pre></td></tr></table></figure>
+
+<p>当手机热点正常连接时，系统优先通过 wlan0 上网。</p>
+<p>当 Wi-Fi 连接断开，且相应 DHCP 默认路由被移除时，系统可以使用 vmbr0 上的备用默认路由。</p>
+<p>检查：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">ip route<br></code></pre></td></tr></table></figure>
+
+<p>理想状态：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs text">default via &lt;Wi-Fi网关&gt; dev wlan0 metric 600<br>default via &lt;有线网关&gt; dev vmbr0 metric 700<br></code></pre></td></tr></table></figure>
+
+<p>查看实际出口：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">ip route get 1.1.1.1<br></code></pre></td></tr></table></figure>
+
+<p>正常情况下应该显示：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs text">dev wlan0<br></code></pre></td></tr></table></figure>
+
+<p>关闭手机热点后，再次检查应该变成：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs text">dev vmbr0<br></code></pre></td></tr></table></figure>
+
+<p>注意：metric 只能根据路由是否存在以及路由优先级选择出口。若 Wi-Fi 仍然显示连接，但手机热点已经无法访问互联网，单靠 metric 不会自动识别这种故障。需要额外的网络连通性检测机制。</p>
+<hr>
+<h1 id="开启-Linux-IPv4-转发"><a href="#开启-Linux-IPv4-转发" class="headerlink" title="开启 Linux IPv4 转发"></a>开启 Linux IPv4 转发</h1><p>虚拟机使用 vmbr1，而互联网出口可能是 wlan0 或 vmbr0。</p>
+<p>PVE 主机需要允许不同网络接口之间进行 IP 转发。</p>
+<p>立即开启：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">sudo sysctl -w net.ipv4.ip_forward=1<br></code></pre></td></tr></table></figure>
+
+<p>验证：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">sysctl net.ipv4.ip_forward<br></code></pre></td></tr></table></figure>
+
+<p>预期：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs text">net.ipv4.ip_forward = 1<br></code></pre></td></tr></table></figure>
+
+<h2 id="设置永久生效"><a href="#设置永久生效" class="headerlink" title="设置永久生效"></a>设置永久生效</h2><p>创建：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">sudo vim /etc/sysctl.d/99-pve-vm-nat.conf<br></code></pre></td></tr></table></figure>
+
+<p>内容：</p>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs ini"><span class="hljs-attr">net.ipv4.ip_forward</span>=<span class="hljs-number">1</span><br></code></pre></td></tr></table></figure>
+
+<p>应用：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">sudo sysctl --system<br></code></pre></td></tr></table></figure>
+
+<p>这样 PVE 重启后也会启用 IPv4 转发。</p>
+<hr>
+<h1 id="配置-NAT（MASQUERADE）"><a href="#配置-NAT（MASQUERADE）" class="headerlink" title="配置 NAT（MASQUERADE）"></a>配置 NAT（MASQUERADE）</h1><p>这是整个架构最重要的部分，也是本次排查过程中发现的一个关键问题。</p>
+<p>虚拟机使用的是：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs text">10.77.77.0/24<br></code></pre></td></tr></table></figure>
+
+<p>但上游手机热点或有线路由器并不知道这个内部网段。</p>
+<p>因此，需要使用 NAT 把虚拟机的源 IP 转换成 PVE 实际出口网卡的 IP。</p>
+<p><strong>由于有两个可能的互联网出口，所以必须分别为 Wi-Fi 和有线网络配置 NAT 规则。</strong></p>
+<h2 id="无线出口-NAT"><a href="#无线出口-NAT" class="headerlink" title="无线出口 NAT"></a>无线出口 NAT</h2><p>执行：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">sudo iptables -t nat -A POSTROUTING -s 10.77.77.0/24 -o wlan0 -j MASQUERADE<br></code></pre></td></tr></table></figure>
+
+<p>含义：</p>
+<p>当源地址属于 <code>10.77.77.0/24</code>，并且流量需要从 wlan0 出去时，自动执行源地址转换。</p>
+<h2 id="有线出口-NAT"><a href="#有线出口-NAT" class="headerlink" title="有线出口 NAT"></a>有线出口 NAT</h2><p>为了让手机热点关闭后虚拟机仍然可以通过有线网络上网，还必须增加另一条规则：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">sudo iptables -t nat -A POSTROUTING -s 10.77.77.0/24 -o vmbr0 -j MASQUERADE<br></code></pre></td></tr></table></figure>
+
+<p>这条规则非常重要，不能遗漏。</p>
+<p>最终必须有两条 NAT 规则：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs text">10.77.77.0/24 -&gt; wlan0 -&gt; MASQUERADE<br><br>10.77.77.0/24 -&gt; vmbr0 -&gt; MASQUERADE<br></code></pre></td></tr></table></figure>
+
+<p>Linux 根据路由表选择实际出口。</p>
+<p><strong>实际排查中曾经遇到一个问题：</strong></p>
+<p>手机热点连接时，虚拟机可以正常上网；但断开手机热点、只保留有线网络时，PVE 宿主机可以上网，虚拟机却无法上网。</p>
+<p>检查 NAT 规则发现，只有：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs text">MASQUERADE  all  --  *  wlan0<br>10.77.77.0/24  0.0.0.0/0<br></code></pre></td></tr></table></figure>
+
+<p>缺少：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs text">MASQUERADE  all  --  *  vmbr0<br>10.77.77.0/24  0.0.0.0/0<br></code></pre></td></tr></table></figure>
+
+<p>最终执行：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">sudo iptables -t nat -A POSTROUTING -s 10.77.77.0/24 -o vmbr0 -j MASQUERADE<br></code></pre></td></tr></table></figure>
+
+<p>虚拟机立即恢复了有线网络上网能力。</p>
+<p>这也说明：<strong>宿主机能够上网，并不代表虚拟机的 NAT 转发也一定正常。</strong></p>
+<h2 id="避免重复添加规则"><a href="#避免重复添加规则" class="headerlink" title="避免重复添加规则"></a>避免重复添加规则</h2><p>建议使用 <code>-C</code> 先检查规则是否存在，再决定是否添加。</p>
+<p>无线出口：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs bash">sudo iptables -t nat -C POSTROUTING -s 10.77.77.0/24 -o wlan0 -j MASQUERADE<br><br>sudo iptables -t nat -A POSTROUTING -s 10.77.77.0/24 -o wlan0 -j MASQUERADE<br></code></pre></td></tr></table></figure>
+
+<p>有线出口：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs bash">sudo iptables -t nat -C POSTROUTING -s 10.77.77.0/24 -o vmbr0 -j MASQUERADE<br><br>sudo iptables -t nat -A POSTROUTING -s 10.77.77.0/24 -o vmbr0 -j MASQUERADE<br></code></pre></td></tr></table></figure>
+
+<h2 id="检查-NAT-规则"><a href="#检查-NAT-规则" class="headerlink" title="检查 NAT 规则"></a>检查 NAT 规则</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">sudo iptables -t nat -vnL POSTROUTING<br></code></pre></td></tr></table></figure>
+
+<p>预期能够看到两条 MASQUERADE 规则：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs text">MASQUERADE  all  --  *  wlan0<br>10.77.77.0/24  0.0.0.0/0<br><br>MASQUERADE  all  --  *  vmbr0<br>10.77.77.0/24  0.0.0.0/0<br></code></pre></td></tr></table></figure>
+
+<hr>
+<h1 id="配置-dnsmasq，为虚拟机提供-DHCP"><a href="#配置-dnsmasq，为虚拟机提供-DHCP" class="headerlink" title="配置 dnsmasq，为虚拟机提供 DHCP"></a>配置 dnsmasq，为虚拟机提供 DHCP</h1><p>前面创建 vmbr1 后，虚拟机还需要 IP、网关和 DNS。</p>
+<p>如果每台虚拟机都手动配置静态 IP，会比较麻烦。</p>
+<p>因此使用 dnsmasq 提供 DHCP 服务。</p>
+<h2 id="安装-dnsmasq"><a href="#安装-dnsmasq" class="headerlink" title="安装 dnsmasq"></a>安装 dnsmasq</h2><p>执行：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">sudo apt update<br>sudo apt install dnsmasq<br></code></pre></td></tr></table></figure>
+
+<p>在这次环境中，最初只有 <code>dnsmasq-base</code>，没有完整的 <code>dnsmasq.service</code>，安装完整软件包后才获得 systemd 服务。</p>
+<p>安装后先暂停默认服务，完成专用配置后再启用：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">sudo systemctl <span class="hljs-built_in">disable</span> --now dnsmasq<br></code></pre></td></tr></table></figure>
+
+<h2 id="创建专用-DHCP-配置文件"><a href="#创建专用-DHCP-配置文件" class="headerlink" title="创建专用 DHCP 配置文件"></a>创建专用 DHCP 配置文件</h2><p>创建：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">sudo vim /etc/dnsmasq.d/vmbr1.conf<br></code></pre></td></tr></table></figure>
+
+<p>内容：</p>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs ini"><span class="hljs-comment"># 只为虚拟机网桥提供 DHCP</span><br><br><span class="hljs-comment"># 禁用 DNS 服务，只提供 DHCP</span><br><span class="hljs-attr">port</span>=<span class="hljs-number">0</span><br><br><span class="hljs-comment"># 只在 vmbr1 上工作</span><br><span class="hljs-attr">interface</span>=vmbr1<br>bind-dynamic<br><br><span class="hljs-comment"># DHCP 地址池</span><br><span class="hljs-attr">dhcp-range</span>=<span class="hljs-number">10.77</span>.<span class="hljs-number">77.100</span>,<span class="hljs-number">10.77</span>.<span class="hljs-number">77.200</span>,<span class="hljs-number">255.255</span>.<span class="hljs-number">255.0</span>,<span class="hljs-number">12</span>h<br><br><span class="hljs-comment"># 默认网关</span><br><span class="hljs-attr">dhcp-option</span>=option:router,<span class="hljs-number">10.77</span>.<span class="hljs-number">77.1</span><br><br><span class="hljs-comment"># DNS</span><br><span class="hljs-attr">dhcp-option</span>=option:dns-server,<span class="hljs-number">1.1</span>.<span class="hljs-number">1.1</span>,<span class="hljs-number">8.8</span>.<span class="hljs-number">8.8</span><br><br><span class="hljs-comment"># 本网络只有一个 DHCP 服务器</span><br>dhcp-authoritative<br></code></pre></td></tr></table></figure>
+
+<p>几个关键参数：</p>
+<table>
+<thead>
+<tr>
+<th>配置</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>port&#x3D;0</td>
+<td>禁止 dnsmasq 提供 DNS 服务</td>
+</tr>
+<tr>
+<td>interface&#x3D;vmbr1</td>
+<td>只服务虚拟机内部网桥</td>
+</tr>
+<tr>
+<td>bind-dynamic</td>
+<td>支持动态接口出现</td>
+</tr>
+<tr>
+<td>dhcp-range</td>
+<td>指定 DHCP 地址池</td>
+</tr>
+<tr>
+<td>dhcp-option router</td>
+<td>下发默认网关</td>
+</tr>
+<tr>
+<td>dhcp-option dns-server</td>
+<td>下发 DNS 服务器</td>
+</tr>
+<tr>
+<td>dhcp-authoritative</td>
+<td>声明这是当前网络的权威 DHCP 服务器</td>
+</tr>
+</tbody></table>
+<p>这里非常重要：</p>
+<p><code>vmbr1</code> 是隔离网络，因此 dnsmasq 不应该给 vmbr0 或 wlan0 提供 DHCP。</p>
+<p>这样不会干扰家里路由器或者手机热点自身的 DHCP 服务。</p>
+<h2 id="检查配置"><a href="#检查配置" class="headerlink" title="检查配置"></a>检查配置</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">sudo dnsmasq --<span class="hljs-built_in">test</span><br></code></pre></td></tr></table></figure>
+
+<p>预期：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs text">dnsmasq: syntax check OK.<br></code></pre></td></tr></table></figure>
+
+<h2 id="启动-DHCP-服务"><a href="#启动-DHCP-服务" class="headerlink" title="启动 DHCP 服务"></a>启动 DHCP 服务</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">sudo systemctl <span class="hljs-built_in">enable</span> --now dnsmasq<br></code></pre></td></tr></table></figure>
+
+<p>检查：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">systemctl status dnsmasq --no-pager<br></code></pre></td></tr></table></figure>
+
+<p>预期：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs text">Active: active (running)<br></code></pre></td></tr></table></figure>
+
+<p>检查 UDP 67 端口：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">sudo ss -lunp | grep <span class="hljs-string">&#x27;:67 &#x27;</span><br></code></pre></td></tr></table></figure>
+
+<p>检查日志：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">sudo journalctl -u dnsmasq -n 30 --no-pager<br></code></pre></td></tr></table></figure>
+
+<hr>
+<h1 id="Windows-Server-虚拟机配置"><a href="#Windows-Server-虚拟机配置" class="headerlink" title="Windows Server 虚拟机配置"></a>Windows Server 虚拟机配置</h1><p>以 Windows Server 2012（非 R2）为例。</p>
+<p>在 PVE Web 管理页面：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs text">Windows Server<br>    |<br>Hardware<br>    |<br>Network Device<br>    |<br>Edit<br></code></pre></td></tr></table></figure>
+
+<pre><code class=" mermaid">flowchart TB
+    windows[&quot;Windows Server&quot;] --&gt; hardware[&quot;Hardware&quot;]
+    hardware --&gt; network[&quot;Network Device&quot;]
+    network --&gt; edit[&quot;Edit&quot;]
+</code></pre>
+
+<p>将网卡桥接设置为：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs text">Bridge: vmbr1<br><br>Model: VirtIO (paravirtualized)<br></code></pre></td></tr></table></figure>
+
+<p>保留原 MAC 地址即可。</p>
+<h2 id="最初使用静态-IP-测试"><a href="#最初使用静态-IP-测试" class="headerlink" title="最初使用静态 IP 测试"></a>最初使用静态 IP 测试</h2><p>初次测试时，可以手动填写：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs text">IP：       10.77.77.10<br>Mask：     255.255.255.0<br>Gateway：  10.77.77.1<br>DNS：      1.1.1.1<br>备用 DNS： 8.8.8.8<br></code></pre></td></tr></table></figure>
+
+<p>Windows Server 成功通过 IE 打开 Google，说明：</p>
+<ul>
+<li>vmbr1 内部网络正常。</li>
+<li>Windows 可以访问 PVE 网关。</li>
+<li>PVE 的 IPv4 转发正常。</li>
+<li>NAT 地址转换正常。</li>
+<li>手机热点能够提供互联网连接。</li>
+</ul>
+<h2 id="改成-DHCP-自动获取"><a href="#改成-DHCP-自动获取" class="headerlink" title="改成 DHCP 自动获取"></a>改成 DHCP 自动获取</h2><p>在 Windows Server 中按下<code>Win + R</code>，输入：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs text">ncpa.cpl<br></code></pre></td></tr></table></figure>
+
+<p>找到 Ethernet 网卡：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs text">Properties<br>    |<br>Internet Protocol Version 4 (TCP/IPv4)<br></code></pre></td></tr></table></figure>
+
+<pre><code class=" mermaid">flowchart TB
+    properties[&quot;Properties&quot;] --&gt; ipv4[&quot;Internet Protocol Version 4 (TCP/IPv4)&quot;]
+</code></pre>
+
+<p>选择：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs text">Obtain an IP address automatically<br><br>Obtain DNS server address automatically<br></code></pre></td></tr></table></figure>
+
+<p>保存后，以管理员身份打开命令行：</p>
+<figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs cmd"><span class="hljs-built_in">ipconfig</span> /release<br><span class="hljs-built_in">ipconfig</span> /renew<br><span class="hljs-built_in">ipconfig</span> /all<br></code></pre></td></tr></table></figure>
+
+<p>预期获得：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs text">IPv4 Address：10.77.77.100 ~ 10.77.77.200<br><br>Subnet Mask：255.255.255.0<br><br>Default Gateway：10.77.77.1<br><br>DNS Server：1.1.1.1<br>             8.8.8.8<br></code></pre></td></tr></table></figure>
+
+<p>以后新建虚拟机，只需要把网卡连接到 vmbr1，并设置为 DHCP，就可以自动获取网络参数。</p>
+<h2 id="Windows-Server-2012-特别说明"><a href="#Windows-Server-2012-特别说明" class="headerlink" title="Windows Server 2012 特别说明"></a>Windows Server 2012 特别说明</h2><p>Windows Server 2012 非 R2 没有这个命令：</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs powershell"><span class="hljs-built_in">Test-NetConnection</span><br></code></pre></td></tr></table></figure>
+
+<p>因此不能使用这个 PowerShell 命令测试 TCP 443 端口。</p>
+<p>可以使用：</p>
+<figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs cmd"><span class="hljs-built_in">ipconfig</span> /all<br>nslookup www.google.com<br><span class="hljs-built_in">ping</span> <span class="hljs-number">10</span>.<span class="hljs-number">77</span>.<span class="hljs-number">77</span>.<span class="hljs-number">1</span><br><span class="hljs-built_in">ping</span> <span class="hljs-number">1</span>.<span class="hljs-number">1</span>.<span class="hljs-number">1</span>.<span class="hljs-number">1</span><br></code></pre></td></tr></table></figure>
+
+<p>也可以直接使用 IE 打开：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs text">https://www.google.com<br></code></pre></td></tr></table></figure>
+
+<p>本次实际测试中，Windows Server 2012 已经能够通过 IE 正常打开 Google Search，验证了 DHCP + NAT 网络可以正常工作。</p>
+<p>另外，单纯 ping 不通 Google 并不一定说明网络故障，因为某些网络会屏蔽 ICMP。</p>
+<hr>
+<h1 id="实现手机热点和有线网络自动切换"><a href="#实现手机热点和有线网络自动切换" class="headerlink" title="实现手机热点和有线网络自动切换"></a>实现手机热点和有线网络自动切换</h1><p>我们希望达到：</p>
+<table>
+<thead>
+<tr>
+<th>网络情况</th>
+<th>PVE 出口</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>手机热点正常连接</td>
+<td>wlan0</td>
+</tr>
+<tr>
+<td>手机热点断开</td>
+<td>vmbr0</td>
+</tr>
+<tr>
+<td>手机热点重新连接</td>
+<td>wlan0</td>
+</tr>
+<tr>
+<td>更换有线路由器</td>
+<td>vmbr0 自动获取新网络参数</td>
+</tr>
+</tbody></table>
+<p>核心是两条默认路由：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs text">Wi-Fi：metric 600<br><br>有线：metric 700<br></code></pre></td></tr></table></figure>
+
+<p>加上两条对应的 NAT 规则。</p>
+<h2 id="测试无线优先"><a href="#测试无线优先" class="headerlink" title="测试无线优先"></a>测试无线优先</h2><p>查看：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">ip route get 1.1.1.1<br></code></pre></td></tr></table></figure>
+
+<p>预期：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs text">1.1.1.1 via &lt;Wi-Fi网关&gt; dev wlan0<br></code></pre></td></tr></table></figure>
+
+<h2 id="测试有线备用"><a href="#测试有线备用" class="headerlink" title="测试有线备用"></a>测试有线备用</h2><p>断开手机热点连接：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">nmcli connection down <span class="hljs-string">&quot;手机热点连接名称&quot;</span><br></code></pre></td></tr></table></figure>
+
+<p>检查：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">ip route<br>ip route get 1.1.1.1<br></code></pre></td></tr></table></figure>
+
+<p>预期改为：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs text">1.1.1.1 via &lt;有线网关&gt; dev vmbr0<br></code></pre></td></tr></table></figure>
+
+<p>然后测试：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">ping -c 3 1.1.1.1<br>curl -I --max-time 10 https://www.google.com<br></code></pre></td></tr></table></figure>
+
+<p>如果 PVE 主机有线网络正常，再进入 Windows Server，直接使用 IE 打开 Google。</p>
+<p>恢复 Wi-Fi：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">nmcli connection up <span class="hljs-string">&quot;手机热点连接名称&quot;</span><br></code></pre></td></tr></table></figure>
+
+<p>路由应重新优先选择 wlan0。</p>
+<p>注意：这里的自动切换主要适用于 Wi-Fi 断开、无线默认路由被移除的情况。如果无线仍然关联，但无法访问互联网，则需要另外配置网络健康检查，不能仅依赖 metric。</p>
+<hr>
+<h1 id="手机热点更换网段，是否需要修改-NAT？"><a href="#手机热点更换网段，是否需要修改-NAT？" class="headerlink" title="手机热点更换网段，是否需要修改 NAT？"></a>手机热点更换网段，是否需要修改 NAT？</h1><p>不需要。</p>
+<p>这是采用 MASQUERADE 的一个重要优势。</p>
+<p>例如当前手机热点：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs text">无线 IP：10.212.122.211<br><br>网关：10.212.122.199<br><br>网络：10.212.122.0/24<br></code></pre></td></tr></table></figure>
+
+<p>换一个手机热点后：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs text">无线 IP：192.168.43.105<br><br>网关：192.168.43.1<br><br>网络：192.168.43.0/24<br></code></pre></td></tr></table></figure>
+
+<p>原来的 NAT 规则仍然可以使用：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">iptables -t nat -A POSTROUTING -s 10.77.77.0/24 -o wlan0 -j MASQUERADE<br></code></pre></td></tr></table></figure>
+
+<p>因为 MASQUERADE 自动使用出口网卡当前的 IP 地址，不需要写死手机热点的 IP 或网关。</p>
+<p>虚拟机内部网络不变：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs text">10.77.77.0/24<br></code></pre></td></tr></table></figure>
+
+<p>唯一需要注意的是，新的上游网络不能与 vmbr1 的内部网段冲突。</p>
+<hr>
+<h1 id="将-NAT-规则设置为永久生效"><a href="#将-NAT-规则设置为永久生效" class="headerlink" title="将 NAT 规则设置为永久生效"></a>将 NAT 规则设置为永久生效</h1><p>前面通过 iptables 手动添加的规则默认不会自动持久化。</p>
+<p>可以在 <code>/etc/network/interfaces</code> 的 vmbr1 配置段中加入 post-up 和 post-down。</p>
+<p>最终推荐的 vmbr1 配置：</p>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs ini">auto vmbr1<br>iface vmbr1 inet static<br>        address 10.77.77.1/24<br>        bridge-ports none<br>        bridge-stp off<br>        bridge-fd 0<br><br>        <span class="hljs-comment"># Wi-Fi NAT</span><br>        post-up iptables -t nat -C POSTROUTING -s 10.77.77.0/24 -o wlan0 -j MASQUERADE 2&gt;/dev/null || iptables -t nat -A POSTROUTING -s 10.77.77.0/24 -o wlan0 -j MASQUERADE<br><br>        <span class="hljs-comment"># 有线 NAT</span><br>        post-up iptables -t nat -C POSTROUTING -s 10.77.77.0/24 -o vmbr0 -j MASQUERADE 2&gt;/dev/null || iptables -t nat -A POSTROUTING -s 10.77.77.0/24 -o vmbr0 -j MASQUERADE<br><br>        <span class="hljs-comment"># 清理 Wi-Fi NAT</span><br>        post-down iptables -t nat -D POSTROUTING -s 10.77.77.0/24 -o wlan0 -j MASQUERADE 2&gt;/dev/null || true<br><br>        <span class="hljs-comment"># 清理有线 NAT</span><br>        post-down iptables -t nat -D POSTROUTING -s 10.77.77.0/24 -o vmbr0 -j MASQUERADE 2&gt;/dev/null || true<br></code></pre></td></tr></table></figure>
+
+<p>这里使用：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">iptables -C<br></code></pre></td></tr></table></figure>
+
+<p>先检查规则是否存在，避免反复执行网络重载时重复添加。</p>
+<p>IPv4 转发则通过之前的：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs text">/etc/sysctl.d/99-pve-vm-nat.conf<br></code></pre></td></tr></table></figure>
+
+<p>永久开启。</p>
+<p>应用配置：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">sudo ifreload -a<br></code></pre></td></tr></table></figure>
+
+<p>检查：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs bash">sudo iptables -t nat -vnL POSTROUTING<br>sysctl net.ipv4.ip_forward<br>systemctl is-enabled dnsmasq<br>systemctl is-active dnsmasq<br></code></pre></td></tr></table></figure>
+
+<p>注意：</p>
+<ol>
+<li>如果当前已经有手动添加的 NAT 规则，确认使用的规则相同，避免重复添加。</li>
+<li>如果未来启用 PVE Firewall，需要重新检查虚拟机转发和防火墙放行规则。</li>
+<li>上述 post-up 配置需要在实际重启后验证，确认两条 NAT 规则都能自动恢复。</li>
+<li>PVE 的网络管理和防火墙配置可能影响 iptables 规则的生命周期，正式使用前应检查实际启动顺序和规则状态。</li>
+</ol>
+<hr>
+<h1 id="最终网络配置汇总"><a href="#最终网络配置汇总" class="headerlink" title="最终网络配置汇总"></a>最终网络配置汇总</h1><h2 id="PVE-主机网络"><a href="#PVE-主机网络" class="headerlink" title="PVE 主机网络"></a>PVE 主机网络</h2><table>
+<thead>
+<tr>
+<th>设备</th>
+<th>IP 配置</th>
+<th>用途</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>wlan0</td>
+<td>DHCP</td>
+<td>手机热点</td>
+</tr>
+<tr>
+<td>nic0</td>
+<td>manual</td>
+<td>有线物理网卡</td>
+</tr>
+<tr>
+<td>vmbr0</td>
+<td>静态或 DHCP</td>
+<td>有线网络桥接</td>
+</tr>
+<tr>
+<td>vmbr1</td>
+<td>10.77.77.1&#x2F;24</td>
+<td>虚拟机内部网络</td>
+</tr>
+</tbody></table>
+<h2 id="虚拟机网络"><a href="#虚拟机网络" class="headerlink" title="虚拟机网络"></a>虚拟机网络</h2><table>
+<thead>
+<tr>
+<th>配置</th>
+<th>参数</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Bridge</td>
+<td>vmbr1</td>
+</tr>
+<tr>
+<td>IP 获取</td>
+<td>DHCP</td>
+</tr>
+<tr>
+<td>IP 地址范围</td>
+<td>10.77.77.100 - 10.77.77.200</td>
+</tr>
+<tr>
+<td>子网掩码</td>
+<td>255.255.255.0</td>
+</tr>
+<tr>
+<td>网关</td>
+<td>10.77.77.1</td>
+</tr>
+<tr>
+<td>DNS</td>
+<td>1.1.1.1、8.8.8.8</td>
+</tr>
+</tbody></table>
+<h2 id="网络服务"><a href="#网络服务" class="headerlink" title="网络服务"></a>网络服务</h2><table>
+<thead>
+<tr>
+<th>服务</th>
+<th>功能</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>NetworkManager</td>
+<td>管理 Wi-Fi</td>
+</tr>
+<tr>
+<td>ifupdown2</td>
+<td>管理 PVE 网卡和网桥</td>
+</tr>
+<tr>
+<td>dnsmasq</td>
+<td>为虚拟机提供 DHCP</td>
+</tr>
+<tr>
+<td>iptables</td>
+<td>NAT 地址转换</td>
+</tr>
+<tr>
+<td>sysctl</td>
+<td>开启 IPv4 转发</td>
+</tr>
+</tbody></table>
+<hr>
+<h1 id="常用排查命令"><a href="#常用排查命令" class="headerlink" title="常用排查命令"></a>常用排查命令</h1><h2 id="查看所有网络接口"><a href="#查看所有网络接口" class="headerlink" title="查看所有网络接口"></a>查看所有网络接口</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">ip <span class="hljs-built_in">link</span><br>ip -4 addr<br></code></pre></td></tr></table></figure>
+
+<h2 id="查看路由表"><a href="#查看路由表" class="headerlink" title="查看路由表"></a>查看路由表</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">ip route<br></code></pre></td></tr></table></figure>
+
+<h2 id="查看实际互联网出口"><a href="#查看实际互联网出口" class="headerlink" title="查看实际互联网出口"></a>查看实际互联网出口</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">ip route get 1.1.1.1<br></code></pre></td></tr></table></figure>
+
+<h2 id="查看-NAT-规则"><a href="#查看-NAT-规则" class="headerlink" title="查看 NAT 规则"></a>查看 NAT 规则</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">iptables -t nat -vnL POSTROUTING<br></code></pre></td></tr></table></figure>
+
+<h2 id="查看-FORWARD-链"><a href="#查看-FORWARD-链" class="headerlink" title="查看 FORWARD 链"></a>查看 FORWARD 链</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">iptables -vnL FORWARD<br></code></pre></td></tr></table></figure>
+
+<h2 id="查看-IP-转发"><a href="#查看-IP-转发" class="headerlink" title="查看 IP 转发"></a>查看 IP 转发</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">sysctl net.ipv4.ip_forward<br></code></pre></td></tr></table></figure>
+
+<h2 id="查看-DHCP-服务"><a href="#查看-DHCP-服务" class="headerlink" title="查看 DHCP 服务"></a>查看 DHCP 服务</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">systemctl status dnsmasq --no-pager<br></code></pre></td></tr></table></figure>
+
+<h2 id="查看-DHCP-服务日志"><a href="#查看-DHCP-服务日志" class="headerlink" title="查看 DHCP 服务日志"></a>查看 DHCP 服务日志</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">journalctl -u dnsmasq -n 50 --no-pager<br></code></pre></td></tr></table></figure>
+
+<h2 id="查看-DHCP-客户端地址"><a href="#查看-DHCP-客户端地址" class="headerlink" title="查看 DHCP 客户端地址"></a>查看 DHCP 客户端地址</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">ip -4 addr show vmbr0<br></code></pre></td></tr></table></figure>
+
+<h2 id="查看无线连接"><a href="#查看无线连接" class="headerlink" title="查看无线连接"></a>查看无线连接</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">nmcli device status<br>nmcli connection show --active<br></code></pre></td></tr></table></figure>
+
+<h2 id="测试-PVE-互联网访问"><a href="#测试-PVE-互联网访问" class="headerlink" title="测试 PVE 互联网访问"></a>测试 PVE 互联网访问</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">ping -c 3 1.1.1.1<br>curl -I https://www.google.com<br></code></pre></td></tr></table></figure>
+
+<hr>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>整个方案最重要的设计思想是：</p>
+<p><strong>将虚拟机内部网络与物理上游网络解耦。</strong></p>
+<p>虚拟机不再直接依赖手机热点或者某台物理路由器的 IP 网段。</p>
+<p>它们只需要连接到 PVE 的 vmbr1：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs text">虚拟机<br>   |<br> vmbr1<br>   |<br>10.77.77.1<br>   |<br>PVE NAT<br>   |<br>   +---- wlan0（Wi-Fi 优先）<br>   |<br>   +---- vmbr0（有线备用）<br></code></pre></td></tr></table></figure>
+
+<pre><code class=" mermaid">flowchart TB
+    vm[&quot;虚拟机&quot;] --&gt; vmbr1[&quot;vmbr1&quot;] --&gt; gateway[&quot;10.77.77.1&quot;] --&gt; nat[&quot;PVE NAT&quot;]
+    nat --&gt;|Wi-Fi 优先| wlan0[&quot;wlan0&quot;]
+    nat --&gt;|有线备用| vmbr0[&quot;vmbr0&quot;]
+</code></pre>
+
+<p>这样做带来了几个好处：</p>
+<ol>
+<li>手机热点更换网段，不需要修改虚拟机网络。</li>
+<li>更换有线路由器，不需要修改虚拟机网络。</li>
+<li>虚拟机可以通过 DHCP 自动获取 IP。</li>
+<li>多台虚拟机共享 PVE 的互联网出口。</li>
+<li>虚拟机之间仍然可以在 vmbr1 内部直接通信。</li>
+<li>需要直接加入物理局域网的虚拟机，仍然可以单独选择 vmbr0。</li>
+</ol>
+<p>最终，PVE 既可以作为虚拟化平台，也可以承担一个轻量级的虚拟机 NAT 网关角色。</p>
+<p>对于经常更换上游网络、使用手机热点或者需要让多台虚拟机共享互联网连接的环境，这种设计非常实用。</p>
+<p><strong>核心原则：上游网络可以变化，但虚拟机内部网络保持稳定。</strong></p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Linux/" class="category-chain-item">Linux</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>PVE配置WiFi与有线双出口，实现虚拟机DHCP或NAT上网</div>
+      <div>http://blog.coolenoch.ink/2026/11/22/Linux/45-PVE配置WiFi与有线双出口，实现虚拟机DHCP或NAT上网-261122/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>CoolestEnoch</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2026年11月22日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2026/11/20/Linux/44-Debian%E8%A3%85ReFrame-261120/" title="Debian装reframe">
+                        <span class="hidden-mobile">Debian装reframe</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  <script>
+  Fluid.utils.createScript('https://lib.baomitu.com/mermaid/8.14.0/mermaid.min.js', function() {
+    mermaid.initialize({"theme":"default"});
+
+    Fluid.utils.listenDOMLoaded(function() {
+      Fluid.events.registerRefreshCallback(function() {
+        if ('mermaid' in window) {
+          mermaid.init();
+        }
+      });
+    });
+  });
+</script>
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+  
+<script src="/js/effect/GoTop/jquery.min.js"></script>
+<script src="/js/effect/lib/jquery-1.9.1.min.js"></script>
+<script src="/js/effect/lib/jquery-3.6.0.min.js"></script>
+<script src="/js/effect/clickeffect.js"></script>
+<script src="/js/effect/clickWord.js"></script>
+<script src="/js/effect/emojiCursor.js"></script>
+<script src="/js/effect/sakura-less.js"></script>
+<script src="/js/effect/sakana@1.0.8.js"></script>
+<script src="/js/effect/cuteTitle.js"></script>
+<script src="/js/effect/GoTop/szgotop.js"></script>
+<script src="/js/effect/Netease.js"></script>
+<script src="/js/effect/cxkChrome.js"></script>
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

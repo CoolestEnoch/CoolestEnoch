@@ -1,0 +1,748 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
+  <link rel="icon" href="/img/favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="CoolestEnoch">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="(封面图源Niri@Github)  ⚠️注意本博客内容可能存在过时，具体参考我的GitHub仓库Readme。  TL;DR在用了KDE和Gnome后，感觉有点索然无味了。KDE确实好看，但太重了；Gnome的平铺动态多工作区模式确实效率高，但果味十足可自定义性没KDE强。那怎么办呢，不如来看看niri吧！这是一个用RUST写的桌面合成器，我配好桌面+附加组件后开机空载就只吃1.3G内存！老机">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Niri桌面在ArchLinux上的使用">
+<meta property="og:url" content="http://blog.coolenoch.ink/2025/10/13/Linux/26-Niri%E6%A1%8C%E9%9D%A2%E5%9C%A8ArchLinux%E4%B8%8A%E7%9A%84%E4%BD%BF%E7%94%A8-251013/index.html">
+<meta property="og:site_name" content="Enoch的个人小站">
+<meta property="og:description" content="(封面图源Niri@Github)  ⚠️注意本博客内容可能存在过时，具体参考我的GitHub仓库Readme。  TL;DR在用了KDE和Gnome后，感觉有点索然无味了。KDE确实好看，但太重了；Gnome的平铺动态多工作区模式确实效率高，但果味十足可自定义性没KDE强。那怎么办呢，不如来看看niri吧！这是一个用RUST写的桌面合成器，我配好桌面+附加组件后开机空载就只吃1.3G内存！老机">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://yalter.github.io/niri/_assets/icons/logo.svg">
+<meta property="article:published_time" content="2025-10-12T16:00:00.000Z">
+<meta property="article:modified_time" content="2025-10-12T16:00:00.000Z">
+<meta property="article:author" content="CoolestEnoch">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://yalter.github.io/niri/_assets/icons/logo.svg">
+  
+  
+  
+  <title>Niri桌面在ArchLinux上的使用 - Enoch的个人小站</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+  
+<link rel="stylesheet" href="/css/effect/cursor.css">
+<link rel="stylesheet" href="/css/effect/blur.css">
+<link rel="stylesheet" href="/css/effect/head-rotate.css">
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"blog.coolenoch.ink","root":"/","version":"1.9.7","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":true,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":"❡"},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 7.2.0"><link rel="alternate" href="/feed.xml" title="Enoch的个人小站" type="application/rss+xml">
+</head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Enoch的个人小站</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/" target="_self">
+                <i class="iconfont icon-link-fill"></i>
+                <span>友链</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/background/1.jpg') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="Niri桌面在ArchLinux上的使用"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2025-10-13 00:00" pubdate>
+          2025年10月13日 凌晨
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          1.7k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          15 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">Niri桌面在ArchLinux上的使用</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <p> <img src="https://yalter.github.io/niri/_assets/icons/logo.svg" srcset="/img/loading.gif" lazyload alt="封面"><br>(封面图源<a target="_blank" rel="noopener" href="https://github.com/YaLTeR/niri">Niri@Github</a>)</p>
+<blockquote>
+<p>⚠️注意<br>本博客内容可能存在过时，具体参考<a target="_blank" rel="noopener" href="https://github.com/CoolestEnoch/niriconfig/blob/main/readme.md">我的GitHub仓库Readme</a>。</p>
+</blockquote>
+<h1 id="TL-DR"><a href="#TL-DR" class="headerlink" title="TL;DR"></a>TL;DR</h1><p>在用了KDE和Gnome后，感觉有点索然无味了。KDE确实好看，但太重了；Gnome的平铺动态多工作区模式确实效率高，但<del><em>果味十足</em></del>可自定义性没KDE强。那怎么办呢，不如来看看<code>niri</code>吧！这是一个用RUST写的桌面合成器，我配好桌面+附加组件后开机空载就只吃1.3G内存！老机狂喜！</p>
+<p><img src="https://tse2.mm.bing.net/th/id/OIP.HQ5ZqfbrekQ_gZ6TdS4KdgHaH7?cb=12&rs=1&pid=ImgDetMain&o=7&rm=3" srcset="/img/loading.gif" lazyload alt="Rust Meme"></p>
+<p>当然，它<em><strong>只</strong></em>是个<em><strong>桌面合成器</strong></em>而已，<em><strong>仅此而已</strong></em>，所以你还需要自己安装状态栏、锁屏界面、通知栏等一系列工具。</p>
+<h1 id="安装基础软件包"><a href="#安装基础软件包" class="headerlink" title="安装基础软件包"></a>安装基础软件包</h1><p>这是<code>niri</code>桌面和依赖的一些组件。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">sudo pacman -S --needed niri alacritty fuzzel swaylock swayidle waybar swaybg xwayland-satellite swaync<br></code></pre></td></tr></table></figure>
+<p><code>alacritty</code>: 终端命令行。<br><code>fuzzel</code>: 相当于<code>krunner</code>，是个应用程序启动器。<br><code>swaylock</code>: 锁屏界面。<br><code>swayidle</code>: 负责处理超时自动休眠。<br><code>waybar</code>: 系统顶部的状态栏。<br><code>swaybg</code>: 壁纸组件。<br><code>xwayland-satellite</code>: 用于兼容运行旧式<code>X11</code>软件。<br><code>swaync</code>: 通知栏组件。</p>
+<h1 id="安装字体"><a href="#安装字体" class="headerlink" title="安装字体"></a>安装字体</h1><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs shell">sudo pacman -S  noto-fonts-emoji  otf-font-awesome<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">搜索可用的 CaskaydiaCove 相关包，这是waybar配置文件中的首选字体</span><br>paru -Ss caskaydia<br>paru -Ss cascadia<br>paru -S ttf-cascadia-code-nerd<br><br>sudo pacman -S  ttf-fira-code<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">更新字体缓存</span><br>fc-cache -fv<br></code></pre></td></tr></table></figure>
+
+
+<h1 id="添加swaybg作为服务运行"><a href="#添加swaybg作为服务运行" class="headerlink" title="添加swaybg作为服务运行"></a>添加<code>swaybg</code>作为服务运行</h1><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell">systemctl --user add-wants niri.service waybar.service<br>systemctl --user add-wants niri.service swaybg.service<br></code></pre></td></tr></table></figure>
+
+
+<h1 id="添加配置文件"><a href="#添加配置文件" class="headerlink" title="添加配置文件"></a>添加配置文件</h1><p>将我的仓库克隆下来，运行<code>deploy.sh</code>即可。</p>
+<blockquote>
+<p>⚠️注<br>如您使用的是我的配置文件，均包含后文所述修改和问题的解决方案，并且自动化部署脚本<code>deploy.sh</code>都会帮你去做好，您只需手动安装对应的软件包即可。</p>
+</blockquote>
+<h1 id="鼠标指针"><a href="#鼠标指针" class="headerlink" title="鼠标指针"></a>鼠标指针</h1><p>修改<code>deploy.sh</code>中<code>THEME_CURSOR</code>和<code>THEME_CURSOR_SIZE</code>两个变量的值，第一个设置成你的主题名，第二个设置成大小（默认是24），改完运行<code>deploy.sh</code>可动态应用指针修改。如果有些软件（如vscode）没能更改过来，把软件关了重启即可。</p>
+<p>主题名可在<code>~/.icons</code>里找到，这里面每个文件夹名都是主题名。主题可以在KDE设置里直接下载，或者用浏览器下载好了解压进去。</p>
+<h1 id="状态栏"><a href="#状态栏" class="headerlink" title="状态栏"></a>状态栏</h1><p>我采用的是<code>waybar</code>，配置文件见<code>dotconfig/waybar/config.jsonc</code>和<code>dotconfig/waybar/style.css</code>。我是基于<a target="_blank" rel="noopener" href="https://github.com/woioeow/hyprland-dotfiles">woioeow&#x2F;hyprland-dotfiles GitHub仓库</a>二改的，所以和他的样子大差不差，但也有些不同。做了修改后记得运行<code>deploy.sh</code>更新配置。<br>详细配置教程可看<a target="_blank" rel="noopener" href="https://github.com/Alexays/Waybar/wiki">官方文档</a>。</p>
+<h2 id="配置文件结构"><a href="#配置文件结构" class="headerlink" title="配置文件结构"></a>配置文件结构</h2><p>前面三个节点<code>&quot;modules-left&quot;</code>、<code>&quot;modules-center&quot;</code>、<code>&quot;modules-right&quot;</code>用于声明左中右三个方位的内容，后面就是对每个节点的详细配置。</p>
+<h2 id="状态栏天气"><a href="#状态栏天气" class="headerlink" title="状态栏天气"></a>状态栏天气</h2><p>你需要添加<code>dotconfig/waybar/weather.sh</code>这个脚本，保证脚本最后返回值是你的天气内容。比如<code>广州 晴 11.4-5.14°C</code>，它会显示在屏幕右上角通知和时间图标的中间。默认触发查询间隔是<code>1小时</code>，你可以修改<code>dotconfig/waybar/config.jsonc</code>进行修改，位于<code>&quot;custom/weather&quot;</code>节点。</p>
+<h2 id="蓝牙控制"><a href="#蓝牙控制" class="headerlink" title="蓝牙控制"></a>蓝牙控制</h2><p>我采用的是<code>bluetoothctl</code>进行命令管理操作，使用<code>blueman</code>作为界面前端，你需要保证安装了这两个包。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">sudo pacman -S bluez-utils blueman<br></code></pre></td></tr></table></figure>
+
+<h2 id="ZRAMSWAP监控"><a href="#ZRAMSWAP监控" class="headerlink" title="ZRAMSWAP监控"></a><code>ZRAMSWAP</code>监控</h2><p>我的电脑配置了<a target="_blank" rel="noopener" href="https://wiki.archlinux.org/title/Zram#Using_zramswap"><code>ZRAMSWAP</code></a>，想要在状态栏监视其用量状态。<br>在<code>dotconfig/waybar/config.jsonc</code>里添加节点<code>&quot;custom/zramswap&quot;</code>即可。</p>
+<h1 id="系统壁纸和锁屏配置"><a href="#系统壁纸和锁屏配置" class="headerlink" title="系统壁纸和锁屏配置"></a>系统壁纸和锁屏配置</h1><h2 id="系统壁纸"><a href="#系统壁纸" class="headerlink" title="系统壁纸"></a>系统壁纸</h2><p>分为桌面壁纸和锁屏壁纸，默认壁纸位置是：<br>桌面壁纸（或者修改我的配置文件仓库里<code>dotfiles/systemd/user/swaybg.service</code>，然后重新运行<code>deploy.sh</code>即可刷新）：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">~/Pictures/wallpaper/wallpaper_desktop.png<br></code></pre></td></tr></table></figure>
+<p>锁屏壁纸（或者修改我的配置文件仓库里<code>dotconfig/swaylock/config</code>，然后重新运行<code>deploy.sh</code>即可刷新）：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">~/Pictures/wallpaper/wallpaper_lock.png<br></code></pre></td></tr></table></figure>
+<h2 id="锁屏配置"><a href="#锁屏配置" class="headerlink" title="锁屏配置"></a>锁屏配置</h2><p>锁屏界面采用的是<code>swaylock</code>，详细可看<a target="_blank" rel="noopener" href="https://github.com/swaywm/swaylock/blob/master/swaylock.1.scd">官方文档</a>。</p>
+<blockquote>
+<p>修改我的配置文件仓库里<code>dotconfig/swaylock/config</code>，然后重新运行<code>deploy.sh</code>即可刷新</p>
+</blockquote>
+<h1 id="通知栏"><a href="#通知栏" class="headerlink" title="通知栏"></a>通知栏</h1><p>采用的是<code>swaync</code>，可高度自定义主题界面。我的配置文件位于<code>dotconfig/swaync/config.json</code>和<code>dotconfig/swaync/style.css</code>。<br>其实你可以去下载大家分享的主题，详见<a target="_blank" rel="noopener" href="https://github.com/ErikReider/SwayNotificationCenter/discussions/183"><code>swaync</code>的这个issues</a>。</p>
+<h1 id="Dolphin相关问题"><a href="#Dolphin相关问题" class="headerlink" title="Dolphin相关问题"></a><code>Dolphin</code>相关问题</h1><h2 id="没法选择文件打开方式怎么办？"><a href="#没法选择文件打开方式怎么办？" class="headerlink" title="没法选择文件打开方式怎么办？"></a>没法选择文件打开方式怎么办？</h2><p>安装<code>archlinux-xdg-menu</code>然后在终端运行</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">XDG_MENU_PREFIX=arch- kbuildsycoca6<br></code></pre></td></tr></table></figure>
+<p>即可。</p>
+<h2 id="没法弹出挂载授权认证界面怎么办？"><a href="#没法弹出挂载授权认证界面怎么办？" class="headerlink" title="没法弹出挂载授权认证界面怎么办？"></a>没法弹出挂载授权认证界面怎么办？</h2><p>在<code>config.kdl</code>中添加如下语句：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs kdl">// 开机启动KDE polkit防止dolphin挂载磁盘的弹窗弹不出来<br>spawn-sh-at-startup &quot;/usr/lib/polkit-kde-authentication-agent-1 &amp;&quot;<br></code></pre></td></tr></table></figure>
+
+
+
+<h1 id="剪贴板历史记录怎么办"><a href="#剪贴板历史记录怎么办" class="headerlink" title="剪贴板历史记录怎么办"></a>剪贴板历史记录怎么办</h1><p>我使用的<code>vicinae</code>来解决这个问题，并绑定了<code>Super+X</code>这个快捷键（不像<code>KDE</code>和<code>Windows</code>绑<code>Super+V</code>是因为这个键默认绑到了切换浮窗上，虽然你可以去配置文件里改绑，但我不太想动这些默认的习惯设置）。<br>安装<code>vicinae</code>：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">paru -S vicinae-bin<br></code></pre></td></tr></table></figure>
+<p>添加到<code>~/.config/niri/config.kdl</code>：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs kdl">// vicinae剪贴板历史记录<br>Super+X &#123; spawn-sh &quot;vicinae toggle&quot;; &#125;<br></code></pre></td></tr></table></figure>
+<p>如果你坚持修改默认的习惯设置，在<code>~/.config/niri/config.kdl</code>里找到这行，然后修改即可。将大括号里的像上面的一样换成<code>spawn-sh &quot;vicinae toggle&quot;;</code>即可：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs kdl">// Move the focused window between the floating and the tiling layout.<br>Mod+V       &#123; toggle-window-floating; &#125;<br></code></pre></td></tr></table></figure>
+
+
+
+<h1 id="微信右键消息没法弹出菜单、表情等小弹窗乱飞怎么办"><a href="#微信右键消息没法弹出菜单、表情等小弹窗乱飞怎么办" class="headerlink" title="微信右键消息没法弹出菜单、表情等小弹窗乱飞怎么办"></a>微信右键消息没法弹出菜单、表情等小弹窗乱飞怎么办</h1><p>用<code>gamescope</code>，具体可参考<a target="_blank" rel="noopener" href="https://wiki.archlinux.org/title/Gamescope">这个WiKi</a>。它需要你安装好了<code>mesa</code>驱动组件，具体可以看<a target="_blank" rel="noopener" href="https://wiki.archlinux.org/title/Intel_graphics">这个WiKi</a>。<br>总的来说，你只需要安装这三个包就行（对于像我一样的<code>Intel</code>核显机器）：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">sudo pacman -S gamescope mesa vulkan-intel<br></code></pre></td></tr></table></figure>
+<p>然后用<code>gamescope</code>运行你的应用程序<code>your_progrom</code>即可。就像这样：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_"># </span><span class="language-bash">直接运行</span><br>gamescope -- your_progrom<br><span class="hljs-meta prompt_"># </span><span class="language-bash">使用特定分辨率和帧率运行</span><br>gamescope -W 1920 -H 1080 -r 60 -- your_program<br></code></pre></td></tr></table></figure>
+<p>如果你的软件和<code>wayland</code>有兼容性问题，给<code>gamescope</code>添加这个参数:</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">--expose-wayland<br></code></pre></td></tr></table></figure>
+<p>这时，你只需要去修改微信的启动脚本，在前面添加<code>gamescope</code>即可</p>
+<h1 id="没法屏幕共享、屏幕共享和KDE冲突怎么办"><a href="#没法屏幕共享、屏幕共享和KDE冲突怎么办" class="headerlink" title="没法屏幕共享、屏幕共享和KDE冲突怎么办"></a>没法屏幕共享、屏幕共享和KDE冲突怎么办</h1><p>安装<code>xdg-desktop-portal xdg-desktop-portal-kde xdg-desktop-portal-wlr</code>，然后创建<code>.config/xdg-desktop-portal/kde-portals.conf</code>：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs conf">[preferred]<br>default=kde<br></code></pre></td></tr></table></figure>
+<p>再创建<code>.config/xdg-desktop-portal/niri-portals.conf</code>：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs conf">[preferred]<br># [...](asc_slot://start-slot-7)屏幕共享和截图使用 wlr 后端<br>org.freedesktop.impl.portal.ScreenCast=wlr<br>org.freedesktop.impl.portal.Screenshot=wlr<br><br># [...](asc_slot://start-slot-9)其他功能（如文件选择器、设置等）推荐使用 GTK 后端<br># 因为 wlr 后端只有截图录屏功能，没有文件选择器<br># 如果你没安装 xdg-desktop-portal-gtk，可以先尝试不填或填 kde (但不推荐在niri用kde的文件选择器)<br>default=kde<br></code></pre></td></tr></table></figure>
+
+
+
+<h1 id="引用的文档和页面"><a href="#引用的文档和页面" class="headerlink" title="引用的文档和页面"></a>引用的文档和页面</h1><p><a target="_blank" rel="noopener" href="https://github.com/YaLTeR/niri">Niri GitHub 仓库</a></p>
+<hr>
+<p><a target="_blank" rel="noopener" href="https://kznleaf.top/2025/09/18/niri%E5%AE%89%E8%A3%85%E4%B8%8E%E9%85%8D%E7%BD%AE">kznleaf - 无限平铺窗口管理器——niri在 ArchLinux 上的安装与配置</a><br><a target="_blank" rel="noopener" href="https://github.com/woioeow/hyprland-dotfiles">woioeow&#x2F;hyprland-dotfiles GitHub仓库</a><br><a target="_blank" rel="noopener" href="https://bbs.archlinux.org/viewtopic.php?id=288823">Archlinux Forums - How to set up Polkit to allow Dolphin to mount different Partitions?</a><br><a target="_blank" rel="noopener" href="https://wiki.archlinux.org/title/Polkit#Authentication_agents">ArchWiki - polkit</a><br><a target="_blank" rel="noopener" href="https://wiki.archlinux.org/title/XDG_MIME_Applications#Empty_MIME_associations_/_open_with_menu_in_KDE">ArchWiki - XDG MIME Applications</a><br><a target="_blank" rel="noopener" href="https://github.com/swaywm/swaylock">Swaylock GitHub 仓库</a><br><a target="_blank" rel="noopener" href="https://github.com/swaywm/swaylock/blob/master/swaylock.1.scd">Swaylock 参数解释 GitHub 仓库</a></p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Linux/" class="category-chain-item">Linux</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>Niri桌面在ArchLinux上的使用</div>
+      <div>http://blog.coolenoch.ink/2025/10/13/Linux/26-Niri桌面在ArchLinux上的使用-251013/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>CoolestEnoch</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2025年10月13日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2025/11/13/Linux/27-%E7%94%A8Debian%E5%92%8CWine%E6%90%AD%E4%B8%80%E4%B8%AA%E4%BA%91%E7%94%B5%E8%84%91-251113/" title="用Debian和Wine搭一个云电脑">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">用Debian和Wine搭一个云电脑</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2025/10/07/Linux/25-%E4%BD%BF%E7%94%A8EasyTier%E5%BC%82%E5%9C%B0%E7%BB%84%E7%BD%91-251007/" title="使用EasyTier异地组网">
+                        <span class="hidden-mobile">使用EasyTier异地组网</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  <script>
+  Fluid.utils.createScript('https://lib.baomitu.com/mermaid/8.14.0/mermaid.min.js', function() {
+    mermaid.initialize({"theme":"default"});
+
+    Fluid.utils.listenDOMLoaded(function() {
+      Fluid.events.registerRefreshCallback(function() {
+        if ('mermaid' in window) {
+          mermaid.init();
+        }
+      });
+    });
+  });
+</script>
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+  
+<script src="/js/effect/GoTop/jquery.min.js"></script>
+<script src="/js/effect/lib/jquery-1.9.1.min.js"></script>
+<script src="/js/effect/lib/jquery-3.6.0.min.js"></script>
+<script src="/js/effect/clickeffect.js"></script>
+<script src="/js/effect/clickWord.js"></script>
+<script src="/js/effect/emojiCursor.js"></script>
+<script src="/js/effect/sakura-less.js"></script>
+<script src="/js/effect/sakana@1.0.8.js"></script>
+<script src="/js/effect/cuteTitle.js"></script>
+<script src="/js/effect/GoTop/szgotop.js"></script>
+<script src="/js/effect/Netease.js"></script>
+<script src="/js/effect/cxkChrome.js"></script>
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

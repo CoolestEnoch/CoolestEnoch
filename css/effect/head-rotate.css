@@ -1,0 +1,7 @@
+.img-fluid {
+    transition: transform 0.3s ease;
+}
+
+.img-fluid:hover {
+    transform: rotate(180deg);
+}
